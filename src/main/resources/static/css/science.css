@@ -1,0 +1,133 @@
+body {
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#tff {
+    background: rgb(255, 210, 251);
+    background: linear-gradient(118deg, rgba(255, 210, 251, 1) 31%, rgba(139, 255, 226, 1) 72%, rgba(255, 237, 171, 1) 100%);
+
+
+    color: rgb(104, 97, 97);
+}
+
+#colorh3 {
+    color: rgb(90, 87, 87);
+}
+
+nav li {
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}
+
+nav input {
+    margin-right: 25px;
+    width: 155px;
+}
+
+#a1 :hover {
+    background-color: #ffe26f;
+}
+
+#a2 :hover {
+    background-color: #00ff88;
+}
+
+#a3 :hover {
+    background-color: #fd34b0;
+
+}
+
+#a3x :hover {
+    background-color: #fd34b0;
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+}
+
+
+#h1 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#h1 :hover {
+    background-color: #ffe57e;
+    border-radius: 15px;
+}
+
+#g1 {
+    background-color: #ffcc00;
+}
+
+#g1:hover {
+    background-color: #f8db64;
+}
+
+#h2 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#h2 :hover {
+    background-color: #8ee1fa;
+    border-radius: 15px;
+}
+
+#g2 {
+    background-color: rgb(150, 193, 250);
+}
+
+#g2:hover {
+    background-color: rgb(63, 120, 206);
+}
+
+#h3 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#h3 :hover {
+    background-color: #ffbdee;
+    border-radius: 15px;
+}
+
+#g3 {
+    background-color: rgb(255, 109, 255);
+}
+
+#g3:hover {
+    background-color: rgb(201, 57, 181);
+}
+
+#h4 {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#h4 :hover {
+    background-color: #00ff88;
+    border-radius: 15px;
+}
+
+#g4 {
+    background-color: rgb(155, 255, 73);
+}
+
+#g4:hover {
+    background-color: rgb(63, 206, 87);
+}
+
+
+@media (min-width: 768px) {
+    .row.equal {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+
+#zdjecia {
+    margin-top: 70px;
+    text-align: center;
+}
+

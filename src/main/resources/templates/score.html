@@ -1,0 +1,63 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}">
+
+    <title>Słownik</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid" id="abc">
+        <a class="navbar-brand " id="a0">Słownik</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item" id="a1">
+                    <a class="nav-link" th:href="@{home}">Home</a>
+                </li>
+                <li class="nav-item" id="a2">
+                    <a class="nav-link" th:href="@{science}">Nauka</a>
+                </li>
+                <script>
+                    function info() {
+                        confirm("Zaloguj się aby mieć dostęp do wyników!");
+                    }
+                </script>
+                <li class="nav-item dropdown" id="a3">
+                    <a class="nav-link" th:href="@{score}">Wynik</a>
+                </li>
+            </ul>
+
+            <form class="d-flex" th:action="@{logout}">
+                <input type="submit" class="btn btn-secondary" name="teleport" value="Wyloguj" id="tff">
+            </form>
+
+            <form class="d-flex" th:action="@{login}">
+                <input type="submit" class="btn btn-secondary" value="Zaloguj" id="tff">
+            </form>
+
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h4 style="text-align:center; margin-top:60px;">wynik</h4></br>
+</div>
+
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

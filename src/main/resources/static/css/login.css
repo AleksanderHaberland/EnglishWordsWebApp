@@ -1,0 +1,129 @@
+body {
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#ojedenwdół {
+    margin-bottom: 42px;
+}
+
+#tff {
+    background: rgb(255, 210, 251);
+    background: linear-gradient(118deg, rgba(255, 210, 251, 1) 31%, rgba(139, 255, 226, 1) 72%, rgba(255, 237, 171, 1) 100%);
+
+
+    color: rgb(104, 97, 97);
+}
+
+#colorh3 {
+    color: rgb(90, 87, 87);
+}
+
+nav li {
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}
+
+nav input {
+    margin-right: 25px;
+    width: 155px;
+}
+
+#a1 :hover {
+    background-color: #ffcc00;
+}
+
+#a2 :hover {
+    background-color: #00ff88;
+}
+
+#a3 :hover {
+    background-color: #fd34b0;
+
+}
+
+#a3x :hover {
+    background-color: #fd34b0;
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+}
+
+.login-container {
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.login-form-1 {
+    padding: 5%;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+
+.login-form-1 h3 {
+    text-align: center;
+    color: #333;
+}
+
+.login-form-2 {
+    padding: 5%;
+    background: #47e2d5;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+}
+
+.login-form-2 h3 {
+    text-align: center;
+    color: #fff;
+}
+
+.login-container form {
+    padding: 10%;
+}
+
+#btnSubmit {
+
+    width: 50%;
+    border-radius: 1rem;
+    padding: 1.5%;
+    border: none;
+    cursor: pointer;
+}
+
+#btnSubmit2 {
+    background-color: #ffcf4b;
+    color: rgb(104, 97, 97);
+    width: 50%;
+    border-radius: 1rem;
+    padding: 1.5%;
+    border: none;
+    cursor: pointer;
+}
+
+.login-form-1 #btnSubmit {
+    font-weight: 600;
+    color: #fff;
+    background-color: #ffcf4b;
+    background-color: rgb(255, 176, 229);
+
+}
+
+.login-form-2 #btnSubmit {
+    font-weight: 600;
+    color: #0062cc;
+    background-color: #fff;
+}
+
+.login-form-2 .ForgetPwd {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-form-1 .ForgetPwd {
+    color: #0062cc;
+    font-weight: 600;
+    text-decoration: none;
+}
+
