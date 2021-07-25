@@ -7,8 +7,6 @@ body {
 #tff {
     background: rgb(255, 210, 251);
     background: linear-gradient(118deg, rgba(255, 210, 251, 1) 31%, rgba(139, 255, 226, 1) 72%, rgba(255, 237, 171, 1) 100%);
-
-
     color: rgb(104, 97, 97);
 }
 
@@ -52,6 +50,20 @@ nav input {
     background: rgb(255, 210, 251);
     background: linear-gradient(118deg, rgba(255, 210, 251, 1) 31%, rgba(139, 255, 226, 1) 72%, rgba(255, 237, 171, 1) 100%);
 }
+
+#alertt {
+    font-family: Bookman, URW Bookman L, serif;
+    font-weight: 200;
+    text-align: center;
+    font-size: 25px;
+}
+#alertt a{
+    font-weight: 800;
+    color: #74ADAE ;
+    font-size: 26px;
+
+}
+
 
 .form-control, .form-control:focus, .input-group-addon {
     border-color: #e1e1e1;
@@ -124,7 +136,7 @@ nav input {
 }
 
 .signup-form a {
-    color: #fff;
+    color: #e6b800;
     text-decoration: underline;
 }
 

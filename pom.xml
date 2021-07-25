@@ -42,6 +42,7 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
+        <!-- Bootstrap added on 16 July-->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
@@ -49,6 +50,7 @@
         </dependency>
 
         <dependency>
+            <!-- jQuery added on 16 July-->
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
             <version>3.6.0</version>

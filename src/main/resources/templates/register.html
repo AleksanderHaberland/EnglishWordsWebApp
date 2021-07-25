@@ -30,8 +30,8 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid" id="abc">
-        <a class="navbar-brand " id="a0">Słownik</a>
+    <div class="container-fluid">
+        <a class="navbar-brand ">Słownik</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -62,9 +62,16 @@
         </div>
     </div>
 </nav>
+<div th:if="${exist == 'emailInUse'}" class="alert alert-danger" id="alertt" >
+    <p> Podany email jest już używany, podaj inny lub <a th:href="@{home}">odzyskaj konto </a> </p>
+</div>
+<div th:if="${exist == 'peselInUse'}" class="alert alert-warning" id="alertt" >
+    <p> Podany Pesel jest już używany, podaj inny lub <a th:href="@{home}">odzyskaj konto </a> </p>
+
+</div>
 
 <div class="signup-form">
-    <form autocomplete="off" method="POST"
+    <form autocomplete="off" method="POST" th:action="@{/save}" th:object="${user}"
           oninput='checkpass.setCustomValidity(checkpass.value != password.value ? "Passwords do not match." : "")'>
 
         <h2>Zarejestruj się</h2>
@@ -73,32 +80,32 @@
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fas fa-battery-empty"></i></span>
-                <input type="text" class="form-control" name="imie" placeholder="Imie" required="required">
+                <input type="text" class="form-control" th:field="*{name}" name="imie" placeholder="Imie" required="required">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fas fa-battery-quarter"></i></span>
-                <input type="text" class="form-control" name="nazwisko" placeholder="Nazwisko" required="required">
+                <input type="text" class="form-control" th:field="*{lastname}" name="nazwisko" placeholder="Nazwisko" required="required">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fas fa-battery-half"></i></span>
-                <input type="email" class="form-control" name="email" placeholder="E-mail" required="required">
+                <input type="email" class="form-control" th:field="*{email}" name="email" placeholder="E-mail" required="required">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fas fa-battery-half"></i></span>
-                <input type="text" onkeypress="return isNumber(event)" class="form-control" name="pesel"
+                <input type="text" onkeypress="return isNumber(event)" th:field="*{pesel}" class="form-control" name="pesel"
                        placeholder="Pesel" minlength="11" required="required">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fas fa-battery-three-quarters"></i></span>
-                <input type="password" class="form-control" name="password" placeholder="Hasło" required="required">
+                <input type="password" class="form-control" th:field="*{password}" name="password" placeholder="Hasło" required="required">
             </div>
         </div>
         <div class="form-group">

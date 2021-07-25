@@ -52,6 +52,20 @@ nav input {
     text-decoration: none;
 }
 
+
+#alertt {
+    font-family: Bookman, URW Bookman L, serif;
+    font-weight: 200;
+    text-align: center;
+    font-size: 25px;
+}
+#alertt a{
+    font-weight: 800;
+    color: #74ADAE ;
+    font-size: 26px;
+
+}
+
 .login-container {
     margin-top: 5%;
     margin-bottom: 5%;
