@@ -8,16 +8,19 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.project.englishwordswebapp.data.UserRepository;
+import pl.project.englishwordswebapp.model.CurrentUser;
 import pl.project.englishwordswebapp.model.User;
 
 @Controller
 public class Navbar {
 
     private UserRepository userRepository;
+    private CurrentUser currentUser;
 
     @Autowired
-    public Navbar(UserRepository userRepository){
+    public Navbar(UserRepository userRepository, CurrentUser currentUser){
         this.userRepository = userRepository;
+        this.currentUser = currentUser;
     }
 
     @GetMapping("/home")

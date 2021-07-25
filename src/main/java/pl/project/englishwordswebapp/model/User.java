@@ -7,7 +7,6 @@ import java.time.LocalTime;
 @Table(name = "User")
 public class User{
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -19,11 +18,11 @@ public class User{
     @Column(nullable = false)
     private String lastname;
 
-    @Column(nullable = false,unique = false)
+    @Column(nullable = false,unique = true)
     private String email;
 
-    @Column(nullable = false, unique = false, length = 11)
-    private long pesel;
+    @Column(nullable = false, unique = true, length = 11)
+    private String pesel;
 
     @Column(nullable = false)
     private String password;
@@ -32,7 +31,7 @@ public class User{
     private LocalTime dateOfFound;
 
     public User(){}
-    public User(String name, String lastname, String email, long pesel, String password, LocalTime dateOfFound) {
+    public User(String name, String lastname, String email, String pesel, String password, LocalTime dateOfFound) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
@@ -73,11 +72,11 @@ public class User{
         this.email = email;
     }
 
-    public long getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
-    public void setPesel(long pesel) {
+    public void setPesel(String pesel) {
         this.pesel = pesel;
     }
 

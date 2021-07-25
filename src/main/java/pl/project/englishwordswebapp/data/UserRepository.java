@@ -8,7 +8,8 @@ import pl.project.englishwordswebapp.model.User;
 public interface UserRepository extends JpaRepository <User, Long> {
 
     User findByEmail(String email);
-    User findByPesel(long pesel);
+    User findByPesel(String pesel);
 
     User findByPassword(String password);
+    User findUserById(long id);
 }

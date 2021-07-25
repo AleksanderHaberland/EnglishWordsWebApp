@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.project.englishwordswebapp.data.UserRepository;
+import pl.project.englishwordswebapp.model.CurrentUser;
 import pl.project.englishwordswebapp.model.User;
 
 import java.time.LocalTime;
@@ -16,10 +17,12 @@ import java.time.LocalTime;
 public class LoginRegisterLogout {
 
     private UserRepository userRepository;
+    private CurrentUser currentUser;
 
     @Autowired
-    LoginRegisterLogout(UserRepository userRepository){
+    LoginRegisterLogout(UserRepository userRepository, CurrentUser currentUser){
         this.userRepository = userRepository;
+        this.currentUser = currentUser;
     }
     
     @PostMapping("/save")
@@ -29,7 +32,7 @@ public class LoginRegisterLogout {
         if((userRepository.findByEmail(user.getEmail()) == null) || !userRepository.findByEmail(user.getEmail()).getEmail().equals(user.getEmail()) ){
             //point. #2
             //  If there not exist user with this pesel (null)  ||   If there not exist user with provided pesel
-            if((userRepository.findByPesel(user.getPesel()) == null) || user.getPesel() != userRepository.findByPesel(user.getPesel()).getPesel()){
+            if((userRepository.findByPesel(user.getPesel()) == null) || !user.getPesel().equals(userRepository.findByPesel(user.getPesel()).getPesel()) ){
                 user.setDateOfFound(LocalTime.now());
                 userRepository.save(user);
                 redirectAttributes.addFlashAttribute("exist", "true");
@@ -48,8 +51,18 @@ public class LoginRegisterLogout {
 
     @PostMapping("/entry")
     public String entry(@ModelAttribute User user, RedirectAttributes redirectAttributes){
-
-
+        if(userRepository.findByEmail(user.getEmail()) == null){
+            redirectAttributes.addFlashAttribute("error", "emailWrong");
+        }
+        else{
+            if(userRepository.findByEmail(user.getEmail()).getPassword().equals(user.getPassword())){
+                return "home";
+            }
+            else {
+                // email correct passwor incorrect
+                redirectAttributes.addFlashAttribute("error", "passWrong");
+            }
+        }
         return "redirect:/login";
     }
 }

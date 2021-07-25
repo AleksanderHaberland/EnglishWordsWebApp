@@ -77,10 +77,10 @@
     </script>
 </div>
 
-<div th:if="${error == 'true'}" class="alert alert-warning" id="alertt">
+<div th:if="${error == 'emailWrong'}" class="alert alert-warning" id="alertt">
     <p>Serwis nie rozpoznaje użytkownika o podanym emailu <a th:href="@{home}">odzyskaj konto </a> </p>
 </div>
-<div th:if="${error == 'true'}" class="alert alert-warning" id="alertt">
+<div th:if="${error == 'passWrong'}" class="alert alert-warning" id="alertt">
     <p>Wprowadzono błędne dane logowania <a th:href="@{home}">odzyskaj konto </a> </p>
 </div>
 <div class="container login-container">
@@ -89,10 +89,10 @@
             <h3 id="colorh3">Zaloguj się jako Uczeń</h3>
             <form method="POST" th:action="@{/entry}" th:object="${user}" >
                 <div class="form-group">
-                    <input type="text" th:field="*{email}" class="form-control" placeholder="E-mail *" name="email" />
+                    <input type="text" th:field="*{email}" class="form-control" placeholder="E-mail *" required="required" />
                 </div>
                 <div class="form-group">
-                    <input type="password" th:field="*{password}" class="form-control" placeholder="Hasło *" name="password" />
+                    <input type="password" th:field="*{password}" class="form-control" placeholder="Hasło *"  required="required" />
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn" id="btnSubmit" value="Login" name="guzik" />

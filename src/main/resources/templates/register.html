@@ -62,7 +62,7 @@
         </div>
     </div>
 </nav>
-<div th:if="${exist == 'emailInUse'}" class="alert alert-danger" id="alertt" >
+    <div th:if="${exist == 'emailInUse'}" class="alert alert-danger" id="alertt" >
     <p> Podany email jest już używany, podaj inny lub <a th:href="@{home}">odzyskaj konto </a> </p>
 </div>
 <div th:if="${exist == 'peselInUse'}" class="alert alert-warning" id="alertt" >
@@ -72,7 +72,7 @@
 
 <div class="signup-form">
     <form autocomplete="off" method="POST" th:action="@{/save}" th:object="${user}"
-          oninput='checkpass.setCustomValidity(checkpass.value != password.value ? "Passwords do not match." : "")'>
+          oninput='checkpass.setCustomValidity(checkpass.value != password.value ? "Hasła nie pasują do siebie." : "")'>
 
         <h2>Zarejestruj się</h2>
         <p>Wypełnij formularz aby stworzyć konto!</p>
@@ -98,14 +98,14 @@
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fas fa-battery-half"></i></span>
-                <input type="text" onkeypress="return isNumber(event)" th:field="*{pesel}" class="form-control" name="pesel"
-                       placeholder="Pesel" minlength="11" required="required">
+                <input type="text" class="form-control" th:field="*{pesel}" name="pesel" placeholder="pesel" minlength="11" required="required" onkeypress="return isNumber(event)" >
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon"><i class="fas fa-battery-three-quarters"></i></span>
-                <input type="password" class="form-control" th:field="*{password}" name="password" placeholder="Hasło" required="required">
+                <input type="password" class="form-control" th:field="*{password}" name="password" placeholder="Hasło"
+                       pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Hasło musi mieć minimum 8 znaków, w tym chociaż jedną dużą literę." required="required">
             </div>
         </div>
         <div class="form-group">
