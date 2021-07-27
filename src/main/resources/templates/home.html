@@ -42,13 +42,17 @@
                 </li>
             </ul>
 
-            <form class="d-flex" th:action="@{logout}">
-                <input type="submit" class="btn btn-secondary" name="teleport" value="Wyloguj" id="tff">
-            </form>
+            <div th:if="${userSession.getLogged() == true}">
+                <form class="d-flex" th:action="@{logout}" method="post">
+                    <input type="submit" class="btn btn-secondary" value="Wyloguj" id="tff">
+                </form>
+            </div>
+            <div th:unless="${userSession.getLogged() == true}">
+                <form class="d-flex" th:action="@{login}">
+                    <input type="submit" class="btn btn-secondary" value="Zaloguj" id="tff">
+                </form>
+            </div>
 
-            <form class="d-flex" th:action="@{login}">
-                <input type="submit" class="btn btn-secondary" value="Zaloguj" id="tff">
-            </form>
 
         </div>
     </div>
@@ -57,6 +61,7 @@
 <div class="container">
     <h4 style="text-align:center; margin-top:60px;">Aleksander H.</h4>
 </div>
+
 
 <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>

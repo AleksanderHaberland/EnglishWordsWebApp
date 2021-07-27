@@ -23,6 +23,11 @@ public class Navbar {
         this.currentUser = currentUser;
     }
 
+    @ModelAttribute
+    public void currentUserSession(Model model){
+        model.addAttribute("userSession", currentUser);
+    }
+
     @GetMapping("/home")
     public String home(){
         return "home";
@@ -44,11 +49,6 @@ public class Navbar {
         return "login";
     }
 
-
-    @GetMapping("/logout")
-    public String lg(){
-        return "redirect:/home";
-    }
 
     @GetMapping("/register")
     public String register(Model model, @ModelAttribute("exist") String inUse){

@@ -24,7 +24,8 @@ public class LoginRegisterLogout {
         this.userRepository = userRepository;
         this.currentUser = currentUser;
     }
-    
+
+    // register
     @PostMapping("/save")
     public String save(@ModelAttribute User user, RedirectAttributes redirectAttributes, Model model){
         // point. #1
@@ -32,7 +33,7 @@ public class LoginRegisterLogout {
         if((userRepository.findByEmail(user.getEmail()) == null) || !userRepository.findByEmail(user.getEmail()).getEmail().equals(user.getEmail()) ){
             //point. #2
             //  If there not exist user with this pesel (null)  ||   If there not exist user with provided pesel
-            if((userRepository.findByPesel(user.getPesel()) == null) || !user.getPesel().equals(userRepository.findByPesel(user.getPesel()).getPesel()) ){
+            if((userRepository.findByPesel(user.getPesel()) == null) || !userRepository.findByPesel(user.getPesel()).getPesel().equals(user.getPesel()) ){
                 user.setDateOfFound(LocalTime.now());
                 userRepository.save(user);
                 redirectAttributes.addFlashAttribute("exist", "true");
@@ -49,20 +50,31 @@ public class LoginRegisterLogout {
        return  "redirect:/register";
     }
 
+    // login
     @PostMapping("/entry")
     public String entry(@ModelAttribute User user, RedirectAttributes redirectAttributes){
         if(userRepository.findByEmail(user.getEmail()) == null){
+            //email null
             redirectAttributes.addFlashAttribute("error", "emailWrong");
         }
         else{
             if(userRepository.findByEmail(user.getEmail()).getPassword().equals(user.getPassword())){
-                return "home";
+                //email correct, pass alsow
+                currentUser.setId((int) user.getId());
+                currentUser.setLogged(true);
+                    return "redirect:/home";
             }
             else {
-                // email correct passwor incorrect
+                // email correct password incorrect
                 redirectAttributes.addFlashAttribute("error", "passWrong");
             }
         }
         return "redirect:/login";
+    }
+
+    @PostMapping("/logout")
+    public String logout(){
+        currentUser.setIdAndLog(0, false    );
+        return "redirect:/home";
     }
 }

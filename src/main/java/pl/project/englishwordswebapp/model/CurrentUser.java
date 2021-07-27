@@ -1,35 +1,34 @@
 package pl.project.englishwordswebapp.model;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.annotation.SessionScope;
 
 @Component
-@SessionScope
+@Scope(scopeName= WebApplicationContext.SCOPE_SESSION, proxyMode= ScopedProxyMode.TARGET_CLASS)
 public class CurrentUser {
 
-    private User user;
-    private short id;
-    private boolean logged;
+    private int id;
+    private boolean logged = false;
+    Integer t = null;
 
     public CurrentUser(){};
-    public CurrentUser(short id, boolean logged, User user) {
+    public void setIdAndLog(int id, boolean logged){
         this.id = id;
         this.logged = logged;
-        this.user = user;
     }
 
-    public short getId() {
+    public int getId() {
         return id;
     }
-
-    public void setId(short id) {
+    public void setId(int id) {
         this.id = id;
     }
-
     public boolean getLogged() {
         return logged;
     }
-
     public void setLogged(boolean logged) {
         this.logged = logged;
     }

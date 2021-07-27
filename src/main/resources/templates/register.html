@@ -55,9 +55,11 @@
                 </li>
             </ul>
 
-            <form class="d-flex" th:action="@{login}">
-                <input type="submit" class="btn btn-secondary" value="Zaloguj" id="tff">
-            </form>
+            <div th:unless="${userSession.getLogged() == true}">
+                <form class="d-flex" th:action="@{login}">
+                    <input type="submit" class="btn btn-secondary" value="Zaloguj" id="tff">
+                </form>
+            </div>
 
         </div>
     </div>
