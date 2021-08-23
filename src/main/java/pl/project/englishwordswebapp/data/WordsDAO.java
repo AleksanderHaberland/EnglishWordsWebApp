@@ -10,4 +10,6 @@ import java.util.List;
 public interface WordsDAO extends JpaRepository<Words, Long> {
 
     List<Words> findAllByCategoryNotNull();
+
+    List<Words> findAllByCategoryId(Long id);
 }

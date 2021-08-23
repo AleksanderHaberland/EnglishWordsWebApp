@@ -5,5 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.project.englishwordswebapp.modelwords.Category;
 
 @Repository
-public interface CategoryDAO extends JpaRepository<Category, Long> {
+public interface CategoryDAO extends JpaRepository <Category, Long> {
+
+    Category findByCatename(String catename);
 }

@@ -1,5 +1,7 @@
 package pl.project.englishwordswebapp.controller;
 
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,7 @@ public class Navbar {
 
     @GetMapping("/home")
     public String home(){
+
         return "home";
     }
 
@@ -43,12 +46,13 @@ public class Navbar {
         return "score";
     }
 
+
+
     @GetMapping("/login")
     public String login(Model model, @ModelAttribute ("exist") String regiSuccess, @ModelAttribute ("error") String nullEmailOrPass) {
         model.addAttribute("user", new User());
         return "login";
     }
-
 
     @GetMapping("/register")
     public String register(Model model, @ModelAttribute("exist") String inUse){

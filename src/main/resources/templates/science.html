@@ -57,14 +57,15 @@
 </nav>
 
 <div class="container-fluid" id="zdjecia">
-    <div class="row ">
+    <form method="get" th:action="@{/words}">
+    <div class="row">
         <div class=col-lg-3 id="h1">
             <div class="card" style="width: 360px;">
                 <img class="card-img-top" src="../img/animal.jpg" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">Zwierzęta</h5>
                     <p class="card-text">Podstawowe słowa związane z zwierzętami.</p>
-                    <a href="animal.index" class="btn " id="g1">Przejdź</a>
+                    <button type="submit" class="btn" value="animals" name="wordsType" id="g1">Przejdź</button>
                 </div>
             </div>
         </div>
@@ -74,7 +75,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Praca - Zawody</h5>
                     <p class="card-text">Podstawowe słowa związane z zawodami.</p>
-                    <a href="work.index" class="btn" id="g2">Przejdź</a>
+                    <button type="submit" class="btn" value="jobs" name="wordsType" id="g2">Przejdź</button>
                 </div>
             </div>
         </div>
@@ -84,7 +85,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Dom</h5>
                     <p class="card-text">Podstawowe słowa związane z domem.</p>
-                    <a href="home2.index" class="btn " id="g3">Przejdź</a>
+                    <button type="submit" class="btn" value="home" name="wordsType" id="g3">Przejdź</button>
                 </div>
             </div>
         </div>
@@ -94,7 +95,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Jedzenie</h5>
                     <p class="card-text">Podstawowe słowa związane z jedzeniem.</p>
-                    <a href="food.index" class="btn " id="g4">Przejdź</a>
+                    <button type="submit" class="btn" value="food" name="wordsType" id="g4">Przejdź</button>
                 </div>
             </div>
         </div>
@@ -143,7 +144,7 @@
             </div>
         </div>
     </div>
-
+    </form>
 </div>
 <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
