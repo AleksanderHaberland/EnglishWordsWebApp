@@ -1,0 +1,218 @@
+body {
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#tff{
+    background: rgb(255,210,251);
+    background: linear-gradient(118deg, rgba(255,210,251,1) 31%, rgba(139,255,226,1) 72%, rgba(255,237,171,1) 100%);
+    color: rgb(104, 97, 97);
+}
+
+#tff:hover{
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(37, 191, 202);
+}
+
+
+
+@media screen and (min-width: 1502px) {
+    #tff {
+        width: 150px;
+    }
+}
+
+
+.navbar  {
+    opacity: 1;
+    width: 100%;
+    top:0;
+}
+
+
+.main{
+    margin-bottom: 50px;
+
+}
+
+nav li {
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}
+
+nav input{
+    margin-right: 25px;
+    width: 155px;
+}
+
+#a1 :hover {
+    background-color: #ffcc00;
+}
+#a2 :hover {
+    background-color: #00ff88;
+}
+#a3 :hover {
+    background-color: #fd34b0;
+}
+
+#a3x :hover {
+    background-color: #fd34b0;
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+}
+
+
+#imgButton{
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.dropdown a:hover{
+    background-color: rgb(150, 193, 250);
+}
+
+
+
+#side p{
+    color:rgb(77, 75, 75);
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+#inSide{
+    background-color: rgb(233, 232, 232);
+    display: block ;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+}
+
+table,tr,td, #thColor th {
+    text-align: center  ;
+    border: rgb(223, 218, 238) 0.5px solid;
+    border-bottom: 0px;
+}
+
+
+.table th{
+    font-weight: 800;
+    color: rgb(117, 214, 213);
+    letter-spacing: 0.8px;
+
+}
+
+#form button:hover{
+    background-color: rgb(230, 255, 223);
+
+}
+#new1{
+    color: rgb(138, 137, 137);
+    font-weight: 800;
+}
+#new2{
+    text-align: center;
+    width: 65%;
+    height: 35px;
+    border-radius: 25px;
+    font-weight: 700;
+    outline:none;
+    color: rgb(129, 122, 122);
+    border-color: rgba(159, 221, 87, 0.363);
+    border-width: 1px;
+}
+#new2::placeholder {
+    color: rgb(138, 137, 137);
+}
+#new2:hover{
+    background-color:#d4f5f4    ;
+}
+
+#new3{
+    color: rgb(138, 137, 137);
+    font-weight: 700;
+}
+
+#first button:hover{
+    background-color: rgb(242, 255, 235);
+}
+
+#first i{
+    color: rgb(12, 224, 5);
+}
+#new4{
+    background-color: #dfffd9    ;
+}
+
+
+#second td{
+    color: rgb(138, 137, 137);
+}
+
+#second i{
+    color: rgb(255, 0, 0);
+}
+#second button:hover{
+    background-color: rgb(253, 242, 242);
+}
+
+#scTd4{
+    background-color: #ffd9dd;
+}
+
+#id{
+    font-weight: 600;
+}
+
+.pagination{
+    text-align: center;
+    display: block;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+
+.pagination p{
+    background-color: rgb(117, 214, 213);
+    text-decoration: none;
+    padding: 0px 12px;
+    font-weight: 700;
+    color:rgb(189, 253, 252);
+    border:1px solid transparent;
+    border-radius: 100%;
+
+}
+
+.pagination p:hover{
+    color: #ffc400 ;
+    font-weight: 900;
+    border-width: 1px;
+}
+
+.pagination .back{
+    margin-right: -10px;
+    font-size: 20px;
+    color: #ffd758    ;
+    background-color: rgb(255, 255, 255,0);
+}
+
+.pagination .next{
+    margin-left: -10px;
+    font-size: 20px;
+    color: #ffd758    ;
+    background-color: rgb(255, 255, 255,0);
+}
+
+#footer{
+    background-color: rgb(221, 217, 217);
+}
+
+
+
+

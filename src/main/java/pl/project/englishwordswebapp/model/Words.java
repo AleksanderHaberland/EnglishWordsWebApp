@@ -1,4 +1,4 @@
-package pl.project.englishwordswebapp.modelwords;
+package pl.project.englishwordswebapp.model;
 
 import javax.persistence.*;
 import java.io.Serializable;

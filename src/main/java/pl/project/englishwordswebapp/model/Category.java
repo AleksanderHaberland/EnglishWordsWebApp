@@ -1,4 +1,6 @@
-package pl.project.englishwordswebapp.modelwords;
+package pl.project.englishwordswebapp.model;
+
+import pl.project.englishwordswebapp.model.Words;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,18 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Category implements    Serializable {
+public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_category")
     private Long id;
 
     @Column(nullable = false)
     private String catename;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Words> words = new ArrayList<>();
 
     public Category(){}

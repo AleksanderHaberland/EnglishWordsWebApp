@@ -12,26 +12,29 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.project.englishwordswebapp.data.CategoryDAO;
 import pl.project.englishwordswebapp.data.UserRepository;
 import pl.project.englishwordswebapp.data.WordsDAO;
-import pl.project.englishwordswebapp.modelwords.Category;
-import pl.project.englishwordswebapp.modelwords.Words;
-import pl.project.englishwordswebapp.modelwords.WordsCounter;
+import pl.project.englishwordswebapp.service.CurrentUser;
+import pl.project.englishwordswebapp.model.Category;
+import pl.project.englishwordswebapp.model.Words;
+import pl.project.englishwordswebapp.service.WordsCounter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class Learn {
+public class LearnController {
 
    // private UserRepository repository;
     private CategoryDAO categoryDAO;
     private WordsDAO wordsDAO;
+    private CurrentUser currentUser;
    // private WordsCounter wordsCounter;
 
     @Autowired
-    public Learn(UserRepository userRepository, CategoryDAO categoryDAO, WordsDAO wordsDAO, WordsCounter wordsCounter){
+    public LearnController(UserRepository userRepository, CategoryDAO categoryDAO, WordsDAO wordsDAO, WordsCounter wordsCounter, CurrentUser currentUser){
        // this.repository = userRepository;
         this.categoryDAO = categoryDAO;
         this.wordsDAO = wordsDAO;
+        this.currentUser = currentUser;
        // this.wordsCounter = wordsCounter;
 
         Words w = new Words("job", "praca");
@@ -53,6 +56,10 @@ public class Learn {
         wordsDAO.save(w2);
     }
 
+    @ModelAttribute
+    public void currentUserSession(Model model){
+        model.addAttribute("userSession", currentUser);
+    }
 
     private String val;
     private List<Integer> score;
@@ -78,12 +85,13 @@ public class Learn {
         voice.allocate();
 
         voice.speak(speaker);
-        return "words";
+        return "/learn/words";
     }
 
     @PostMapping("/words")
     public String postwords(@ModelAttribute ("speaker") String speaker, Model model,RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("speaker", speaker);
+
         return "redirect:/words";
     }
 

@@ -125,9 +125,15 @@ nav input {
     }
 }
 
-
 #zdjecia {
     margin-top: 70px;
     text-align: center;
 }
+
+
+.dropdown a:hover{
+    background-color: rgb(150, 193, 250);
+}
+
+
 

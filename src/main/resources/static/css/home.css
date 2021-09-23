@@ -43,3 +43,9 @@ nav input{
     opacity: 0.5;
     text-decoration: none;
 }
+
+.dropdown a:hover{
+    background-color: rgb(150, 193, 250);
+}
+
+

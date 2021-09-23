@@ -168,3 +168,9 @@ nav input {
     font-size: 7px;
     position: absolute;
 }
+
+.dropdown a:hover{
+    background-color: rgb(150, 193, 250);
+}
+
+
