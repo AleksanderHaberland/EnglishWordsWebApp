@@ -97,11 +97,10 @@
                     </tr>
                 </form>
                 <form method="POST" th:action="@{createTable}" th:object="${category}">
-                    <tr th:each="obj, i : ${row}" id="second">
-                        <td th:text="${(i.index) + 1}" class="col-lg-2" id="id"></td>
+                    <tr th:each="obj, i : ${categoryName}" id="second">
+                        <td th:text="${categoryRow.keySet().toArray()[i.index]}" class="col-lg-2" id="id"></td>
                         <td class="col-lg-4" th:text="${obj}"></td>
-                        <td class="col-lg-4" th:if="${rowsMoreThen10 == 'true'}" th:text="${tableService.amoutOfRows(tableService.allCategories().get(i.index + (tableService.amoutOfPages() * 10 - 10)))}"></td>
-                        <td class="col-lg-4" th:unless="${rowsMoreThen10 == 'true'}" th:text="${tableService.amoutOfRows(tableService.allCategories().get(i.index))}"></td>
+                        <td class="col-lg-4"  th:text="${tableService.amoutOfRows(categoryRow.get(i.index + 1))}"></td>
                         <td class="col-lg-2" id="scTd4"><button class="btn" name="categoryButton" th:value="${obj}"><i class="far fa-trash-alt fa-lg"></i></button></td>
                     </tr>
                 </form>

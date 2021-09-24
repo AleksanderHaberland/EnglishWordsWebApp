@@ -19,5 +19,4 @@ public interface CategoryDAO extends JpaRepository <Category, Long> {
 
     @Transactional
     void deleteByCatename(String catename);
-
 }

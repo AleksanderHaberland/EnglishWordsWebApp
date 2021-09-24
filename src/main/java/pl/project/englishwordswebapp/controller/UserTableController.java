@@ -9,9 +9,12 @@ import pl.project.englishwordswebapp.data.UserRepository;
 import pl.project.englishwordswebapp.mainService.CreateTableService;
 import pl.project.englishwordswebapp.model.Category;
 import pl.project.englishwordswebapp.service.CurrentUser;
+import pl.project.englishwordswebapp.service.Pagination;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Controller
 public class UserTableController {
@@ -34,43 +37,24 @@ public class UserTableController {
 
     @GetMapping("/createTable")
         public String createTable(ModelMap map, @RequestParam(value = "pageNumber", required = false) String pageNumber){
-        boolean moreRows = false;
+        Pagination<Category> pagination = new Pagination<>();
         map.addAttribute("category", new Category());
         map.addAttribute("tableService", createTableService);
-        map.addAttribute("rowsMoreThen10", moreRows);
-        System.out.println(":o to jest request= " + pageNumber);
-        map.addAttribute("pagination", createTableService.amoutOfPages());
+        map.addAttribute("pagination", pagination.amoutOfPages(createTableService.allCategories()));
 
-        if(createTableService.allCategories().size() > 10){
-            moreRows = true;
-        }
-        else {
-            moreRows = false;
-        }
-        int pageNumberAfterParse = 0;
-        if(pageNumber != null && !pageNumber.isEmpty()){
-            pageNumberAfterParse = Integer.parseInt(pageNumber);
-        }
-
-        List<Category> categoryList = createTableService.allCategories();
+        // returning rows of table
         List<String> categoryName = new ArrayList<>();
-        map.addAttribute("row", categoryName);
-        if(pageNumberAfterParse > 1){
-            int start = (pageNumberAfterParse*10) - 10;
-
-            for(int i = start; i < categoryList.size(); i++ ){
-                categoryName.add(categoryList.get(i).getCatename());
-            }
+        for(Category cat: createTableService.allCategories()){
+            categoryName.add(cat.getCatename());
         }
-        else {
-            // could no exsits
-            if(categoryList.size() > 0){
-                for (Category cat : categoryList){
-                    categoryName.add(cat.getCatename());
-                }
-            }
-        }
+        map.addAttribute("categoryName", pagination.pageRow(pageNumber,categoryName));
 
+        // returning row index and amount of words in category
+        Map<Integer,Category> categoryMap = new TreeMap<>();
+        for (String cateName : pagination.pageRow(pageNumber,categoryName)) {
+            categoryMap.put(Integer.valueOf(createTableService.getCategory(cateName).getId().intValue()), createTableService.getCategory(cateName));
+        }
+        map.addAttribute("categoryRow", categoryMap);
 
         return "userTable/createTable";
     }

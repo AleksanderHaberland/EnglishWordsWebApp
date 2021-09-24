@@ -37,7 +37,7 @@ public class LearnController {
         this.currentUser = currentUser;
        // this.wordsCounter = wordsCounter;
 
-        Words w = new Words("job", "praca");
+      /*  Words w = new Words("job", "praca");
         Category c = new Category("jobs");
         Words w3 = new Words("accountant", "księgowy");
 
@@ -53,7 +53,7 @@ public class LearnController {
 
         categoryDAO.save(c2);
         w2.setCategory(c2);
-        wordsDAO.save(w2);
+        wordsDAO.save(w2); */
     }
 
     @ModelAttribute
