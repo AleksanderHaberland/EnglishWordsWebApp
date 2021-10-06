@@ -8,22 +8,45 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.project.englishwordswebapp.data.UserRepository;
-import pl.project.englishwordswebapp.model.CurrentUser;
+import pl.project.englishwordswebapp.service.CurrentUser;
 import pl.project.englishwordswebapp.model.User;
 
 import java.time.LocalTime;
 
 @Controller
-public class LoginRegisterLogout {
+public class
+LoginRegisterLogoutController {
 
     private UserRepository userRepository;
     private CurrentUser currentUser;
 
     @Autowired
-    LoginRegisterLogout(UserRepository userRepository, CurrentUser currentUser){
+    LoginRegisterLogoutController(UserRepository userRepository, CurrentUser currentUser){
         this.userRepository = userRepository;
         this.currentUser = currentUser;
     }
+
+    @ModelAttribute
+    public void currentUserSession(Model model){
+        model.addAttribute("userSession", currentUser);
+    }
+
+    @GetMapping("/login")
+    public String login(Model model,
+                        @ModelAttribute ("exist") String regiSuccess,
+                        @ModelAttribute ("error") String nullEmailOrPass,
+                        @ModelAttribute ("logged") String logged) {
+        model.addAttribute("logged", logged);
+        model.addAttribute("user", new User());
+        return "/log/login";
+    }
+
+    @GetMapping("/register")
+    public String register(Model model, @ModelAttribute("exist") String inUse){
+        model.addAttribute("user", new User());
+        return "/log/register";
+    }
+
 
     // register
     @PostMapping("/save")
@@ -58,9 +81,10 @@ public class LoginRegisterLogout {
             redirectAttributes.addFlashAttribute("error", "emailWrong");
         }
         else{
-            if(userRepository.findByEmail(user.getEmail()).getPassword().equals(user.getPassword())){
+            User userByEmail = userRepository.findByEmail(user.getEmail());
+            if(userByEmail.getPassword().equals(user.getPassword())){
                 //email correct, pass alsow
-                currentUser.setId((int) user.getId());
+                currentUser.setId(userByEmail.getId());
                 currentUser.setLogged(true);
                     return "redirect:/home";
             }
@@ -74,7 +98,7 @@ public class LoginRegisterLogout {
 
     @PostMapping("/logout")
     public String logout(){
-        currentUser.setIdAndLog(0, false    );
+        currentUser.setIdAndLog(0L, false    );
         return "redirect:/home";
     }
 }

@@ -39,6 +39,15 @@
                 <li class="nav-item dropdown" id="a3">
                     <a class="nav-link" th:href="@{score}">Wynik</a>
                 </li>
+                <li class="dropdown" >
+                    <a class="btn dropdown-toggle" type="button" id="dd" data-bs-toggle="dropdown" aria-expanded="false">
+                        Twoja tabela
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dd">
+                        <li id="a2"><a class="dropdown-item" th:href="@{editTable}">Edytuj tabelę</a></li>
+                        <li id="a3"><a class="dropdown-item" th:href="@{createTable}">Stwórz tabelę</a></li>
+                    </ul>
+                </li>
             </ul>
 
             <div th:if="${userSession.getLogged() == true}">
@@ -58,92 +67,92 @@
 
 <div class="container-fluid" id="zdjecia">
     <form method="get" th:action="@{/words}">
-    <div class="row">
-        <div class=col-lg-3 id="h1">
-            <div class="card" style="width: 360px;">
-                <img class="card-img-top" src="../img/animal.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Zwierzęta</h5>
-                    <p class="card-text">Podstawowe słowa związane z zwierzętami.</p>
-                    <button type="submit" class="btn" value="animals" name="wordsType" id="g1">Przejdź</button>
+        <div class="row">
+            <div class=col-lg-3 id="h1">
+                <div class="card" style="width: 360px;">
+                    <img class="card-img-top" src="../img/animal.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Zwierzęta</h5>
+                        <p class="card-text">Podstawowe słowa związane z zwierzętami.</p>
+                        <button type="submit" class="btn" value="animals" name="wordsType" id="g1">Przejdź</button>
+                    </div>
+                </div>
+            </div>
+            <div class=col-lg-3 id="h2">
+                <div class="card" style="width: 360px;">
+                    <img class="card-img-top" src="../img/job.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Praca - Zawody</h5>
+                        <p class="card-text">Podstawowe słowa związane z zawodami.</p>
+                        <button type="submit" class="btn" value="jobs" name="wordsType" id="g2">Przejdź</button>
+                    </div>
+                </div>
+            </div>
+            <div class=col-lg-3 id="h3">
+                <div class="card" style="width: 360px; ">
+                    <img class="card-img-top" src="../img/home.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Dom</h5>
+                        <p class="card-text">Podstawowe słowa związane z domem.</p>
+                        <button type="submit" class="btn" value="home" name="wordsType" id="g3">Przejdź</button>
+                    </div>
+                </div>
+            </div>
+            <div class=col-lg-3 id="h4">
+                <div class="card" style="width: 360px;">
+                    <img class="card-img-top" src="../img/food.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Jedzenie</h5>
+                        <p class="card-text">Podstawowe słowa związane z jedzeniem.</p>
+                        <button type="submit" class="btn" value="food" name="wordsType" id="g4">Przejdź</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class=col-lg-3 id="h2">
-            <div class="card" style="width: 360px;">
-                <img class="card-img-top" src="../img/job.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Praca - Zawody</h5>
-                    <p class="card-text">Podstawowe słowa związane z zawodami.</p>
-                    <button type="submit" class="btn" value="jobs" name="wordsType" id="g2">Przejdź</button>
-                </div>
-            </div>
-        </div>
-        <div class=col-lg-3 id="h3">
-            <div class="card" style="width: 360px; ">
-                <img class="card-img-top" src="../img/home.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Dom</h5>
-                    <p class="card-text">Podstawowe słowa związane z domem.</p>
-                    <button type="submit" class="btn" value="home" name="wordsType" id="g3">Przejdź</button>
-                </div>
-            </div>
-        </div>
-        <div class=col-lg-3 id="h4">
-            <div class="card" style="width: 360px;">
-                <img class="card-img-top" src="../img/food.jpg" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Jedzenie</h5>
-                    <p class="card-text">Podstawowe słowa związane z jedzeniem.</p>
-                    <button type="submit" class="btn" value="food" name="wordsType" id="g4">Przejdź</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
-    <div class="row" style=" margin-top: 50px;">
-        <div class=col-md-3 id="h2">
-            <div class="card" style="width: 350px;">
-                <img class="card-img-top" src="../img/stillnothing.png" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">W budowie</h5>
-                    <p class="card-text">....kontent....</p>
-                    <a href="#" class="btn " id="g2">XXXXX</a>
+        <div class="row" style=" margin-top: 50px;">
+            <div class=col-md-3 id="h2">
+                <div class="card" style="width: 350px;">
+                    <img class="card-img-top" src="../img/stillnothing.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">W budowie</h5>
+                        <p class="card-text">....kontent....</p>
+                        <a href="#" class="btn " id="g2">XXXXX</a>
+                    </div>
+                </div>
+            </div>
+            <div class=col-md-3 id="h1">
+                <div class="card" style="width: 350px;">
+                    <img class="card-img-top" src="../img/stillnothing.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">W budowie</h5>
+                        <p class="card-text">....kontent....</p>
+                        <a href="#" class="btn" id="g1">XXXXX</a>
+                    </div>
+                </div>
+            </div>
+            <div class=col-md-3 id="h4">
+                <div class="card" style="width: 350px;">
+                    <img class="card-img-top" src="../img/stillnothing.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">W budowie</h5>
+                        <p class="card-text">....kontent....</p>
+                        <a href="#" class="btn " id="g4">XXXXX</a>
+                    </div>
+                </div>
+            </div>
+            <div class=col-md-3 id="h3">
+                <div class="card" style="width: 350px;">
+                    <img class="card-img-top" src="../img/stillnothing.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">W budowie</h5>
+                        <p class="card-text">....kontent....</p>
+                        <a href="#" class="btn " id="g3">XXXXX</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class=col-md-3 id="h1">
-            <div class="card" style="width: 350px;">
-                <img class="card-img-top" src="../img/stillnothing.png" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">W budowie</h5>
-                    <p class="card-text">....kontent....</p>
-                    <a href="#" class="btn" id="g1">XXXXX</a>
-                </div>
-            </div>
-        </div>
-        <div class=col-md-3 id="h4">
-            <div class="card" style="width: 350px;">
-                <img class="card-img-top" src="../img/stillnothing.png" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">W budowie</h5>
-                    <p class="card-text">....kontent....</p>
-                    <a href="#" class="btn " id="g4">XXXXX</a>
-                </div>
-            </div>
-        </div>
-        <div class=col-md-3 id="h3">
-            <div class="card" style="width: 350px;">
-                <img class="card-img-top" src="../img/stillnothing.png" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">W budowie</h5>
-                    <p class="card-text">....kontent....</p>
-                    <a href="#" class="btn " id="g3">XXXXX</a>
-                </div>
-            </div>
-        </div>
-    </div>
     </form>
 </div>
 <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>

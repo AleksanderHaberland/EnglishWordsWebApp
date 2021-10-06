@@ -67,6 +67,12 @@ th{
     background: none;
 }
 
+.dropdown a:hover{
+    background-color: rgb(150, 193, 250);
+}
+
+
+
 
 
 

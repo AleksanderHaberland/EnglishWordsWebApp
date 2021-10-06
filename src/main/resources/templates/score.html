@@ -38,6 +38,15 @@
                 <li class="nav-item dropdown" id="a3">
                     <a class="nav-link" th:href="@{score}">Wynik</a>
                 </li>
+                <li class="dropdown" >
+                    <a class="btn dropdown-toggle" type="button" id="dd" data-bs-toggle="dropdown" aria-expanded="false">
+                        Twoja tabela
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dd">
+                        <li id="a2"><a class="dropdown-item" th:href="@{editTable}">Edytuj tabelę</a></li>
+                        <li id="a3"><a class="dropdown-item" th:href="@{createTable}">Stwórz tabelę</a></li>
+                    </ul>
+                </li>
             </ul>
 
             <div th:if="${userSession.getLogged() == true}">

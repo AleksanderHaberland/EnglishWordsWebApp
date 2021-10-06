@@ -12,33 +12,59 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.project.englishwordswebapp.data.CategoryDAO;
 import pl.project.englishwordswebapp.data.UserRepository;
 import pl.project.englishwordswebapp.data.WordsDAO;
-import pl.project.englishwordswebapp.modelwords.Category;
-import pl.project.englishwordswebapp.modelwords.Words;
-import pl.project.englishwordswebapp.modelwords.WordsCounter;
+import pl.project.englishwordswebapp.model.User;
+import pl.project.englishwordswebapp.service.CurrentUser;
+import pl.project.englishwordswebapp.model.Category;
+import pl.project.englishwordswebapp.model.Words;
+import pl.project.englishwordswebapp.service.WordsCounter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class Learn {
+public class LearnController {
 
    // private UserRepository repository;
     private CategoryDAO categoryDAO;
     private WordsDAO wordsDAO;
+    private CurrentUser currentUser;
    // private WordsCounter wordsCounter;
 
     @Autowired
-    public Learn(UserRepository userRepository, CategoryDAO categoryDAO, WordsDAO wordsDAO, WordsCounter wordsCounter){
-       // this.repository = userRepository;
+    public LearnController(UserRepository userRepository, CategoryDAO categoryDAO, WordsDAO wordsDAO, WordsCounter wordsCounter, CurrentUser currentUser) {
+        // this.repository = userRepository;
         this.categoryDAO = categoryDAO;
         this.wordsDAO = wordsDAO;
-       // this.wordsCounter = wordsCounter;
+        this.currentUser = currentUser;
+
+        // this.wordsCounter = wordsCounter;
+
+
+      /*  LocalTime time = LocalTime.of(10,43,12);
+
+        User u = new User("alek", "haber", "arric@wp.pl", "98082107090", "Szooter1", time);
+        Category c = new Category("jobs");
+
+        u.addCategory(c);
+        userRepository.save(u);
+
+        User u2 = new User("alek2", "haber2", "arric@wp.pl2", "98082107092", "Szooter12", time);
+        Category c2 = new Category("jobs");
+
+        u2.addCategory(c2);
+        userRepository.save(u2); */
+        LocalTime time = LocalTime.of(10,43,12);
+        User u = new User("alek", "haber", "arric@wp.pl", "98082107090", "Szooter1", time);
+        Category c = new Category("jobs");
+
+        u.addCategory(c);
+        userRepository.save(u);
 
         Words w = new Words("job", "praca");
-        Category c = new Category("jobs");
         Words w3 = new Words("accountant", "księgowy");
 
-        categoryDAO.save(c);
         w.setCategory(c);
         wordsDAO.save(w);
 
@@ -48,11 +74,16 @@ public class Learn {
         Words w2 = new Words("animal", "zwierze");
         Category c2 = new Category("animals");
 
+        u.addCategory(c2);
         categoryDAO.save(c2);
         w2.setCategory(c2);
         wordsDAO.save(w2);
     }
 
+    @ModelAttribute
+    public void currentUserSession(Model model){
+        model.addAttribute("userSession", currentUser);
+    }
 
     private String val;
     private List<Integer> score;
@@ -69,7 +100,6 @@ public class Learn {
             val = cateName;
         }
 
-        System.out.println(val + " val");
         model.addAttribute("allWords", wordsDAO.findAllByCategoryId(categoryDAO.findByCatename(val).getId()));
         System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
 
@@ -78,12 +108,13 @@ public class Learn {
         voice.allocate();
 
         voice.speak(speaker);
-        return "words";
+        return "/learn/words";
     }
 
     @PostMapping("/words")
     public String postwords(@ModelAttribute ("speaker") String speaker, Model model,RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("speaker", speaker);
+
         return "redirect:/words";
     }
 
