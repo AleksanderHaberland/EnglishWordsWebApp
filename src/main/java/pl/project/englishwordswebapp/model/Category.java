@@ -1,11 +1,15 @@
 package pl.project.englishwordswebapp.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import pl.project.englishwordswebapp.model.Words;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Category implements Serializable {
@@ -22,11 +26,17 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Words> words = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
     public Category(){}
+
 
     public Category(String catename) {
         this.catename = catename;
     }
+
 
     public Long getId() {
         return id;
@@ -38,6 +48,14 @@ public class Category implements Serializable {
 
     public String getCatename() {
         return catename;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setCatename(String catename) {

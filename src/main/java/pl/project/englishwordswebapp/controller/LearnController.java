@@ -12,11 +12,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.project.englishwordswebapp.data.CategoryDAO;
 import pl.project.englishwordswebapp.data.UserRepository;
 import pl.project.englishwordswebapp.data.WordsDAO;
+import pl.project.englishwordswebapp.model.User;
 import pl.project.englishwordswebapp.service.CurrentUser;
 import pl.project.englishwordswebapp.model.Category;
 import pl.project.englishwordswebapp.model.Words;
 import pl.project.englishwordswebapp.service.WordsCounter;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,18 +33,38 @@ public class LearnController {
    // private WordsCounter wordsCounter;
 
     @Autowired
-    public LearnController(UserRepository userRepository, CategoryDAO categoryDAO, WordsDAO wordsDAO, WordsCounter wordsCounter, CurrentUser currentUser){
-       // this.repository = userRepository;
+    public LearnController(UserRepository userRepository, CategoryDAO categoryDAO, WordsDAO wordsDAO, WordsCounter wordsCounter, CurrentUser currentUser) {
+        // this.repository = userRepository;
         this.categoryDAO = categoryDAO;
         this.wordsDAO = wordsDAO;
         this.currentUser = currentUser;
-       // this.wordsCounter = wordsCounter;
 
-      /*  Words w = new Words("job", "praca");
+        // this.wordsCounter = wordsCounter;
+
+
+      /*  LocalTime time = LocalTime.of(10,43,12);
+
+        User u = new User("alek", "haber", "arric@wp.pl", "98082107090", "Szooter1", time);
         Category c = new Category("jobs");
+
+        u.addCategory(c);
+        userRepository.save(u);
+
+        User u2 = new User("alek2", "haber2", "arric@wp.pl2", "98082107092", "Szooter12", time);
+        Category c2 = new Category("jobs");
+
+        u2.addCategory(c2);
+        userRepository.save(u2); */
+        LocalTime time = LocalTime.of(10,43,12);
+        User u = new User("alek", "haber", "arric@wp.pl", "98082107090", "Szooter1", time);
+        Category c = new Category("jobs");
+
+        u.addCategory(c);
+        userRepository.save(u);
+
+        Words w = new Words("job", "praca");
         Words w3 = new Words("accountant", "księgowy");
 
-        categoryDAO.save(c);
         w.setCategory(c);
         wordsDAO.save(w);
 
@@ -51,9 +74,10 @@ public class LearnController {
         Words w2 = new Words("animal", "zwierze");
         Category c2 = new Category("animals");
 
+        u.addCategory(c2);
         categoryDAO.save(c2);
         w2.setCategory(c2);
-        wordsDAO.save(w2); */
+        wordsDAO.save(w2);
     }
 
     @ModelAttribute
@@ -76,7 +100,6 @@ public class LearnController {
             val = cateName;
         }
 
-        System.out.println(val + " val");
         model.addAttribute("allWords", wordsDAO.findAllByCategoryId(categoryDAO.findByCatename(val).getId()));
         System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
 

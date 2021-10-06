@@ -24,10 +24,10 @@
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand">Słownik</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarNav" aria-expanded="false" aria-label="    Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item" id="a1">
                     <a class="nav-link" th:href="@{home}">Home</a>
@@ -50,21 +50,29 @@
             </ul>
             <div th:if="${userSession.getLogged() == true}">
                 <form class="d-flex" th:action="@{logout}" method="post">
-                    <input type="submit" class="btn btn-secondary" value="Wyloguj" id="tff">
+                    <input type="submit" class="form-control" value="Wyloguj" id="tff">
                 </form>
             </div>
             <div th:unless="${userSession.getLogged() == true}">
                 <form class="d-flex" th:action="@{login}">
-                    <input type="submit" class="btn btn-secondary" value="Zaloguj" id="tff">
+                    <input type="submit" class="form-control" value="Zaloguj" id="tff">
                 </form>
             </div>
         </div>
     </nav>
 </div>
 
-<div class="container-fluid" style="padding-top: 35px; max-height: 1200px;" >
 
-    <div class="row" id="side">
+<div th:if="${nameExist}">
+    <script>
+        alert("Podana nazwa kategori już istnieje, wprowadź inną!");
+    </script>
+</div>
+
+
+<div class="container-fluid " style="padding-top: 35px;" >
+
+    <div class="row vh-100" id="side">
 
         <div class="col-lg-2" id="inSide">
             <p style="padding-top: 68px; padding-bottom: 10px;">Funkcjonalości które tutaj znajedziesz to:</p>
@@ -86,21 +94,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <form method="POST" th:action="@{createTable}" th:object="${category}">
+                <form method="POST" th:action="@{createTable}" th:object="${newCategory}"autocomplete="off" >
                     <tr id="first">
-                        <td class="col-lg-2" id="new1" th:text="${(tableService.allCategories().size() + 1)}"></td>
+                        <td class="col-lg-2" id="new1" th:text="${(allCate.size() + 1)}"></td>
                         <div class="group">
-                        <td class="col-lg-4"><input type="text" th:field="*{catename}" required="required" placeholder="nazwa tabeli" id="new2"></td>
+                        <td class="col-lg-4"><input type="text" th:field="*{catename}" required="required" autocomplete="off" placeholder="nazwa tabeli" id="new2"></td>
                         </div>
                         <td class="col-lg-4" id="new3">0</td>
                         <td class="col-lg-2" id="new4"><button class="btn" name="categoryButton" value="create"><i class="fas fa-plus fa-lg "></i></button></td>
                     </tr>
                 </form>
-                <form method="POST" th:action="@{createTable}" th:object="${category}">
-                    <tr th:each="obj, i : ${categoryName}" id="second">
-                        <td th:text="${categoryRow.keySet().toArray()[i.index]}" class="col-lg-2" id="id"></td>
+                <form method="POST" th:action="@{createTable}" th:object="${newCategory}" >
+                    <tr th:each="obj, i : ${category}" id="second">
+                        <td th:text="${catgoryValues.keySet().toArray()[i.index]}" class="col-lg-2" id="id"></td>
                         <td class="col-lg-4" th:text="${obj}"></td>
-                        <td class="col-lg-4"  th:text="${tableService.amoutOfRows(categoryRow.get(i.index + 1))}"></td>
+                        <td class="col-lg-4"  th:text="${tableService.amoutOfRows(catgoryValues.get(i.index + 1))}"></td>
                         <td class="col-lg-2" id="scTd4"><button class="btn" name="categoryButton" th:value="${obj}"><i class="far fa-trash-alt fa-lg"></i></button></td>
                     </tr>
                 </form>
@@ -108,20 +116,20 @@
             </table>
         </div>
     </div>
-    <div class="row">
+    <div class="row" id="side2">
         <div class="pagination">
             <form method="get" th:action="@{createTable}">
-                <button class="btn"><p class="back"><i class="fas fa-angle-double-left fa-md"></i></p></button>
+                <button class="btn"><p class="back"><i class="fas fa-angle-double-left"></i></p></button>
                 <tr th:each="obj : ${pagination}">
                     <td><button class="btn" name="pageNumber" th:value="${obj}"><p th:text="${obj}"></p></button></td>
                 </tr>
-                <button class="btn"><p class="next"> <i class="fas fa-angle-double-right fa-md"></i></p></button>
+                <button class="btn"><p class="next"> <i class="fas fa-angle-double-right"></i></p></button>
             </form>
         </div>
     </div>
 </div>
 
-<div class="container-fluid" style="background-color: white;">
+<div class="container-fluid">
 
     <footer class="row g-light text-center p-2"  id="footer">
         <div class="col-lg-2">

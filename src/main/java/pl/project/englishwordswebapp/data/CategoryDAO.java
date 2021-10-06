@@ -12,11 +12,12 @@ import java.util.List;
 public interface CategoryDAO extends JpaRepository <Category, Long> {
 
     Category findByCatename(String catename);
+    Category findByCatenameAndUserId(String catename,long id);
 
     List<Category>getAllByIdNotNull();
-
+    List<Category>getAllByUserId(long id);
     Category findTop1ByOrderByIdDesc();
-
     @Transactional
     void deleteByCatename(String catename);
+
 }

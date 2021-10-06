@@ -2,12 +2,17 @@ body{
     background-image: url("../img/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    height: 100%;
 }
+
+html{
+    height: 100%;
+}
+
+
 #tff{
     background: rgb(255,210,251);
     background: linear-gradient(118deg, rgba(255,210,251,1) 31%, rgba(139,255,226,1) 72%, rgba(255,237,171,1) 100%);
-
-
     color: rgb(104, 97, 97);
 }
 #colorh3{
@@ -47,5 +52,4 @@ nav input{
 .dropdown a:hover{
     background-color: rgb(150, 193, 250);
 }
-
 

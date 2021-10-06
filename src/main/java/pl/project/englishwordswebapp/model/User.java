@@ -2,6 +2,8 @@ package pl.project.englishwordswebapp.model;
 
 import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "User")
@@ -30,6 +32,17 @@ public class User{
     @Column(nullable = true)
     private LocalTime dateOfFound;
 
+   @OneToMany (mappedBy = "user",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.PERSIST,
+           orphanRemoval = true)
+   Set<Category> category = new HashSet<>();
+
+    public void addCategory(Category category){
+        category.setUser(this);
+        getCategory().add(category);
+    }
+
     public User(){}
     public User(String name, String lastname, String email, String pesel, String password, LocalTime dateOfFound) {
         this.name = name;
@@ -38,6 +51,14 @@ public class User{
         this.pesel = pesel;
         this.password = password;
         this.dateOfFound = dateOfFound;
+    }
+
+    public Set<Category> getCategory() {
+        return category;
+    }
+
+    public void setCategory(Set<Category> category) {
+        this.category = category;
     }
 
     public long getId() {

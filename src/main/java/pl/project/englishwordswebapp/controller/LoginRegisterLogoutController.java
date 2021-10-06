@@ -14,7 +14,8 @@ import pl.project.englishwordswebapp.model.User;
 import java.time.LocalTime;
 
 @Controller
-public class LoginRegisterLogoutController {
+public class
+LoginRegisterLogoutController {
 
     private UserRepository userRepository;
     private CurrentUser currentUser;
@@ -31,7 +32,11 @@ public class LoginRegisterLogoutController {
     }
 
     @GetMapping("/login")
-    public String login(Model model, @ModelAttribute ("exist") String regiSuccess, @ModelAttribute ("error") String nullEmailOrPass) {
+    public String login(Model model,
+                        @ModelAttribute ("exist") String regiSuccess,
+                        @ModelAttribute ("error") String nullEmailOrPass,
+                        @ModelAttribute ("logged") String logged) {
+        model.addAttribute("logged", logged);
         model.addAttribute("user", new User());
         return "/log/login";
     }
@@ -76,9 +81,10 @@ public class LoginRegisterLogoutController {
             redirectAttributes.addFlashAttribute("error", "emailWrong");
         }
         else{
-            if(userRepository.findByEmail(user.getEmail()).getPassword().equals(user.getPassword())){
+            User userByEmail = userRepository.findByEmail(user.getEmail());
+            if(userByEmail.getPassword().equals(user.getPassword())){
                 //email correct, pass alsow
-                currentUser.setId((int) user.getId());
+                currentUser.setId(userByEmail.getId());
                 currentUser.setLogged(true);
                     return "redirect:/home";
             }
@@ -92,7 +98,7 @@ public class LoginRegisterLogoutController {
 
     @PostMapping("/logout")
     public String logout(){
-        currentUser.setIdAndLog(0, false    );
+        currentUser.setIdAndLog(0L, false    );
         return "redirect:/home";
     }
 }

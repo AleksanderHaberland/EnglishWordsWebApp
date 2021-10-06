@@ -44,7 +44,7 @@ public class Pagination<T>{
     }
 
     // method return all current words if there is only 1 page, and all for if pages is more than 1
-    public List<String> pageRow(String currentPageNumb, List<String> categoryName){
+    public List<String> pageRows(String currentPageNumb, List<String> categoryName){
 
         int pageNumberAfterParse = 0;
         if(currentPageNumb != null && !currentPageNumb.isEmpty()){

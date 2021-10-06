@@ -20,7 +20,11 @@
 </head>
 
 <body>
-
+<div th:if="${logged == 'false'}">
+    <script>
+        alert("Zaloguj się a otrzymasz dostęp do tej strony");
+    </script>
+</div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid" id="abc">
         <a class="navbar-brand " id="a0">Słownik</a>

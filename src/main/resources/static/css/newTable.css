@@ -1,3 +1,4 @@
+
 body {
     background-image: url("../img/background.jpg");
     background-repeat: no-repeat;
@@ -15,8 +16,6 @@ body {
     border-style: solid;
     border-color: rgb(37, 191, 202);
 }
-
-
 
 @media screen and (min-width: 1502px) {
     #tff {
@@ -87,7 +86,7 @@ nav input{
 }
 
 #inSide{
-    background-color: rgb(233, 232, 232);
+    background-color: rgb(236, 236, 236);
     display: block ;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -174,9 +173,14 @@ table,tr,td, #thColor th {
 .pagination{
     text-align: center;
     display: block;
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgb(236, 236, 236);
 }
 
+.pagination button{
+    padding-left: 4px;
+    padding-right: 4px;
+    height: 40px;
+}
 
 .pagination p{
     background-color: rgb(117, 214, 213);
@@ -210,7 +214,7 @@ table,tr,td, #thColor th {
 }
 
 #footer{
-    background-color: rgb(221, 217, 217);
+     background-color: rgb(221, 221, 217);
 }
 
 
