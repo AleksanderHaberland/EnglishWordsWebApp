@@ -8,6 +8,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.annotation.SessionScope;
 
 @Service
+@Scope(scopeName= WebApplicationContext.SCOPE_SESSION, proxyMode= ScopedProxyMode.TARGET_CLASS)
 public class CurrentUser {
 
     private Long id;
