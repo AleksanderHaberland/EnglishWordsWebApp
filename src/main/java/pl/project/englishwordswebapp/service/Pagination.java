@@ -44,13 +44,13 @@ public class Pagination<T>{
     }
 
     // method return all current words if there is only 1 page, and all for if pages is more than 1
-    public List<String> pageRows(String currentPageNumb, List<String> categoryName){
+    public List<T> pageRows(String currentPageNumb, List<T> categoryName){
 
         int pageNumberAfterParse = 0;
         if(currentPageNumb != null && !currentPageNumb.isEmpty()){
             pageNumberAfterParse = Integer.parseInt(currentPageNumb);
         }
-        List<String> currentCategoryName = new ArrayList<>();
+        List<T> currentCategoryName = new ArrayList<>();
         int start = 0;
 
         if(pageNumberAfterParse > 1){
@@ -72,7 +72,7 @@ public class Pagination<T>{
         else {
             // could no exsits
             if(categoryName.size() > 0 && categoryName.size() < 11){
-                for (String cat : categoryName){
+                for (T cat : categoryName){
                     currentCategoryName.add(cat);
                 }
             }

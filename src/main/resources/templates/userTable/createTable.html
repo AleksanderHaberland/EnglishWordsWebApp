@@ -1,6 +1,6 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<!-- responsible files for createTable.html are in UserTableController.java, CreateTableService.java-->
+<!-- responsible files for createTable.html are in UserTableController.java, CreateCategoryService.java-->
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -63,7 +63,7 @@
 </div>
 
 
-<div th:if="${nameExist}">
+<div th:if="${nameExist} =='true'">
     <script>
         alert("Podana nazwa kategori już istnieje, wprowadź inną!");
     </script>
@@ -116,7 +116,7 @@
             </table>
         </div>
     </div>
-    <div class="row" id="side2">
+    <div class="row">
         <div class="pagination">
             <form method="get" th:action="@{createTable}">
                 <button class="btn"><p class="back"><i class="fas fa-angle-double-left"></i></p></button>

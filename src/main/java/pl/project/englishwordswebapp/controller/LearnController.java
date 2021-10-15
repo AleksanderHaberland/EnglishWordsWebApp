@@ -30,7 +30,7 @@ public class LearnController {
     private CategoryDAO categoryDAO;
     private WordsDAO wordsDAO;
     private CurrentUser currentUser;
-   // private WordsCounter wordsCounter;
+    private WordsCounter wordsCounter;
 
     @Autowired
     public LearnController(UserRepository userRepository, CategoryDAO categoryDAO, WordsDAO wordsDAO, WordsCounter wordsCounter, CurrentUser currentUser) {
@@ -39,7 +39,7 @@ public class LearnController {
         this.wordsDAO = wordsDAO;
         this.currentUser = currentUser;
 
-        // this.wordsCounter = wordsCounter;
+        this.wordsCounter = wordsCounter;
 
 
       /*  LocalTime time = LocalTime.of(10,43,12);
@@ -118,7 +118,7 @@ public class LearnController {
         return "redirect:/words";
     }
 
-    /*@GetMapping("/learntemp")
+    @GetMapping("/learntemp")
     public String learn(@ModelAttribute ("wordsType") String value, Model model, @ModelAttribute("postActive")String postA){
 
         // after post method check if value is not null. if it is null table can't be created
@@ -160,5 +160,5 @@ public class LearnController {
 
         redirectAttributes.addFlashAttribute("postActive", "true");
         return "redirect:/learntemp";
-    } */
+    }
 }
