@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class CreateTableService {
+public class CreateCategoryService {
 
     private CategoryDAO categoryDAO;
     private WordsDAO wordsDAO;
     private UserRepository userRepository;
 
     @Autowired
-    public CreateTableService(CategoryDAO categoryDAO, WordsDAO wordsDAO, UserRepository userRepository){
+    public CreateCategoryService(CategoryDAO categoryDAO, WordsDAO wordsDAO, UserRepository userRepository){
         this.categoryDAO = categoryDAO;
         this.wordsDAO = wordsDAO;
         this.userRepository = userRepository;
