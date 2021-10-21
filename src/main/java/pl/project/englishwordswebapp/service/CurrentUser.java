@@ -8,6 +8,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.annotation.SessionScope;
 
 @Service
+//@SessionScope
 public class CurrentUser {
 
     private Long id;

@@ -71,15 +71,16 @@
       Edycja wiersza słów</p></div>
   </div>
 
-  <div class="row">
+  <div class="row vh-100">
     <div class="col-lg-2 col-md-3 col-sm-4 col-12" id="inSide">
 
       <div class="row">
         <div class="col-lg-12 fw-bold sideP">Twoje tabele słów</div>
-        <div style=" height:565px; overflow-y: scroll; padding-top: 5px;">
+        <div style="overflow-y: scroll; padding-top: 5px;">
           <form method="get" th:action="@{editTable}">
             <tr th:each="obj : ${allCategories}">
-              <td><button class="col-12 btn" id="chooseTable" name="chosenCate" th:value="${obj.getCatename()}"><p th:text="${obj.getCatename()}" style="margin-bottom: 0px"></p></button></td>
+              <td th:if="${category} == ${obj.getCatename()}"><button class="col-12 btn" id="chooseTable2" name="chosenCate" th:value="${obj.getCatename()}"><p th:text="${obj.getCatename()}" style="margin-bottom: 0px"></p></button></td>
+              <td th:unless="${category} == ${obj.getCatename()}"><button class="col-12 btn" id="chooseTable" name="chosenCate" th:value="${obj.getCatename()}"><p th:text="${obj.getCatename()}"  style="margin-bottom: 0px"></p></button></td>
             </tr>
           </form>
         </div>
@@ -97,7 +98,8 @@
                 || event.charCode == 243
                 || event.charCode == 347
                 || event.charCode == 378
-                || event.charCode == 380) {
+                || event.charCode == 380
+        ) {
           return ture;
         }
         return false;
@@ -119,8 +121,13 @@
         <tr id="first">
           <form method="POST" th:action="@{editTable}" th:object="${newWord}">
             <td class="col-2" id="new1" th:text="${cateSize} +1 "></td>
-            <td class="col-4"><input type="text" placeholder="nazwa tabeli" id="new2" th:field="*{english}" maxlength="25" onkeypress="return lowChars(event)"></td>
-            <td class="col-4"><input type="text" placeholder="nazwa tabeli" id="new2" th:field="*{polish}" maxlength="25" onkeypress="return lowChars(event)"></td>
+
+            <td class="col-4" th:if="${existSame} == 'true'"><input type="text" required="required" placeholder="już istnieje !" id="new2err" th:field="*{english}" maxlength="25" onkeypress="return lowChars(event)"></td>
+            <td class="col-4" th:unless="${existSame} == 'true'"><input type="text" required="required" placeholder="nazwa tabeli" id="new2" th:field="*{english}" maxlength="25" onkeypress="return lowChars(event)"></td>
+
+            <td class="col-4" th:if="${existSame} == 'true'"><input type="text" required="required" placeholder="już istnieje !" id="new2err" th:field="*{polish}" maxlength="25" onkeypress="return lowChars(event)"></td>
+            <td class="col-4" th:unless="${existSame} == 'true'"><input type="text" required="required" placeholder="nazwa tabeli" id="new2" th:field="*{polish}" maxlength="25" onkeypress="return lowChars(event)"></td>
+
             <td class="col-2" colspan="2" id="new4"><button class="btn" name="currentWordId" value="create"><i class="fas fa-plus fa-lg "></i></button></td>
           </form>
         </tr>
@@ -129,14 +136,14 @@
             <td class="col-2" id="id" th:text="${i.index + 1}"></td>
 
             <td th:if="${edit} == ${obj.id}" class="col-4">
-              <input th:if="${existSame} == 'true'" id="new3error" type="text" placeholder="już istnieje !" th:field="${newWord.english}" maxlength="25"onkeypress="return lowChars(event)">
-              <input th:unless="${existSame} == 'true'" id="new3" type="text" th:placeholder="${obj.english}" th:field="${newWord.english}" maxlength="25" onkeypress="return lowChars(event)">
+              <input th:if="${existSame} == 'true2'" id="new3error" type="text" required="required" placeholder="już istnieje !" th:field="${newWord.english}" maxlength="25"onkeypress="return lowChars(event)">
+              <input th:unless="${existSame} == 'true2'" id="new3" type="text" required="required" th:placeholder="${obj.english}" th:field="${newWord.english}" maxlength="25" onkeypress="return lowChars(event)">
             </td>
             <td th:unless="${edit} == ${obj.id}" class="col-4" th:text="${obj.english}"></td>
 
             <td th:if="${edit} == ${obj.id}" class="col-4">
-              <input th:if="${existSame} == 'true'" id="new3error" type="text" placeholder="już istnieje !" th:field="${newWord.polish}" maxlength="25" onkeypress="return lowChars(event)">
-              <input th:unless="${existSame} == 'true'" id="new3" type="text" th:placeholder="${obj.polish}" th:field="${newWord.polish}" maxlength="25" onkeypress="return lowChars(event)">
+              <input th:if="${existSame} == 'true2'" id="new3error" type="text" required="required" placeholder="już istnieje !" th:field="${newWord.polish}" maxlength="25"onkeypress="return lowChars(event)">
+              <input th:unless="${existSame} == 'true2'" id="new3" type="text" required="required" th:placeholder="${obj.polish}" th:field="${newWord.polish}" maxlength="25" onkeypress="return lowChars(event)">
             </td>
             <td th:unless="${edit} == ${obj.id}" class="col-4" th:text="${obj.polish}"></td>
 

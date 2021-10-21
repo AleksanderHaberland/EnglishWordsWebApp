@@ -2,6 +2,7 @@ package pl.project.englishwordswebapp.mainService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.RequestScope;
 import pl.project.englishwordswebapp.data.CategoryDAO;
 import pl.project.englishwordswebapp.data.UserRepository;
 import pl.project.englishwordswebapp.data.WordsDAO;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+
 public class CreateCategoryService {
 
     private CategoryDAO categoryDAO;

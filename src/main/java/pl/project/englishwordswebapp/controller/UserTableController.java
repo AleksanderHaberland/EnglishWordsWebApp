@@ -107,7 +107,7 @@ public class UserTableController {
                                   RedirectAttributes attributes){
         if(categoryButton.equals("create")){ // button value  == "crate"
             if(createCategoryService.getCategory(category.getCatename(), currentUser.getId()) != null){
-                attributes.addFlashAttribute("nameExist", true);
+                attributes.addFlashAttribute("nameExist", "true");
             }
             else {
                 createCategoryService.createCatagory(category, currentUser.getId());
@@ -119,33 +119,62 @@ public class UserTableController {
         return "redirect:/createTable";
     }
 
-    private String currentPage;
+    private String currentPageCate;
     private Category currentCate;
+    private int end;
+
     @GetMapping("/editTable")
     public String editTable(ModelMap map,
+                             @RequestParam(value = "pageNumber", required = false) String pageNumber,
                              @RequestParam(required = false) String chosenCate,
                              @RequestParam(required = false) String edit,
                              @ModelAttribute(value = "existSame") String existSame,
                              RedirectAttributes attr){
-       /* if(currentUser.getLogged() == false){
+          if(currentUser.getLogged() == false){
             attr.addFlashAttribute("logged", false);
             return "redirect:/login";
-        } */
-
+        }
         Pagination pagination = new Pagination();
-        List<Category> allCategories = createCategoryService.allCategories(1L);//////////////////////////
+
+        List<Category> allCategories = createCategoryService.allCategories(currentUser.getId());
         map.addAttribute("allCategories", allCategories);
 
         String notSelected = "false";
         List<Words> allWordsInCategory = new ArrayList<>();
 
-        if(chosenCate != null || currentPage != null){
+        if(chosenCate != null || currentPageCate != null){
             if(chosenCate != null){
-                currentPage = chosenCate;
+                currentPageCate = chosenCate;
             }
-            currentCate = createCategoryService.getCategory(currentPage, 1L);///////////////////////////
+            currentCate = createCategoryService.getCategory(currentPageCate, currentUser.getId());
             allWordsInCategory = createWordService.allCateWords(currentCate.getId());
-            List<Words> pageRows = pagination.pageRows("0", allWordsInCategory);
+
+            List<Words> pageRows = new ArrayList<>();
+            if(pageNumber == null){
+                pageRows = pagination.pageRows("0", allWordsInCategory);
+            }else {
+                pageRows = pagination.pageRows(pageNumber, allWordsInCategory);
+            }
+
+            boolean duplicate = false;
+
+            for (int i = 0; i < allWordsInCategory.size(); i++) {
+                for (int j = i + 1 ; j < allWordsInCategory.size(); j++) {
+                    if (allWordsInCategory.get(i).getEnglish().equals(allWordsInCategory.get(j).getEnglish()) && allWordsInCategory.get(i).getPolish().equals(allWordsInCategory.get(j).getPolish())) {
+                        int x = Math.toIntExact(allWordsInCategory.get(j).getId());// Long to int on j
+                        try {
+                            createWordService.deleteWord(x);
+                        }catch (Exception e){
+                            System.out.println("problem = " + e.getMessage());
+                        }
+                        duplicate = true;
+                    }
+                }
+            }
+            if(duplicate == true){
+                return "redirect:/editTable";
+            }
+
             map.addAttribute("allWords", pageRows);
             map.addAttribute("pagination", pagination.amoutOfPages(allWordsInCategory));
 
@@ -153,40 +182,43 @@ public class UserTableController {
             notSelected = "true";
             map.addAttribute("notSelected", notSelected);
         }
+
+
+        map.addAttribute("category", currentPageCate);
         // Editing, adding word properties
         map.addAttribute("cateSize", allWordsInCategory.size());;
         map.addAttribute("newWord", new Words());
 
         map.addAttribute("edit", edit);
         map.addAttribute("existSame", existSame);
-        System.out.println("weszlooooooo2222 " + existSame);
-
-        return "userTable/editTable";/////
+        return "userTable/editTable";
 
     }
 
+    int x = 0;
     @PostMapping("/editTable")
     public String postEditTable(@ModelAttribute Words word,
                                 @RequestParam(required = false) String currentWordId,
                                 RedirectAttributes attr){
+            x += 1;
         if(currentWordId.equals("create")){
             //check if exist same or is more than 25 chars
-            if(createWordService.checkExist(word.getEnglish(), word.getPolish(), currentCate) != null){
-                attr.addFlashAttribute("existSame", true);
+            if(!createWordService.checkExist(word.getEnglish(), word.getPolish(), currentCate).isEmpty()){
+                   attr.addFlashAttribute("existSame", "true");
             } else {
-                createWordService.addWord(word, currentCate);
+                    createWordService.addWord(word, currentCate);
             }
-
-        }else if(currentWordId.endsWith("delete")){
-            createWordService.deleteWord(Integer.valueOf(currentWordId.substring(0, currentWordId.length()-6)));
+        }else if(currentWordId.endsWith("delete")) {
+            if(x == 1){ // need to check if there is one using of Post method <- in some way passes multiple clicking button by what generating errors
+            createWordService.deleteWord(Integer.valueOf(currentWordId.substring(0, currentWordId.length() - 6)));
+        }
         }else{
             String edit = currentWordId.substring(0,currentWordId.length()-4);
             // checking if word is not null
             if (word.getEnglish() != null) {
-                if(createWordService.checkExist(word.getEnglish(), word.getPolish(), currentCate) != null){
-                    System.out.println("weszlooooooo1111111");
+                if(!createWordService.checkExist(word.getEnglish(), word.getPolish(), currentCate).isEmpty()){
                     attr.addAttribute("edit", edit);
-                    attr.addFlashAttribute("existSame", "true");
+                    attr.addFlashAttribute("existSame", "true2");
                 }else {
                     createWordService.updateWord(Integer.parseInt(edit), word);
                 }
@@ -194,6 +226,7 @@ public class UserTableController {
                 attr.addAttribute("edit", edit);
             }
         }
+        x = 0;
         return "redirect:/editTable";
     }
 

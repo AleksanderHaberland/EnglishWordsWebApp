@@ -27,5 +27,6 @@ public interface WordsDAO extends JpaRepository<Words, Long> {
     @Query("UPDATE Words w SET w.english=:eng, w.polish=:pol WHERE w.id=:id")
     void updateWord(@Param("id") long id, @Param("eng") String eng, @Param("pol") String pol);
 
-    Words getWordsByEnglishAndPolishAndCategory(String eng, String pol, Category category);
+    List<Words> getWordsByEnglishAndPolishAndCategory(String eng, String pol, Category category);
+
 }

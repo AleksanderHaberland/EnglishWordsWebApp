@@ -69,7 +69,24 @@
     </script>
 </div>
 
-
+<script>
+    function lowChars(event) {
+        var keycode = event.keyCode;
+        if ((event.charCode > 96 && event.charCode < 123) || event.charCode == 261
+            || event.charCode == 263
+            || event.charCode == 281
+            || event.charCode == 322
+            || event.charCode == 324
+            || event.charCode == 243
+            || event.charCode == 347
+            || event.charCode == 378
+            || event.charCode == 380
+        ) {
+            return ture;
+        }
+        return false;
+    }
+</script>
 <div class="container-fluid " style="padding-top: 35px;" >
 
     <div class="row vh-100" id="side">
@@ -98,7 +115,7 @@
                     <tr id="first">
                         <td class="col-lg-2" id="new1" th:text="${(allCate.size() + 1)}"></td>
                         <div class="group">
-                        <td class="col-lg-4"><input type="text" th:field="*{catename}" required="required" autocomplete="off" placeholder="nazwa tabeli" id="new2"></td>
+                            <td class="col-lg-4"><input type="text" th:field="*{catename}" required="required" autocomplete="off" placeholder="nazwa tabeli" id="new2" onkeypress="return lowChars(event)"></td>
                         </div>
                         <td class="col-lg-4" id="new3">0</td>
                         <td class="col-lg-2" id="new4"><button class="btn" name="categoryButton" value="create"><i class="fas fa-plus fa-lg "></i></button></td>
@@ -106,10 +123,12 @@
                 </form>
                 <form method="POST" th:action="@{createTable}" th:object="${newCategory}" >
                     <tr th:each="obj, i : ${category}" id="second">
-                        <td th:text="${catgoryValues.keySet().toArray()[i.index]}" class="col-lg-2" id="id"></td>
-                        <td class="col-lg-4" th:text="${obj}"></td>
-                        <td class="col-lg-4"  th:text="${tableService.amoutOfRows(catgoryValues.get(i.index + 1))}"></td>
-                        <td class="col-lg-2" id="scTd4"><button class="btn" name="categoryButton" th:value="${obj}"><i class="far fa-trash-alt fa-lg"></i></button></td>
+                        <th:block th:with="localid = ${catgoryValues.keySet().toArray()[i.index]}">
+                            <td th:text="${localid}" class="col-lg-2" id="id"></td>
+                            <td class="col-lg-4" th:text="${obj}"></td>
+                            <td class="col-lg-4"  th:text="${tableService.amoutOfRows(catgoryValues.get(localid))}"></td>
+                            <td class="col-lg-2" id="scTd4"><button class="btn" name="categoryButton" th:value="${obj}"><i class="far fa-trash-alt fa-lg"></i></button></td>
+                        </th:block>
                     </tr>
                 </form>
                 </tbody>

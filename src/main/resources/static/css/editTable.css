@@ -149,6 +149,25 @@ nav input{
     border-width: 1px;
 }
 
+#chooseTable2{
+    word-wrap: break-word !important;
+    background: #ffe8c5;
+    transition: all 0.4s ease 0s;
+    border: 1px solid #ece9ca;
+    outline:none;
+    color: rgb(129, 122, 122);
+}
+
+#chooseTable2:hover {
+    color: #9c9999;
+    text-transform: uppercase;
+    background: #fde1a8;
+    border-color: #f6b93b !important;
+    transition: all 0.4s;
+    border-width: 1px;
+
+}
+
 
 tbody{
     background-color: white;
@@ -200,6 +219,24 @@ table,tr,td, .sideP{
     background-color:#d4f5f4    ;
 }
 
+#new2err{
+    text-align: center;
+    width: 65%;
+    height: 35px;
+    border-radius: 25px;
+    font-weight: 700;
+    outline:none;
+    color: rgb(129, 122, 122);
+    border-color: rgb(255, 22, 0);
+    border-width: 1px;
+}
+#new2err::placeholder {
+    color: rgb(138, 137, 137);
+}
+#new2err:hover{
+    background-color:#d4f5f4    ;
+}
+
 #new3{
    text-align: center;
     border-radius: 25px;
@@ -229,6 +266,8 @@ table,tr,td, .sideP{
 #new3error:hover{
     background-color: rgba(255, 247, 196, 0.87);
 }
+
+
 #first button:hover{
     background-color: rgb(242, 255, 235);
 }

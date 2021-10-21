@@ -1,5 +1,6 @@
 package pl.project.englishwordswebapp.mainService;
 
+import org.hibernate.StaleStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.project.englishwordswebapp.data.WordsDAO;
@@ -30,9 +31,12 @@ public class CreateWordService {
 
     public void deleteWord(int wordId){
         long x = wordId;
-        wordsDAO.delete(getWord(x));
+        try {
+            wordsDAO.delete(getWord(x));
+        }catch (Exception e){
+            System.out.println("problem = " + e.getMessage());
+        }
     }
-
 
     public void updateWord(int wordId, Words word){
         wordsDAO.updateWord(wordId, word.getEnglish(), word.getPolish());
@@ -42,7 +46,8 @@ public class CreateWordService {
         return wordsDAO.getWordsById(id);
     }
 
-    public Words checkExist(String eng, String pol, Category category){
+    public List<Words> checkExist(String eng, String pol, Category category){
         return wordsDAO.getWordsByEnglishAndPolishAndCategory(eng, pol, category);
     }
+
 }
