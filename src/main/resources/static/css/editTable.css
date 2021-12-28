@@ -117,7 +117,7 @@ nav input{
 }
 
 #inSide{
-    background-color: rgb(236, 236, 236);
+            background-color: rgb(236, 236, 236);
 
 }
 
@@ -191,6 +191,20 @@ table,tr,td, .sideP{
 .table th, .sideP{
     font-weight: 800;
     color: rgb(117, 214, 213);
+}
+
+table {
+    table-layout: fixed;
+}
+
+td, th{
+    text-align: center;
+    word-wrap:break-word
+}
+
+#i{
+    display: flex;
+    justify-content: center;
 }
 
 #form button:hover{
@@ -356,5 +370,4 @@ table,tr,td, .sideP{
 #footer{
     background-color: rgb(221, 221, 217);
 }
-
 

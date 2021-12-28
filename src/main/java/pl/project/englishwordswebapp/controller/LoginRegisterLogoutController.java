@@ -11,7 +11,9 @@ import pl.project.englishwordswebapp.data.UserRepository;
 import pl.project.englishwordswebapp.service.CurrentUser;
 import pl.project.englishwordswebapp.model.User;
 
+import java.security.SecureRandom;
 import java.time.LocalTime;
+import java.util.Base64;
 
 @Controller
 public class
@@ -55,17 +57,13 @@ LoginRegisterLogoutController {
         // There is no any user with this email   ||  (!) <-before condition If there is no exist user with this email
         if((userRepository.findByEmail(user.getEmail()) == null) || !userRepository.findByEmail(user.getEmail()).getEmail().equals(user.getEmail()) ){
             //point. #2
-            //  If there not exist user with this pesel (null)  ||   If there not exist user with provided pesel
-            if((userRepository.findByPesel(user.getPesel()) == null) || !userRepository.findByPesel(user.getPesel()).getPesel().equals(user.getPesel()) ){
                 user.setDateOfFound(LocalTime.now());
+                // authentication token generation
+
                 userRepository.save(user);
                 redirectAttributes.addFlashAttribute("exist", "true");
                 return "redirect:/login";
-            }
-            // #2.1 return info. that this peselExists
-            else{
-                redirectAttributes.addFlashAttribute("exist", "peselInUse");
-            }
+
         } else {
             // #1.2 return info. that this emailExists
             redirectAttributes.addFlashAttribute("exist", "emailInUse");
@@ -96,7 +94,7 @@ LoginRegisterLogoutController {
         return "redirect:/login";
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(){
         currentUser.setIdAndLog(0L, false    );
         return "redirect:/home";

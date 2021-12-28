@@ -17,6 +17,7 @@ public interface CategoryDAO extends JpaRepository <Category, Long> {
     List<Category>getAllByIdNotNull();
     List<Category>getAllByUserId(long id);
     Category findTop1ByOrderByIdDesc();
+
     @Transactional
     void deleteByCatename(String catename);
 

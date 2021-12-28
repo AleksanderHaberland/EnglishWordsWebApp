@@ -23,8 +23,8 @@ public class User{
     @Column(nullable = false,unique = true)
     private String email;
 
-    @Column(nullable = false, unique = true, length = 11)
-    private String pesel;
+    @Column(nullable = true, unique = true)
+    private String token;
 
     @Column(nullable = false)
     private String password;
@@ -44,11 +44,11 @@ public class User{
     }
 
     public User(){}
-    public User(String name, String lastname, String email, String pesel, String password, LocalTime dateOfFound) {
+    public User(String name, String lastname, String email, String password, LocalTime dateOfFound) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
-        this.pesel = pesel;
+
         this.password = password;
         this.dateOfFound = dateOfFound;
     }
@@ -93,12 +93,12 @@ public class User{
         this.email = email;
     }
 
-    public String getPesel() {
-        return pesel;
+    public String getToken() {
+        return token;
     }
 
-    public void setPesel(String pesel) {
-        this.pesel = pesel;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getPassword() {
@@ -124,7 +124,7 @@ public class User{
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
-                ", pesel='" + pesel + '\'' +
+                ", pesel='" + token + '\'' +
                 ", password='" + password + '\'' +
                 ", dateOfFound='" + dateOfFound + '\'' +
                 '}';

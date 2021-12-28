@@ -1,0 +1,276 @@
+body {
+    background-image: url("CssPictures/81744.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.tff{
+    background: rgb(255,210,251);
+    background: linear-gradient(118deg, rgba(255,210,251,1) 31%, rgba(139,255,226,1) 72%, rgba(255,237,171,1) 100%);
+    color: rgb(104, 97, 97);
+}
+
+.tff:hover{
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(37, 191, 202);
+}
+.tff2{
+    background: rgb(255,210,251);
+    background: linear-gradient(118deg, rgba(255,210,251,1) 31%, rgba(139,255,226,1) 72%, rgba(255,237,171,1) 100%);    border-radius: 15px;
+}
+.tff2:hover{
+    background-color: rgb(235, 235, 235);
+    border: 2px solid rgb(235, 235, 235)   ;
+
+}
+
+#iconUser{
+    color: rgb(139, 75, 134);
+    color: linear-gradient(118deg, rgba(255,210,251,1) 31%, rgba(139,255,226,1) 72%, rgba(255,237,171,1) 100%);
+}
+
+
+@media screen and (min-width: 1502px) {
+    .tff {
+        width: 150px;
+    }
+}
+
+
+.navbar  {
+    opacity: 1;
+    width: 100%;
+    top:0;
+}
+
+
+.main{
+    margin-bottom: 50px;
+
+}
+
+nav li {
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: center;
+}
+
+nav input{
+    margin-right: 25px;
+    width: 155px;
+}
+
+
+
+#a1 :hover {
+    background-color: #ffcc00;
+}
+#a2 :hover {
+    background-color: #00ff88;
+}
+#a3 :hover {
+    background-color: #fd34b0;
+}
+
+#a3x :hover {
+    background-color: #fd34b0;
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+}
+
+
+#imgButton{
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.dropdown a:hover{
+    background-color: rgb(150, 193, 250);
+}
+
+#logout1:hover{
+    background-color: rgb(150, 193, 250);
+    color: rgb(255, 254, 254);
+}
+
+#logout2:hover{
+    background-color: rgb(255, 87, 87);
+    color: rgb(255, 254, 254);
+}
+
+#info {
+    padding-top: 25px;
+    background-color: rgb(255, 255, 255, 0.3);
+    text-align: center;
+}
+
+#side1{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: rgb(247, 245, 245);
+    text-align: center;
+    color: rgb(156, 154, 150);
+    font-weight: 600;
+}
+
+
+#a4:hover {
+    background-color: rgb(150, 193, 250);
+}
+
+
+#ax:hover{
+    background-color: #ffdf60;
+    color: #464242;
+    border-width: 2px;
+    font-weight: 600;
+}
+#ax{
+    font-weight: 400;
+    border-top: 0px;
+    border-bottom: 1px rgb(71, 71, 71) solid;
+    border-left:0px ;
+    border-right: 0px;
+    border-width: 1 px;
+    background-color: rgba(240, 250, 255, 0.616);
+    color: rgb(124, 122, 117);
+
+}
+
+#bx:hover{
+    background-color: #00ff88;
+    color: #615d5d;
+    border-width: 2px;
+    font-weight: 600;
+
+}
+
+#bx{
+    font-weight: 400;
+    border-top: 0px;
+    border-bottom: 1px rgb(71, 71, 71) solid;
+    border-left:0px ;
+    border-right: 0px;
+    border-width: 1 px;
+    background-color: rgba(240, 250, 255, 0.616);
+    color: rgb(124, 122, 117);
+
+
+}
+
+#cx:hover{
+    background-color: #fd34b0;
+    color: #615d5d;
+    border-width: 2px;
+    font-weight: 600;
+
+}
+#cx{
+    font-weight: 400;
+    border-top: 0px;
+    border-bottom: 1px rgb(71, 71, 71) solid;
+    border-left:0px ;
+    border-right: 0px;
+    border-width: 1 px;
+    background-color: rgba(240, 250, 255, 0.616);
+    color: rgb(124, 122, 117);
+
+}
+
+#dx:hover{
+    background: rgb(253, 72, 72);
+    color: #615d5d;
+    border-width: 2px;
+    font-weight: 600;
+
+}
+
+#dx{
+    font-weight: 400;
+    border-top: 0px;
+    border-bottom: 1px rgb(71, 71, 71) solid;
+    border-left:0px ;
+    border-right: 0px;
+    border-width: 1 px;
+    background-color: rgba(240, 250, 255, 0.616);
+    color: rgb(124, 122, 117);
+
+}
+
+table thead{
+    background-color: rgb(245, 242, 208);
+    color: rgb(116, 116, 116);
+}
+
+table{
+    table-layout: fixed;
+}
+
+td, th{
+    text-align: center;
+    word-wrap:break-word
+}
+
+th{
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    border-bottom: 1px solid rgb(236, 238, 130) !important;
+}
+
+td{
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    font-weight: 400;
+    color: rgb(201, 181, 3);
+}
+
+#alertt {
+    font-family: Bookman, URW Bookman L, serif;
+    font-weight: 200;
+    text-align: center;
+    font-size: 25px;
+    height: 250px;
+}
+
+#option2{
+    text-align: center;
+    border-radius: 12px;
+    border-width: 0px;
+}
+
+#option2B{
+    width: 35%;
+    background-color: rgb(225, 226, 225);
+}
+
+#option2B:hover{
+    background-color: rgb(190, 202, 201);
+    font-weight: 500;
+}
+
+#option3a{
+    font-weight: 700;
+}
+
+#option3b{
+    background-color: rgb(168, 224, 243);
+    color: black;
+    font-size: 25px;
+
+}
+
+#option3c{
+    background-color: rgba(255, 187, 237, 0.705);
+}
+#option3c:hover{
+    background-color: rgb(255, 187, 237);
+    font-weight: 500;
+
+}
+#footer{
+    background-color: rgb(221, 221, 217);
+}

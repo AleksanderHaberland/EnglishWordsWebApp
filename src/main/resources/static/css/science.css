@@ -1,19 +1,53 @@
 body {
-    background-image: url("../img/background.jpg");
+    background-image: url("CssPictures/81744.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-#tff {
-    background: rgb(255, 210, 251);
-    background: linear-gradient(118deg, rgba(255, 210, 251, 1) 31%, rgba(139, 255, 226, 1) 72%, rgba(255, 237, 171, 1) 100%);
-
-
+.tff{
+    background: rgb(255,210,251);
+    background: linear-gradient(118deg, rgba(255,210,251,1) 31%, rgba(139,255,226,1) 72%, rgba(255,237,171,1) 100%);
     color: rgb(104, 97, 97);
 }
 
-#colorh3 {
-    color: rgb(90, 87, 87);
+.tff:hover{
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(37, 191, 202);
+}
+.tff2{
+    background: rgb(255,210,251);
+    background: linear-gradient(118deg, rgba(255,210,251,1) 31%, rgba(139,255,226,1) 72%, rgba(255,237,171,1) 100%);    border-radius: 15px;
+}
+.tff2:hover{
+    background-color: rgb(235, 235, 235);
+    border: 2px solid rgb(235, 235, 235)   ;
+
+}
+
+#iconUser{
+    color: rgb(139, 75, 134);
+    color: linear-gradient(118deg, rgba(255,210,251,1) 31%, rgba(139,255,226,1) 72%, rgba(255,237,171,1) 100%);
+}
+
+
+@media screen and (min-width: 1502px) {
+    .tff {
+        width: 150px;
+    }
+}
+
+
+.navbar  {
+    opacity: 1;
+    width: 100%;
+    top:0;
+}
+
+
+.main{
+    margin-bottom: 50px;
+
 }
 
 nav li {
@@ -22,22 +56,21 @@ nav li {
     text-align: center;
 }
 
-nav input {
+nav input{
     margin-right: 25px;
     width: 155px;
 }
 
-#a1 :hover {
-    background-color: #ffe26f;
-}
 
+
+#a1 :hover {
+    background-color: #ffcc00;
+}
 #a2 :hover {
     background-color: #00ff88;
 }
-
 #a3 :hover {
     background-color: #fd34b0;
-
 }
 
 #a3x :hover {
@@ -49,6 +82,24 @@ nav input {
 }
 
 
+#imgButton{
+    padding: 0;
+    border: none;
+    background: none;
+}
+
+.dropdown a:hover{
+    background-color: rgb(150, 193, 250);
+}
+#logout1:hover{
+    background-color: rgb(150, 193, 250);
+    color: rgb(255, 254, 254);
+}
+
+#logout2:hover{
+    background-color: rgb(255, 87, 87);
+    color: rgb(255, 254, 254);
+}
 #h1 {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
@@ -125,15 +176,120 @@ nav input {
     }
 }
 
-#zdjecia {
-    margin-top: 70px;
+.dd1 a:hover{
+    background-color: #fd34b0;
+}
+
+.dd2 a:hover{
+    background-color: rgb(150, 193, 250);
+}
+
+#info {
+    padding-top: 25px;
+    background-color: rgb(255, 255, 255, 0.3);
     text-align: center;
 }
 
 
-.dropdown a:hover{
-    background-color: rgb(150, 193, 250);
+.sideP{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:rgb(124, 122, 117) ;
 }
 
+#sidecolor{
+    background-color:rgb(247, 245, 245) ;
+    font-weight: 600;
+}
 
+#axc{
+    max-height: 360px;
+    background-color: whitesmoke;
+}
+#axc::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #d8f0ee;
+}
 
+#axc::-webkit-scrollbar
+{
+    width: 7px;
+}
+
+#axc::-webkit-scrollbar-thumb
+{
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #b1caff;
+}
+
+#chooseTable{
+    word-wrap: break-word !important;
+    color: #494949;
+    background: rgba(240, 250, 255, 0.616);
+    transition: all 0.4s ease 0s;
+    border: 1px solid gainsboro;
+    outline:none;
+    color: rgb(129, 122, 122);
+    border-color: rgba(156, 155, 152, 0.363);
+}
+
+#chooseTable:hover{
+    color: #837f7f;
+    text-transform: uppercase;
+    background: #ffffff;
+    transition: all 0.4s;
+}
+
+#chooseTable2{
+    word-wrap: break-word !important;
+    background: #d9ffc5;
+    transition: all 0.4s ease 0s;
+    border: 1px solid #caecd0;
+    outline:none;
+    color: rgb(129, 122, 122);
+}
+
+#chooseTable2:hover {
+    color: #9c9999;
+    background: #bffda8;
+    border-color: #89f63b !important;
+    transition: all 0.4s;
+    border-width: 1px;
+
+}
+
+#chooseTable3{
+    word-wrap: break-word !important;
+    background: #ffe7c5;
+    transition: all 0.4s ease 0s;
+    border: 1px solid #ece9ca;
+    outline:none;
+    color: rgb(129, 122, 122);
+}
+
+#chooseTable3:hover {
+    color: #9c9999;
+    background: #fde1a8;
+    border-color: #f6b93b !important;
+    transition: all 0.4s;
+    border-width: 1px;
+}
+
+#dekoA{
+    text-decoration: none;
+    color: rgb(129, 122, 122);
+}
+
+#dekoA:hover{
+    color: #474545;
+    transition: all 0.4s;
+}
+
+#footer{
+    background-color: rgb(221, 221, 217);
+}

@@ -6,11 +6,16 @@ import org.springframework.context.ConfigurableApplicationContext;
 import pl.project.englishwordswebapp.data.UserRepository;
 import pl.project.englishwordswebapp.model.User;
 
+import java.security.SecureRandom;
+import java.util.Base64;
+
 @SpringBootApplication
 public class EnglishWordsWebAppApplication {
 
+
     public static void main(String[] args) {
         SpringApplication.run(EnglishWordsWebAppApplication.class, args);
+
 
        /*  ConfigurableApplicationContext ctx =  SpringApplication.run(EnglishWordsWebAppApplication.class, args);
         UserRepository userRepository = ctx.getBean(UserRepository.class);

@@ -9,7 +9,8 @@
 
   <title>Słownik</title>
 
-  <link th:href="@{/css/learn.css}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/words.css}">
+
   <link th:href="@{https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css}" rel="stylesheet">
 
   <script th:href="@{https://kit.fontawesome.com/yourcode.js}" crossorigin="anonymous"></script>
@@ -17,27 +18,22 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid" id="abc">
-    <a class="navbar-brand " id="a0">Słownik</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
+<body>
+<div class="main">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand">Słownik</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="    Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
         <li class="nav-item" id="a1">
           <a class="nav-link" th:href="@{home}">Home</a>
         </li>
         <li class="nav-item" id="a2">
           <a class="nav-link" th:href="@{science}">Nauka</a>
         </li>
-        <script>
-          function info() {
-            confirm("Zaloguj się aby mieć dostęp do wyników!");
-          }
-        </script>
         <li class="nav-item dropdown" id="a3">
           <a class="nav-link" th:href="@{score}">Wynik</a>
         </li>
@@ -51,55 +47,104 @@
           </ul>
         </li>
       </ul>
-
-        <div th:if="${userSession.getLogged() == true}">
-            <form class="d-flex" th:action="@{logout}" method="post">
-                <input type="submit" class="btn btn-secondary" value="Wyloguj" id="tff">
-            </form>
-        </div>
-        <div th:unless="${userSession.getLogged() == true}">
-            <form class="d-flex" th:action="@{login}">
-                <input type="submit" class="btn btn-secondary" value="Zaloguj" id="tff">
-            </form>
-        </div>
-
+      <div th:if="${userSession.getLogged() == true}">
+        <form class="d-flex" th:action="@{logout}" method="post">
+          <input type="submit" class="form-control" value="Wyloguj" id="tff">
+        </form>
+      </div>
+      <div th:unless="${userSession.getLogged() == true}">
+        <form class="d-flex" th:action="@{login}">
+          <input type="submit" class="form-control" value="Zaloguj" id="tff">
+        </form>
+      </div>
     </div>
-  </div>
-</nav>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8" style="text-align: center" >
-
-      <form method="post" th:action="@{words}">
-        <table id="tabel" class="table table-striped">
-          <caption>Lista słów z bazy <span th:text="${wordsType}"></span> </caption>
-
-          <thead class="thead-dark">
-            <tr id="tff">
-              <th style="width: 20%"> number </th>
-              <th style="width: 40%"> english </th>
-              <th style="width: 40%"> polish  </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:each="obj, i : ${allWords}">
-              <td style="font-size: 90%"><span th:text="${(i.index)+1}"></span></td>
-              <td><span th:text="${obj.english}"></span><button th:value="${obj.english}" name="speaker" id="imgButton"><img style="width: 70%" src="https://img.icons8.com/windows/32/000000/speaker.png"/></button></td>
-              <td><span th:text="${obj.polish}"></span></td>
-            </tr>
-          </tbody>
-        </table>
-        <button type="submit" class="btn">sprawdź</button>
-      </form>
-
-    </div>
-    <div class="col-md-2"></div>
-  </div>
+  </nav>
 </div>
 
+<div class="container-fluid">
 
+  <div class="row" id="info">
+  </div>
+
+  <div class="row" style="min-height: 100vh;">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-12" style="background-color:rgb(247, 245, 245); padding-bottom: 10px;">
+      <div class="row">
+
+        <div class="sideP" id="sidecolor">
+          KATEGORIE
+        </div>
+
+        <div style="overflow-y: scroll; padding-top: 5px; " id="axc">
+          <form method="get" th:action="@{/words}">
+            <tr th:each="obj : ${category}">
+              <td><button type="submit" class="col-12 btn" id="chooseTable" th:value="${obj.getCatename()}" name="wordsType" th:text="${obj.getCatename()}"></button></td>
+            </tr>
+          </form>
+        </div>
+
+        <div class="sideP" id="sidecolor" style="margin-top: 10px;">
+          TWOJA BAZA SŁÓW
+        </div>
+        <div style="overflow-y: scroll;" id="axc">
+          <form method="get" th:action="@{/words}">
+            <th:block >
+              <a th:href="@{createtable}" id="dekoA"><button type="button" th:if="${empty} == 'empty'" class="col-12 btn" id="chooseTable2">Dodaj pierwszą baze słów</button></a>
+              <a th:href="@{login}" id="dekoA"><button type="button" th:if="${empty} == 'notloged'" class="col-12 btn" id="chooseTable3" >Zaloguj się a otrzymasz dostęp!</button></a>
+
+            </th:block>
+            <tr th:each="obj : ${category}">
+              <td><button type="submit" class="col-12 btn" id="chooseTable" th:value="${obj.getCatename()}" name="wordsType" th:text="${obj.getCatename()}"></button></td>
+            </tr>
+          </form>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="col-lg-10 col-md-9 col-sm-8 col-12 ps-0 pe-0">
+      <h5 th:if="${notChoosenTable}" style="text-align: center; padding:10%;"> Proszę wybrać kategorię z listy </h5>
+          <form method="get" th:action="@{words}" th:unless="${notChoosenTable}">
+            <table id="tabel" class="table table-striped">
+              <thead class="thead-dark">
+              <tr id="tff2">
+                <th class="col-2"> number </th>
+                <th class="col-4"> english </th>
+                <th class="col-4"> polish  </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="obj, i : ${allWords}" style="background-color: rgba(255,255,255,0.44)">
+                <td style="font-size: 90%" th:text="${(i.index)+1}"></td>
+                <td><span th:text="${obj.english}"></span><button th:value="${obj.english}" name="speaker" id="imgButton"><img style="width: 70%" src="https://img.icons8.com/windows/32/000000/speaker.png"/></button></td>
+                <td th:text="${obj.polish}"></td>
+              </tr>
+              </tbody>
+            </table>
+          </form>
+
+    </div>
+  </div>
+
+  <div class="row">
+  </div>
+
+</div>
+
+<div class="container-fluid" style="background-color: white;">
+
+  <footer class="row g-light text-center p-2" id="footer">
+    <div class="col-lg-2">
+      Aleksander Haberland 2021
+    </div>
+    <div class="col-lg-7">
+    </div>
+    <div class="col-lg-3">
+      <i class="fas fa-envelope-square pe-1"></i>email: aleksanderhabe@gmail.com
+    </div>
+  </footer>
+
+</div>
 <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"></script>
