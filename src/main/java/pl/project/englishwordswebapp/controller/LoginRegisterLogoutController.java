@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.project.englishwordswebapp.data.UserRepository;
+import pl.project.englishwordswebapp.mainService.UserService;
 import pl.project.englishwordswebapp.service.CurrentUser;
 import pl.project.englishwordswebapp.model.User;
 
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Base64;
 
@@ -21,11 +23,13 @@ LoginRegisterLogoutController {
 
     private UserRepository userRepository;
     private CurrentUser currentUser;
+    private UserService userService;
 
     @Autowired
-    LoginRegisterLogoutController(UserRepository userRepository, CurrentUser currentUser){
+    LoginRegisterLogoutController(UserRepository userRepository, CurrentUser currentUser, UserService userService){
         this.userRepository = userRepository;
         this.currentUser = currentUser;
+        this.userService = userService;
     }
 
     @ModelAttribute
@@ -49,7 +53,6 @@ LoginRegisterLogoutController {
         return "/log/register";
     }
 
-
     // register
     @PostMapping("/save")
     public String save(@ModelAttribute User user, RedirectAttributes redirectAttributes, Model model){
@@ -57,10 +60,9 @@ LoginRegisterLogoutController {
         // There is no any user with this email   ||  (!) <-before condition If there is no exist user with this email
         if((userRepository.findByEmail(user.getEmail()) == null) || !userRepository.findByEmail(user.getEmail()).getEmail().equals(user.getEmail()) ){
             //point. #2
-                user.setDateOfFound(LocalTime.now());
-                // authentication token generation
 
-                userRepository.save(user);
+                // save user
+                userService.saveUser(user, LocalDate.now());
                 redirectAttributes.addFlashAttribute("exist", "true");
                 return "redirect:/login";
 
@@ -96,7 +98,7 @@ LoginRegisterLogoutController {
 
     @GetMapping("/logout")
     public String logout(){
-        currentUser.setIdAndLog(0L, false    );
+        currentUser.setIdAndLog(null, false    );
         return "redirect:/home";
     }
 }

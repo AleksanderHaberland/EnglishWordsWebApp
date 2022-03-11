@@ -3,19 +3,16 @@ package pl.project.englishwordswebapp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import pl.project.englishwordswebapp.data.UserRepository;
-import pl.project.englishwordswebapp.model.User;
+import org.springframework.context.annotation.ComponentScan;
 
-import java.security.SecureRandom;
-import java.util.Base64;
 
+@ComponentScan({"pl.project.englishwordswebapp","pl.wordsAPI"})
 @SpringBootApplication
 public class EnglishWordsWebAppApplication {
 
 
     public static void main(String[] args) {
-        SpringApplication.run(EnglishWordsWebAppApplication.class, args);
-
+      SpringApplication.run(EnglishWordsWebAppApplication.class, args);
 
        /*  ConfigurableApplicationContext ctx =  SpringApplication.run(EnglishWordsWebAppApplication.class, args);
         UserRepository userRepository = ctx.getBean(UserRepository.class);

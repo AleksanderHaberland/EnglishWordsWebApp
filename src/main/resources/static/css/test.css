@@ -1,6 +1,8 @@
 body {
+    background-image: url("../img/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
-
 #tff{
     background: rgb(255,210,251);
     background: linear-gradient(118deg, rgba(255,210,251,1) 31%, rgba(139,255,226,1) 72%, rgba(255,237,171,1) 100%);
@@ -95,8 +97,6 @@ nav input{
 }
 
 
-
-
 #h1 {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
@@ -173,12 +173,65 @@ nav input{
     }
 }
 
-
-
-#info {
-    padding-top: 25px;
-    background-color: rgb(255, 255, 255, 0.3);
+#info{
+    background-color: rgba(255, 255, 255, 0.15);
     text-align: center;
+}
+
+#rowOne {
+    color: rgb(114, 114, 114);
+    font-weight: 400;
+    padding: 6px 0px;
+}
+#info1:hover button, #info2:hover button, #info3:hover button{
+    color: rgb(88, 88, 88);
+    font-weight: 500;
+}
+#info1{
+    background-color:#c9f8c1;
+    border-radius: 100px 18px 0px 0px;
+    min-height: 40px;
+    text-align: center;
+
+}
+#info1:hover{
+    background-color:#a9f89c;
+    border: 1px solid #5df845;
+}
+
+#info2{
+    min-height: 40px;
+    background-color:#ffd9dd;
+    border-radius: 100px 18px 0px 0px;
+    text-align: center;
+
+}
+#info2:hover{
+    background-color:#ffced2;
+    border: 1px solid #ffb1b1;
+}
+
+#info3{
+    background-color:#fce399;
+    border-radius: 100px 18px 0px 0px;
+    min-height: 40px;
+    text-align: center;
+
+}
+
+#info3:hover{
+    background-color:#fadd87;
+    border: 1px solid #ffca2b;
+}
+
+.custom-select{
+    background-color: rgb(224, 238, 252);
+    text-align: center;
+}
+
+.custom-select:focus{
+    background-color: rgb(213, 233, 253);
+    border: 1px solid #4bc3e0ec ;
 }
 
 .sideP{
@@ -195,7 +248,7 @@ nav input{
 }
 
 #axc{
-    max-height: 360px;
+    max-height: 280px;
     background-color: whitesmoke;
 }
 #axc::-webkit-scrollbar-track
@@ -235,51 +288,159 @@ nav input{
     transition: all 0.4s;
 }
 
-#chooseTable2{
+#chooseTableUser{
     word-wrap: break-word !important;
-    background: #d9ffc5;
+    color: #494949;
+    background: rgba(228, 255, 224, 0.62);
     transition: all 0.4s ease 0s;
-    border: 1px solid #caecd0;
+    border: 1px solid #edffe3;
     outline:none;
     color: rgb(129, 122, 122);
+    border-color: rgba(156, 155, 152, 0.363);
 }
 
-#chooseTable2:hover {
-    color: #9c9999;
-    background: #bffda8;
-    border-color: #89f63b !important;
+#chooseTableUser:hover{
+    color: #837f7f;
+    text-transform: uppercase;
+    background: #ffffff;
     transition: all 0.4s;
-    border-width: 1px;
+}
 
+#chooseTableDiff{
+    word-wrap: break-word !important;
+    color: #494949;
+    background: rgba(255, 214, 149, 0.86);
+    transition: all 0.4s ease 0s;
+    border: 1px solid gainsboro;
+    outline:none;
+    color: rgb(129, 122, 122);
+    border-color: rgba(156, 155, 152, 0.363);
 }
 
 #chooseTable3{
+    color: #4c4c4c;
     word-wrap: break-word !important;
-    background: #ffe7c5;
     transition: all 0.4s ease 0s;
-    border: 1px solid #ece9ca;
-    outline:none;
-    color: rgb(129, 122, 122);
+    background-color: #d2d2d2;
 }
+#chooseTable3:hover{
+    border-width: 2px;
+    background-color: #b1b0b0;
 
-#chooseTable3:hover {
-    color: #9c9999;
-    background: #fde1a8;
-    border-color: #f6b93b !important;
-    transition: all 0.4s;
-    border-width: 1px;
-}
-
-#dekoA{
-    text-decoration: none;
-    color: rgb(129, 122, 122);
-}
-
-#dekoA:hover{
-    color: #474545;
-    transition: all 0.4s;
 }
 
 #footer{
     background-color: rgb(221, 221, 217);
+}
+
+table {
+    table-layout: fixed;
+}
+td, th{
+    text-align: center;
+    word-wrap:break-word;
+}
+
+input[type=text] {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+#checkControl1, #checkControl2{
+    text-align: center;
+}
+#checkControl1 i{
+    color: rgb(20, 224, 156);
+}
+#checkControl1 p, #checkControl2 p{
+    color: rgb(83, 82, 82);
+}
+
+#checkControl2 i{
+    color: rgb(245, 63, 63);
+}
+
+#checkButton{
+    color: rgb(83, 82, 82);
+    width: 200px;
+    font-weight: 500;
+    background-color: rgba(252, 186, 84, 0.87);
+    transition: all 0.6s;
+    margin-bottom: 20px;
+}
+
+#checkButton:hover{
+    font-weight: 600;
+    background-color: rgba(252, 176, 69, 0.95);
+}
+
+#checkButton2{
+    color: rgb(83, 82, 82);
+    width: 200px;
+    font-weight: 500;
+    background-color: rgba(199, 250, 90, 0.87);
+    transition: all 0.2s;
+    margin-bottom: 20px;
+}
+
+#checkButton2:hover{
+    font-weight: 600;
+    background-color: rgba(185, 250, 32, 0.87);
+}
+
+
+#resetButton{
+    margin-top: 10px;
+    color: rgb(83, 82, 82);
+    font-weight: 500;
+    transition: all 0.6s;
+    background-color: rgb(189, 222, 255);
+}
+#resetButton:hover{
+    font-weight: 600;
+    transition: all 0.4s;
+    background-color: rgb(149, 210, 253);
+}
+
+.pagination{
+    text-align: center;
+    display: block;
+    background-color: rgb(236, 236, 236);
+}
+
+.pagination button{
+    padding-left: 4px;
+    padding-right: 4px;
+    height: 40px;
+}
+
+.pagination p{
+    background-color: rgb(117, 214, 213);
+    text-decoration: none;
+    padding: 0px 12px;
+    font-weight: 700;
+    color:rgb(189, 253, 252);
+    border:1px solid transparent;
+    border-radius: 100%;
+
+}
+
+.pagination p:hover{
+    color: #ffc400 ;
+    font-weight: 900;
+    border-width: 1px;
+}
+
+.pagination .back{
+    margin-right: -10px;
+    font-size: 20px;
+    color: #ffd758    ;
+    background-color: rgb(255, 255, 255,0);
+}
+
+.pagination .next{
+    margin-left: -10px;
+    font-size: 20px;
+    color: #ffd758    ;
+    background-color: rgb(255, 255, 255,0);
 }

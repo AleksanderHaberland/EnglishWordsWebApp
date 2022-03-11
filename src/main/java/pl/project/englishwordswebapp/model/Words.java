@@ -29,7 +29,7 @@ public class Words implements Serializable {
         this.polish = polish;
     }
 
-    public Long getId() {
+    public Long getId(){
         return id;
     }
 
@@ -67,7 +67,6 @@ public class Words implements Serializable {
                 "id to = " + id +
                 ", english to = '" + english + '\'' +
                 ", polish to = '" + polish + '\'' +
-                ", category to = " + category +
                 '}';
     }
 }

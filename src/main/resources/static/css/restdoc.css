@@ -94,63 +94,52 @@ nav input{
     color: rgb(255, 254, 254);
 }
 
-
-
-.mainContainer{
-    background-image: url("../img/backGroundFree.jpg");
-    background-repeat: no-repeat;
-    background-size: cover; }
-
-#moreLight{
-    background-color: rgba(255, 255, 255, 0.966);
-}
-
 #btnMain{
-    background-color: rgb(255, 205, 112);
+    background-color: rgb(240, 240, 240);
     transition: 0.2s;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
-    color: rgb(80, 80, 80);
+    border: 1px solid rgba(220, 220, 220, 0.384);
 }
+
 #btnMain:hover{
-    background-color: rgb(252, 187, 67);
-    border-width: 2px;
+    background-color: rgb(221, 221, 221);
 }
 
-#btnRest{
-    background-color: rgb(182, 255, 113);
-    transition: 0.2s;
+#btnMainInside{
     font-family: "Trebuchet MS", Helvetica, sans-serif;
     color: rgb(80, 80, 80);
-
-}
-#btnRest:hover{
-    background-color: rgb(166, 250, 56);
-    border-width: 2px;
-
-}
-hr.mainHR {
-    position: relative;
-    display: block;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    height: 6px;
-    border:none;
-    background: linear-gradient(to right, transparent 50%, #fff 50%), linear-gradient(to right, #00b9ff, #26ff00, #ff00f2, #ffc404);
-    background-size: 1.4rem, 90%;
-    transform: rotate(-4deg);
-}
-hr.mainHR2 {
-    position: relative;
-    display: block;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    height: 6px;
-    border:none;
-    background: linear-gradient(to left, transparent 50%, #fff 50%), linear-gradient(to right, rgba(255,158,0,1) 25%, rgba(9,255,20,1) 48%, rgba(255,0,250,1) 71%, rgba(0,245,255,1) 100%);
-    background-size: 1.4rem, 100%;
-    transform: rotate(+4deg);
+    font-weight: 400;
+    font-size: 95%;
+    text-align: start   ;
 }
 
+#QueryColor{
+    color: rgba(5, 106, 201, 0.678);
+}
+#textColor{
+    background: -webkit-linear-gradient(118deg, #ffee8b 31%, rgb(98, 255, 216) 72%, rgba(255, 237, 171) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#GenerallyFront{
+    margin-top: 80px;
+    padding-left: 30px;
+    text-align: start;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color: rgb(77, 77, 77);
+}
+
+#Generally{
+    background-color: rgb(255, 255, 255);
+    text-align: start;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color: rgb(68, 68, 68);
+    padding-left: 30px;
+}
+
+thead th{
+    height: 45px;
+}
 #footer{
     background-color: rgb(221, 221, 217);
 }

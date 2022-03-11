@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+
+    <title>Słownik</title>
+    <link rel="stylesheet" th:href="@{/css/userAccount.css}">
+</head>
+
+<body>
+<div class="main">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+            <a class="navbar-brand" style="padding-left: 5px;">Słownik</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="    Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" id="a1">
+                        <a class="nav-link" th:href="@{/home}">Home</a>
+                    </li>
+                    <li class="nav-item" id="aRest">
+                        <a class="nav-link" th:href="@{/documentation}">RestAPI</a>
+                    </li>
+                    <li class="nav-item" id="a2">
+                        <a class="nav-link" th:href="@{science}">Nauka</a>
+                    </li>
+                    <li class="dropdown dd1">
+                        <a class="btn dropdown-toggle" type="button" id="dd1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Testy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dd1">
+                            <li id="a2"><a class="dropdown-item" th:href="@{test/written}">Test pisemny</a></li>
+                            <li id="a1"><a class="dropdown-item" th:href="@{test/sound}">Test odsłuchu</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dd2">
+                        <a class="btn dropdown-toggle" type="button" id="dd2" data-bs-toggle="dropdown" aria-expanded="false">
+                            Twoja tabela
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dd2">
+                            <li id="a2"><a class="dropdown-item" th:href="@{editTable}">Dodaj słowa</a></li>
+                            <li id="a3"><a class="dropdown-item" th:href="@{createTable}">Dodaj kategorię</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div th:if="${userSession.getLogged() == true}">
+                    <form class="d-flex dropdown navbar-nav dropstart" th:action="@{account}" method="get">
+                        <button type="submit" class="btn dropdown-toggle tff2" id="user" data-bs-toggle="dropdown"
+                                aria-expanded="false"><i class="fas fa-user fa-lg" id="iconUser"></i></button>
+                        <ul class="dropdown-menu " aria-labelledby="user">
+                            <li><button class="btn dropdown-item" name="select" value="userdata" id="logout1">Twoje dane</button></li>
+                            <li><button class="btn dropdown-item" name="select" value="password" id="logout1">Zmień hasło</button></li>
+                            <li><button class="btn dropdown-item" name="select" value="tokenExist" id="logout1">Generuj token API</button></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li style="background-color: rgb(252, 250, 250);"><a class="dropdown-item" id="logout2" th:href="@{logout}" style="font-weight: 600;">Wyloguj</a></li>
+                        </ul>
+                    </form>
+                </div>
+                <div th:unless="${userSession.getLogged() == true}">
+                    <form class="d-flex" th:action="@{login}">
+                        <input type="submit" class="form-control" value="Zaloguj" id="tff">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container-fluid" style="margin-top: 20px;">
+    <div class="row" id="info">
+    </div>
+
+    <div class="row" style="text-align: center; min-height: 100vh;">
+
+        <div class="col-lg-2 col-md-3 col-sm-4 col-12" style="background-color:rgb(247, 245, 245); padding-bottom: 10px;">
+
+            <div class="row " style="background-color: rgb(247, 245, 245);">
+                <div class="col-lg-12 fw-bold" id="side1" style="background-color: rgb(233, 233, 233);">TWOJE KONTO</div>
+
+                <form method="get" th:action="@{account}">
+                    <tr>
+                        <td><button type="submit" class="col-12 btn shadow-none pt-4 pb-4" id="ax" name="select" value="userdata">Twoje dane</button></td>
+                        <td><button type="submit" class="col-12 btn shadow-none pt-4 pb-4" id="bx" name="select" value="password" >Zmień hasło</button></td>
+                        <td><button type="submit" class="col-12 btn shadow-none pt-4 pb-4" id="cx" name="select" value="tokenExist" >Generuj token API</button></td>
+                    </tr>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="col-lg-10 col-md-9 col-sm-8 col-12" style="background-color: white; padding-bottom: 10px;">
+            <div class="row" th:if="${select == 'userdata'}">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                    <tr class="">
+                        <th class="col-2 x">Imię</th>
+                        <th class="col-2 ">Nazwisko</th>
+                        <th class="col-2 ">E-mail</th>
+                        <th class="col-2 ">Data założenia konta</th>
+                        <th class="col-4 ">Token API</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="col-2" th:text="${userAccountDatas.getName()}"></td>
+                        <td class="col-2" th:text="${userAccountDatas.getLastname()}"></td>
+                        <td class="col-2" th:text="${userAccountDatas.getEmail()}"></td>
+                        <td class="col-2" th:text="${userAccountDatas.getDateOfFound()}"></td>
+                        <td class="col-4" th:text="${userAccountDatas.getToken()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:if="${successPassChange}" class="alert alert-info d-flex align-items-center justify-content-center" id="alertt" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                    </symbol>
+                </svg>
+                <svg class="bi flex-shrink-0 me-2" width="28" height="28" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                <p class="mb-0"><strong>Pomyślnie udało ci się zmienić hasło !</strong></p>
+            </div>
+
+            <th:block th:if="${select == 'password'}">
+                <p class="h3 text-muted">Wprowadź nowe hasło</p>
+                <form class="form-inline" method="POST" th:action="@{/account}"
+                      oninput='checkpass.setCustomValidity(checkpass.value != password.value ? "Hasła nie pasują do siebie." : "")'>
+                    <div class="row py-3" style="background-color: #71ffbd;">
+                        <div class="col-4"></div>
+                        <input class="col-2 py-3 me-2" type="password" id="option2" placeholder="hasło" th:field="${user.password}" pattern="(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Hasło musi mieć minimum 8 znaków, w tym chociaż jedną dużą literę."  required="required">
+                        <input class="col-2 py-3 ms-2" type="password" name="checkpass" id="option2" placeholder="powtórz hasło" required="required">
+                        <div class="col-4"></div>
+
+                        <div class="col-12 p-2"><button type="submit" class="btn shadow-none"   name="save" value="" id="option2B">zapisz nowe hasło</button></div>
+                    </div>
+                </form>
+            </th:block>
+
+            <div class="row pt-5 gy-0" th:if="${select == 'tokenExist'}">
+                <p class="col-12" style="background-color: rgba(255, 187, 237, 0.705);">Pemiętaj! Po wygenrerowaniu tokenu API, poprzedni zostanie dezaktywowany</p>
+
+                <th:block th:if="${tokenExist}">
+                    <p id="option3a" class="col-12 mb-1">API KEY:</p>
+                    <p class="col-sm-12 w-50 mx-auto text-wrap text-break" id="option3b" th:text="${tokenAPI}"></p>
+                </th:block>
+
+                    <form method="POST" th:action="@{/account}">
+                        <button type="submit" class="btn shadow-none" name="info" value="newToken" id="option3c">Generuj Token</button>
+                    </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container-fluid" id="footer">
+
+    <footer class="row g-light text-center p-2" id="footer">
+        <div class="col-lg-2">
+            Aleksander Haberland 2021
+        </div>
+        <div class="col-lg-7">
+        </div>
+        <div class="col-lg-3">
+            <i class="fas fa-envelope-square pe-1"></i>email: aleksanderhabe@gmail.com
+        </div>
+    </footer>
+</div>
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"></script>
+</body>
+</html>

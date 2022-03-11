@@ -1,0 +1,736 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+
+  <title>Słownik</title>
+  <link rel="stylesheet" th:href="@{/css/restdoc.css}">
+</head>
+
+<body>
+<div class="main">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+
+      <a class="navbar-brand" style="padding-left: 5px;">Słownik</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="    Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item" id="a1">
+            <a class="nav-link" th:href="@{/home}">Home</a>
+          </li>
+          <li class="nav-item" id="aRest">
+            <a class="nav-link" th:href="@{/documentation}">RestAPI</a>
+          </li>
+          <li class="nav-item" id="a2">
+            <a class="nav-link" th:href="@{science}">Nauka</a>
+          </li>
+          <li class="dropdown dd1">
+            <a class="btn dropdown-toggle" type="button" id="dd1" data-bs-toggle="dropdown" aria-expanded="false">
+              Testy
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dd1">
+              <li id="a2"><a class="dropdown-item" th:href="@{test/written}">Test pisemny</a></li>
+              <li id="a1"><a class="dropdown-item" th:href="@{test/sound}">Test odsłuchu</a></li>
+            </ul>
+          </li>
+          <li class="dropdown dd2">
+            <a class="btn dropdown-toggle" type="button" id="dd2" data-bs-toggle="dropdown" aria-expanded="false">
+              Twoja tabela
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dd2">
+              <li id="a2"><a class="dropdown-item" th:href="@{editTable}">Dodaj słowa</a></li>
+              <li id="a3"><a class="dropdown-item" th:href="@{createTable}">Dodaj kategorię</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div th:if="${userSession.getLogged() == true}">
+          <form class="d-flex dropdown navbar-nav dropstart" th:action="@{account}" method="get">
+            <button type="submit" class="btn dropdown-toggle tff2" id="user" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-lg" id="iconUser"></i></button>
+            <ul class="dropdown-menu " aria-labelledby="user">
+              <li><button class="btn dropdown-item" name="select" value="userdata" id="logout1">Twoje dane</button></li>
+              <li><button class="btn dropdown-item" name="select" value="password" id="logout1">Zmień hasło</button></li>
+              <li><button class="btn dropdown-item" name="select" value="tokenExist" id="logout1">Generuj token API</button></li>
+              <li><hr class="dropdown-divider"></li>
+              <li style="background-color: rgb(252, 250, 250);"><a class="dropdown-item" id="logout2" th:href="@{logout}" style="font-weight: 600;">Wyloguj</a></li>
+            </ul>
+          </form>
+        </div>
+        <div th:unless="${userSession.getLogged() == true}">
+          <form class="d-flex" th:action="@{login}">
+            <input type="submit" class="form-control" value="Zaloguj" id="tff">
+          </form>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="conatiner-fluid">
+  <div class="row g-0">
+
+    <div class="col-lg-2 col-md-3 col-sm-4 col-12"
+         style="min-height: vh-100; background-color: rgb(248, 248, 248);">
+      <ul class="list-group sticky-top">
+        <div style="height: 185px;"></div>
+        <li class="list-group-item p-1" id="btnMain"><a href="#s1" class="btn col-12"
+                                                        id="btnMainInside">Ogłne informacje</a></li>
+        <li class="list-group-item p-1" id="btnMain"><a href="#s2" class="btn col-12"
+                                                        id="btnMainInside">Dostęp poprzez token</a></li>
+        <li class="list-group-item p-1" id="btnMain"><a href="#s3" class="btn col-12"
+                                                        id="btnMainInside">API version 1</a></li>
+        <li class="list-group-item p-1" id="btnMain"><a href="#s4" class="btn col-12"
+                                                        id="btnMainInside">Budowa zapytań</a></li>
+        <li class="list-group-item p-1" id="btnMain"><a href="#cate" class="btn col-12"
+                                                        id="btnMainInside">Categories</a></li>
+        <li class="list-group-item p-1" id="btnMain"><a href="#word" class="btn col-12"
+                                                        id="btnMainInside">Words</a></li>
+        <li class="list-group-item p-1" id="btnMain"><a href="#test" class="btn col-12"
+                                                        id="btnMainInside">Test</a></li>
+
+
+      </ul>
+    </div>
+
+    <div class="col-lg-10 col-md-9 col-sm-8 col-12 pt-5 text-center">
+      <div class="jumbotron jumbotron-fluid">
+
+        <h1 class="display-4 fw-bold" id="textColor">REST API DOKUMENTACJA</h1>
+        <p class="lead" style="font-weight: 350; color: rgb(116, 114, 114);">poniżej znajduje się
+          zestawienie dostępnych punktów końcowych udostępnianych przez API</p>
+      </div>
+
+      <div id="GenerallyFront" class="pb-0 mb-0" style="background-color: rgba(157, 255, 0, 0.295);">
+        <h3 class="pb-0 mb-0" style="font-weight: 100;" id="s1">Ogólne informacje</h3>
+        <p class="pt-0 mt-0 text-muted" style="font-size: 85%;">edit: 09.02.2022</p>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0">
+        <p class="fw-bold pt-1  my-1">Rola Serwisu:</p>
+        <p style="color: rgb(80, 80, 80);">Serwis na podstawie zadeklarowanych wymagań niefunkcjonalnych
+          będzie aktualizowany, a poprzednie wersje REST nie będą usuwane w celu zapewnienia płynności
+          serwisu opartych na starszych wersjach. Serwis nie uwzględnia w początkowych wersjach metody
+          HATEOAS. </p>
+        <hr>
+        <p class="fw-bold pt-1  my-1">Rola Klienta API:</p>
+        <p style="color: rgb(80, 80, 80);">Klient API, będący użytkownikiem wewnętrznym, nie pełni funkcji
+          budujących infrastrukturę nowych funkcjonalności dla API serwisu. Klient dzięki możliwości
+          dowolnego dodawania nowych kategorii i słów może budować własną aplikację. Cel, dla którego
+          klient używa API jest dla serwisu nie istotny, póki serwis użytkownika nie zacznie wpływać
+          znacząco na płynność serwera aplikacji webowej do nauki języka angielskiego.</p>
+        <hr>
+        <p class="fw-bold pt-1  my-1">Metody odpowiedzi na żądania HTTP</p>
+        <p>Serwis w zależności od żądań przesyłanych za pomocą protokołu http odpowiada:</p>
+        <ul>
+          <li>Metodą GET, na zapytania.</li>
+          <li>Metodą POST, w celu utworzenia nowej instancji obiektu do bazy danych.</li>
+          <li>Metodą PUT, podczas aktualizacji już istniejących rekordów w bazie danych.</li>
+          <li>Metodą DELETE, w celu usunięcia danych przypisanych do Klienta API.</li>
+        </ul>
+        <hr>
+      </div>
+
+      <div id="GenerallyFront" class="pb-0 mb-0" style="background-color: rgba(0, 225, 255, 0.247);">
+        <h3 class="pb-0 mb-0" style="font-weight: 100;" id="s2">Dostęp poprzez token</h3>
+        <p class="pt-0 mt-0 text-muted" style="font-size: 85%;">edit: 10.02.2022</p>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0">
+        <p class="fw-bold pt-1  my-1">Token API</p>
+        <p>Aplikacja po zalogowaniu użytkownika, umożliwia w panelu użytkownika wygenerowanie tokenu
+          API.</br>
+          Token pełni rolę prywatnego klucza, powiązanego z danym kontem użytkownika wewnętrznego.
+          Każdy generowany token jest indywidualny, w przypadku uzyskania swoje tokenu, należy udać się do
+          panelu użytkownia, gdzie widnieje w danych.
+        </p>
+        <hr>
+      </div>
+
+      <div id="GenerallyFront" class="pb-0 mb-0" style="background-color: rgba(200, 41, 206, 0.247);">
+        <h3 class="pb-0 mb-0" style="font-weight: 100;" id="s3">Wersja serwisu v1</h3>
+        <p class="pt-0 mt-0 text-muted" style="font-size: 85%;">edit: 10.02.2022</p>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0">
+        <p class="fw-bold pt-1 my-1">API v1</p>
+        <p>Wersja v1 REST'owego interfejsu programistycznego jest wersją inicjalizaycjną. Dostępne metody
+          umożliwiają wprowadzanei kategorii słownych wraz z słowami do nich przypisanymi w formacie
+          Angielsko - Polskim.
+          </br> Wersja podsatowa umożiwia generowanie testu na podstawie wybrnaych wartości.
+        </p>
+        <hr>
+      </div>
+
+      <div id="GenerallyFront" class="pb-0 mb-0" style="background-color: rgba(255, 230, 0, 0.247);">
+        <h3 class="pb-0 mb-0" style="font-weight: 100;" id="s4">Budowa zapytań do serwera API</h3>
+        <p class="pt-0 mt-0 text-muted" style="font-size: 85%;">edit: 10.02.2022</p>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0">
+        <p class="fw-bold pt-1 my-1">Wzór zapytania</p>
+        <p>Wszystkie zapytnia do serwera są przyjmowane według określonej ścieżki:</p>
+        <div class="pt-3 pb-1 px-2"
+             style="background-color: rgba(255, 230, 0, 0.164); max-width: fit-content;">
+          <p class="fst-italic" style="font-size: large;">
+            <span class="text-muted">GET/POST/PUT/DELETE</span>
+            <span style="overflow-wrap: break-word;" class="fw-bold">&nbspapi/<span></span><span
+                    id="QueryColor">v1</span>/<span id="QueryColor">punkt_końcowy</span>?<span
+                    id="QueryColor">parametr_zapytania</span>=..&amp<span
+                    id="QueryColor">parametr_zapytania</span>=..&amp...</span>
+          </p>
+          <p class="m-1">Metoda <span class="fst-italic text-muted">POST</span> oraz <span
+                  class="fst-italic text-muted ">PUT</span> oczekują przekazania obiektu w formacie JSON
+          </p>
+          <ul>
+            <li><span class="fst-italic fw-bold" id="QueryColor">v1</span> - wersja api</li>
+            <li><span class="fst-italic fw-bold" id="QueryColor">punkt_końcowy</span> - wybrany endpoint
+            </li>
+            <li><span class="fst-italic fw-bold" id="QueryColor">parametr_zapytania</span> - określone
+              parametry z przypisaną wartości w odstępie <span class="fw-bold"
+                                                               style="color: black;">&amp</span></li>
+          </ul>
+        </div>
+
+        <p class="fw-bold pt-1 mt-4 mb-1">Format wymiany danych</p>
+        <p>Ogólno przyjętym formatem wymianych danych API jest JSON</p>
+        <hr>
+      </div>
+
+
+      <div id="GenerallyFront" class="pb-0 mb-0" style="background-color: rgba(0, 26, 255, 0.247);">
+        <h3 class="pb-0 mb-0" style="font-weight: 100;" id="cate">Kategorie słowne</h3>
+        <p class="pt-0 mt-0 text-muted" style="font-size: 85%;">edit: 14.02.2022</p>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0 mb-5">
+        <p class="pt-1 my-1 mb-3 fw-light">Metoda: <span class="text-muted lead fw-bold"
+                                                         style="color: rgba(85, 102, 252, 0.24);">GET</span></p>
+        <p class="px-2 py-1" style="background-color: rgba(85, 101, 252, 0.363); max-width: fit-content;">
+          <span class="fst-italic fw-bold" style="color: black;">/allCategories</span>
+        </p>
+        <div class="card">
+          <table class="me-3">
+            <thead style="text-align: center;">
+            <th>Konfiguracje zapytania</th>
+            <th>Odpowiedzi HTTP</th>
+            <th>Przykładowe zapytanie</th>
+            </thead>
+            <tbody>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(238, 238, 238);">
+              <p class="fw-bold" style="top:0"></p>
+              <p>Brak parametrów zapytania</p>
+            </td>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(231, 231, 231);">
+              <p class="pb-0 mb-0" style="background-color: rgba(108, 123, 255, 0.322); color: rgb(255, 255, 255);"><span class="fw-bold">OK 200</span></p>
+              <span style="font-size: 14px; font-weight: 100;">Pomyślne zapytanie</span>
+            </td>
+            <td class="col-lg-3 col-12 text-break" style="background-color: rgb(221, 221, 221);">
+              <p class="text-center pt-1 m-0 fw-bold">/api/.../addCategories</p>
+              <pre style="background-color: rgb(255, 255, 255); white-space: pre-wrap;
+                                    word-wrap: break-word;
+                                    text-align: justify;">
+                                        <code class="" style="color: rgb(117, 131, 255); font-family: 'Courier New', Courier, monospace; font-size: medium; font-weight: 900;">
+    Odpowiedź:
+        [
+          {
+            id: 1,
+            name: "animals"
+          },
+          {
+            id: 2,
+            name: "jobs"
+          }
+        ]
+
+                                        </code>
+                                        </pre>
+            </td>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0">
+        <p class="pt-1 my-1 mb-3 fw-light">Metoda: <span class="text-muted lead fw-bold"
+                                                         style="color: rgba(85, 102, 252, 0.24);">POST</span></p>
+        <p class="px-2 py-1" style="background-color: rgba(85, 101, 252, 0.363); max-width: fit-content;">
+          <span class="fst-italic fw-bold" style="color: black;">/addCategories</span>
+        </p>
+        <div class="card">
+          <table class="me-3">
+            <thead style="text-align: center;">
+            <th>Konfiguracje zapytania</th>
+            <th>Odpowiedzi HTTP</th>
+            <th>Przykładowe zapytanie</th>
+            </thead>
+            <tbody>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(238, 238, 238);">
+              <p class="fw-bold" style="top:0"></p>
+              <p>Brak parametrów zapytania</p>
+              <p class="mx-1">Zapytanie może przyjąć jeden, jaki i wiele obiektów według przykładowego zapytania</p>
+
+            </td>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(231, 231, 231);">
+              <p class="pb-0 mb-0" style="background-color: rgba(108, 123, 255, 0.322); color: rgb(255, 255, 255);"><span class="fw-bold">NO_CONTENT 204 </span></p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłano zapytanie z pustym obiektem</span>
+
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(108, 123, 255, 0.322); color: rgb(255, 255, 255);"><span class="fw-bold">BAD_REQUEST 400</span><p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłany obiek nie ma przypisanych wartości, lub wartość jest niezgodna z okreslonymi polami</span>
+
+              <p class="pb-0 mb-0" style="background-color: rgba(108, 123, 255, 0.322); color: rgb(255, 255, 255);"><span class="fw-bold">CONFLICT 409</span></p>
+              <span class="" style="font-size: 14px; font-weight: 100;">Podana wartość już istnieje lub wprowadzano wartość z niedozwolonymi znakami, lub spacją na początku, lub na końcu</span>
+
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(108, 123, 255, 0.322); color: rgb(255, 255, 255);"><span class="fw-bold">OK 200</span></p>
+              <span style="font-size: 14px; font-weight: 100;">Pomyślne zapytanie</span>
+            </td>
+            <td class="col-lg-3 col-12 text-break" style="background-color: rgb(221, 221, 221);">
+              <p class="text-center pt-1 m-0 fw-bold">/api/.../addCategories</p>
+              <pre style="background-color: rgb(255, 255, 255); white-space: pre-wrap;
+                                    word-wrap: break-word;
+                                    text-align: justify;">
+                                        <code class="" style="color: rgb(117, 131, 255); font-family: 'Courier New', Courier, monospace; font-size: medium; font-weight: 900;">
+    Zapytanie:
+        [
+          {
+            id: 1,
+            name: "animals"
+          },
+          {
+            id: 2,
+            name: "jobs"
+          }
+        ]
+
+                                        </code>
+                                        </pre>
+            </td>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0">
+        <p class="pt-1 my-1 mb-3 fw-light">Metoda: <span class="text-muted lead fw-bold"
+                                                         style="color: rgba(85, 102, 252, 0.24);">PUT</span></p>
+        <p class="px-2 py-1" style="background-color: rgba(85, 101, 252, 0.363); max-width: fit-content;">
+          <span class="fst-italic fw-bold" style="color: black;">/updateCategoryName</span>
+        </p>
+        <div class="card">
+          <table class="me-3">
+            <thead style="text-align: center;">
+            <th>Konfiguracje zapytania</th>
+            <th>Odpowiedzi HTTP</th>
+            <th>Przykładowe zapytanie</th>
+            </thead>
+            <tbody>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(238, 238, 238);">
+              <p class="fw-bold" style="top:0"></p>
+              <p class="lead">?name = "nowa nazwa kategorii"</p>
+              <p class="mx-1"></p>
+
+            </td>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(231, 231, 231);">
+              <p class="pb-0 mb-0" style="background-color: rgba(108, 123, 255, 0.322); color: rgb(255, 255, 255);"><span class="fw-bold">NO_CONTENT 204 </span></p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłano zapytanie z pustym obiektem</span>
+
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(108, 123, 255, 0.322); color: rgb(255, 255, 255);"><span class="fw-bold">BAD_REQUEST 400</span><p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłany obiek nie ma przypisanych wartości, lub wartość jest niezgodna z okreslonymi polami</span>
+
+              <p class="pb-0 mb-0" style="background-color: rgba(108, 123, 255, 0.322); color: rgb(255, 255, 255);"><span class="fw-bold">CONFLICT 409</span></p>
+              <span class="" style="font-size: 14px; font-weight: 100;">Podana wartość już istnieje lub wprowadzano wartość z niedozwolonymi znakami, lub spacją na początku, lub na końcu</span>
+
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(108, 123, 255, 0.322); color: rgb(255, 255, 255);"><span class="fw-bold">OK 200</span></p>
+              <span style="font-size: 14px; font-weight: 100;">Pomyślne zapytanie</span>
+            </td>
+            <td class="col-lg-3 col-12 text-break" style="background-color: rgb(221, 221, 221);">
+              <p class="text-center pt-1 m-0 fw-bold">/api/v1/.../updateCategoryName?name=animal</p>
+              <pre style="background-color: rgb(255, 255, 255); white-space: pre-wrap;
+                                    word-wrap: break-word;
+                                    text-align: justify;">
+                                        <code class="" style="color: rgb(117, 131, 255); font-family: 'Courier New', Courier, monospace; font-size: medium; font-weight: 900;">
+     Zapytanie:
+        {
+           id: 1,
+           name: "animals"
+        },
+
+                                        </code>
+                                        </pre>
+            </td>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0">
+        <p class="pt-1 my-1 mb-3 fw-light">Metoda: <span class="text-muted lead fw-bold"
+                                                         style="color: rgba(85, 102, 252, 0.24);">DELETE</span></p>
+        <p class="px-2 py-1" style="background-color: rgba(85, 101, 252, 0.363); max-width: fit-content;">
+          <span class="fst-italic fw-bold" style="color: black;">/deleteCategory</span>
+        </p>
+        <div class="card">
+          <table class="me-3">
+            <thead style="text-align: center;">
+            <th>Konfiguracje zapytania</th>
+            <th>Odpowiedzi HTTP</th>
+            <th>Przykładowe zapytanie</th>
+            </thead>
+            <tbody>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(238, 238, 238);">
+              <p class="fw-bold" style="top:0"></p>
+              <p class="lead">?delete = "nazwa kategorii do usunięcia"</p>
+              <p class="mx-1"></p>
+
+            </td>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(231, 231, 231);">
+              <p class="pb-0 mb-0" style="background-color: rgba(108, 123, 255, 0.322); color: rgb(255, 255, 255);"><span class="fw-bold">NO_CONTENT 204 </span></p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłano zapytanie z pustym obiektem</span>
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(108, 123, 255, 0.322); color: rgb(255, 255, 255);"><span class="fw-bold">OK 200</span></p>
+              <span style="font-size: 14px; font-weight: 100;">Pomyślne zapytanie</span>
+            </td>
+            <td class="col-lg-3 col-12 text-break" style="background-color: rgb(221, 221, 221);">
+              <p class="text-center pt-1 m-0 fw-bold">/api/v1/.../deleteCategory?delete=animals</p>
+              <pre style="background-color: rgb(255, 255, 255); white-space: pre-wrap;
+                                    word-wrap: break-word;
+                                    text-align: justify;">
+                                        <code class="" style="color: rgb(117, 131, 255); font-family: 'Courier New', Courier, monospace; font-size: medium; font-weight: 900;">
+                                        </code>
+                                        </pre>
+            </td>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+      </div>
+
+
+      <div id="GenerallyFront" class="pb-0 mb-0" style="background-color: rgba(255, 153, 37, 0.349);">
+        <h3 class="pb-0 mb-0" style="font-weight: 100;" id="word">Słowa Kategorii</h3>
+        <p class="pt-0 mt-0 text-muted" style="font-size: 85%;">edit: 14.02.2022</p>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0 mb-5">
+        <p class="pt-1 my-1 mb-3 fw-light">Metoda: <span class="text-muted lead fw-bold"
+                                                         style="color: rgba(255, 153, 37, 0.349);">GET</span></p>
+        <p class="px-2 py-1" style="background-color: rgba(255, 153, 37, 0.349); max-width: fit-content;">
+          <span class="fst-italic fw-bold" style="color: black;">/allCategories</span>
+        </p>
+        <div class="card">
+          <table class="me-3">
+            <thead style="text-align: center;">
+            <th>Konfiguracje zapytania</th>
+            <th>Odpowiedzi HTTP</th>
+            <th>Przykładowe zapytanie</th>
+            </thead>
+            <tbody>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(238, 238, 238);">
+              <p class="fw-bold" style="top:0"></p>
+              <p>Brak parametrów zapytania</p>
+            </td>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(231, 231, 231);">
+              <p class="pb-0 mb-0" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">OK 200</span></p>
+              <span style="font-size: 14px; font-weight: 100;">Pomyślne zapytanie</span>
+            </td>
+            <td class="col-lg-3 col-12 text-break" style="background-color: rgb(221, 221, 221);">
+              <p class="text-center pt-1 m-0 fw-bold">/api/v1/.../getAllWords?category=jobs</p>
+              <pre style="background-color: rgb(255, 255, 255); white-space: pre-wrap;
+                                    word-wrap: break-word;
+                                    text-align: justify;">
+                                        <code class="" style="color: rgb(255, 153, 37); font-family: 'Courier New', Courier, monospace; font-size: medium; font-weight: 900;">
+    Odpowiedź:
+    [
+        {
+            "id": 21,
+            "english": "doctor",
+            "polish": "doktor"
+        },
+        {
+            "id": 22,
+            "english": "driver",
+            "polish": "kierowca"
+        },
+    ]
+
+                                        </code>
+                                        </pre>
+            </td>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0">
+        <p class="pt-1 my-1 mb-3 fw-light">Metoda: <span class="text-muted lead fw-bold"
+                                                         style="color: rgba(255, 153, 37, 0.349);">POST</span></p>
+        <p class="px-2 py-1" style="background-color: rgba(255, 153, 37, 0.349); max-width: fit-content;">
+          <span class="fst-italic fw-bold" style="color: black;">/addWords</span>
+        </p>
+        <div class="card">
+          <table class="me-3">
+            <thead style="text-align: center;">
+            <th>Konfiguracje zapytania</th>
+            <th>Odpowiedzi HTTP</th>
+            <th>Przykładowe zapytanie</th>
+            </thead>
+            <tbody>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(238, 238, 238);">
+              <p class="fw-bold" style="top:0"></p>
+              <p class="lead">?category = "nazwa kategorii do której zostaną dodane słowa"</p>
+              <p class="mx-1"></p>
+            </td>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(231, 231, 231);">
+              <p class="pb-0 mb-0" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">NO_CONTENT 204 </span></p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłano zapytanie z pustym obiektem</span>
+
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">BAD_REQUEST 400</span><p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłany obiek nie ma przypisanych wartości, lub wartość jest niezgodna z okreslonymi polami</span>
+
+              <p class="pb-0 mb-0" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">CONFLICT 409</span></p>
+              <span class="" style="font-size: 14px; font-weight: 100;">Podana wartość już istnieje lub wprowadzano wartość z niedozwolonymi znakami, lub spacją na początku, lub na końcu</span>
+
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">OK 200</span></p>
+              <span style="font-size: 14px; font-weight: 100;">Pomyślne zapytanie</span>
+            </td>
+            <td class="col-lg-3 col-12 text-break" style="background-color: rgb(221, 221, 221);">
+              <p class="text-center pt-1 m-0 fw-bold">/api/v1/.../addWords?category=jobs</p>
+              <pre style="background-color: rgb(255, 255, 255); white-space: pre-wrap;
+                                    word-wrap: break-word;
+                                    text-align: justify;">
+                                        <code class="" style="color: rgb(255, 153, 37); font-family: 'Courier New', Courier, monospace; font-size: medium; font-weight: 900;">
+
+   Zapytanie:
+ [
+     {
+        "id": 1,
+        "english": "plasterer",
+        "polish": "tynkarz"
+     },
+     {
+        "id": 2,
+        "english": "bricklayer",
+        "polish": "murarz"
+     }
+  ]
+                                        </code>
+                                        </pre>
+            </td>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0">
+        <p class="pt-1 my-1 mb-3 fw-light">Metoda: <span class="text-muted lead fw-bold"
+                                                         style="color: rgba(255, 153, 37, 0.349);">PUT</span></p>
+        <p class="px-2 py-1" style="background-color: rgba(255, 153, 37, 0.349); max-width: fit-content;">
+          <span class="fst-italic fw-bold" style="color: black;">/updateWord</span>
+        </p>
+        <div class="card">
+          <table class="me-3">
+            <thead style="text-align: center;">
+            <th>Konfiguracje zapytania</th>
+            <th>Odpowiedzi HTTP</th>
+            <th>Przykładowe zapytanie</th>
+            </thead>
+            <tbody>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(238, 238, 238);">
+              <p class="fw-bold" style="top:0"></p>
+              <p class="lead">?category = "nazwa kategorii z bazy"</p>
+              <p class="lead">&eng = "angielska nazwa z bazy"</p>
+              <p class="lead">&pol = "polska nazwa z bazy"</p>
+
+            </td>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(231, 231, 231);">
+              <p class="pb-0 mb-0" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">NO_CONTENT 204 </span></p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłano zapytanie z pustym obiektem</span>
+
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">BAD_REQUEST 400</span><p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłany obiek nie ma przypisanych wartości, lub wartość jest niezgodna z okreslonymi polami</span>
+
+              <p class="pb-0 mb-0" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">CONFLICT 409</span></p>
+              <span class="" style="font-size: 14px; font-weight: 100;">Podana wartość już istnieje lub wprowadzano wartość z niedozwolonymi znakami, lub spacją na początku, lub na końcu</span>
+
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">OK 200</span></p>
+              <span style="font-size: 14px; font-weight: 100;">Pomyślne zapytanie</span>
+            </td>
+            <td class="col-lg-3 col-12 text-break" style="background-color: rgb(221, 221, 221);">
+              <p class="text-center pt-1 m-0 fw-bold">/v1/.../updateWord?category=fruits&eng=apple&pol=jabłko</p>
+              <pre style="background-color: rgb(255, 255, 255); white-space: pre-wrap;
+                                    word-wrap: break-word;
+                                    text-align: justify;">
+                                        <code class="" style="color: rgb(255, 153, 37); font-family: 'Courier New', Courier, monospace; font-size: medium; font-weight: 900;">
+       Zapytanie:
+        {
+           id: 1,
+           "english": "kiwi",
+           "polish": "kiwi"
+        },
+
+                                        </code>
+                                        </pre>
+            </td>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0">
+        <p class="pt-1 my-1 mb-3 fw-light">Metoda: <span class="text-muted lead fw-bold"
+                                                         style="color: rgba(255, 153, 37, 0.349);">DELETE</span></p>
+        <p class="px-2 py-1" style="background-color: rgba(255, 153, 37, 0.349); max-width: fit-content;">
+          <span class="fst-italic fw-bold" style="color: black;">/deleteWord</span>
+        </p>
+        <div class="card">
+          <table class="me-3">
+            <thead style="text-align: center;">
+            <th>Konfiguracje zapytania</th>
+            <th>Odpowiedzi HTTP</th>
+            <th>Przykładowe zapytanie</th>
+            </thead>
+            <tbody>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(238, 238, 238);">
+              <p class="fw-bold" style="top:0"></p>
+              <p class="lead">?category = "nazwa kategorii z bazy"</p>
+              <p class="lead">&eng = "angielska nazwa z bazy"</p>
+              <p class="lead">&pol = "polska nazwa z bazy"</p>
+
+            </td>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(231, 231, 231);">
+              <p class="pb-0 mb-0" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">NO_CONTENT 204 </span></p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłano zapytanie z pustym obiektem</span>
+
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">BAD_REQUEST 400</span><p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłany obiek nie ma przypisanych wartości, lub wartość jest niezgodna z okreslonymi polami</span>
+
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(255, 153, 37, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">OK 200</span></p>
+              <span style="font-size: 14px; font-weight: 100;">Pomyślne zapytanie</span>
+            </td>
+            <td class="col-lg-3 col-12 text-break" style="background-color: rgb(221, 221, 221);">
+              <p class="text-center pt-1 m-0 fw-bold">/api/v1/.../deleteWord?category=fruits&eng=apple&pol=jabłko</p>
+              <pre style="background-color: rgb(255, 255, 255); white-space: pre-wrap;
+                                    word-wrap: break-word;
+                                    text-align: justify;">
+                                        <code class="" style="color: rgb(117, 131, 255); font-family: 'Courier New', Courier, monospace; font-size: medium; font-weight: 900;">
+                                        </code>
+                                        </pre>
+            </td>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+      </div>
+
+      <div id="GenerallyFront" class="pb-0 mb-0" style="background-color: rgba(60, 255, 0, 0.349);">
+        <h3 class="pb-0 mb-0" style="font-weight: 100;" id="test">Test</h3>
+        <p class="pt-0 mt-0 text-muted" style="font-size: 85%;">edit: 14.02.2022</p>
+      </div>
+
+      <div id="Generally" class="pt-0 mt-0 mb-5">
+        <p class="pt-1 my-1 mb-3 fw-light">Metoda: <span class="text-muted lead fw-bold"
+                                                         style="color: rgba(60, 255, 0, 0.349);">GET</span></p>
+        <p class="px-2 py-1" style="background-color: rgba(60, 255, 0, 0.349); max-width: fit-content;">
+          <span class="fst-italic fw-bold" style="color: black;">/generateTest</span>
+        </p>
+        <div class="card">
+          <table class="me-3">
+            <thead style="text-align: center;">
+            <th>Konfiguracje zapytania</th>
+            <th>Odpowiedzi HTTP</th>
+            <th>Przykładowe zapytanie</th>
+            </thead>
+            <tbody>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(238, 238, 238);">
+              <p class="fw-bold" style="top:0"></p>
+              <p class="lead">&amount = "ilość losowych słów z kategorii"</p>
+            </td>
+            <td class="col-lg-4 col-12 text-break text-center" style="background-color: rgb(231, 231, 231);">
+              <p class="pb-0 mb-0" style="background-color: rgba(60, 255, 0, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">NO_CONTENT 204 </span></p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłano zapytanie z pustym obiektem</span>
+              <p class="pb-0 mb-0 mt-3" style="background-color: rgba(60, 255, 0, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">BAD_REQUEST 400</span><p>
+              <span style="font-size: 14px; font-weight: 100;">Przesłany obiek nie ma przypisanych wartości, lub wartość jest niezgodna z okreslonymi polami</span>
+              <p class="pb-0 mb-0" style="background-color: rgba(60, 255, 0, 0.349); color: rgb(255, 255, 255);"><span class="fw-bold">OK 200</span></p>
+              <span style="font-size: 14px; font-weight: 100;">Pomyślne zapytanie</span>
+
+            </td>
+            <td class="col-lg-3 col-12 text-break" style="background-color: rgb(221, 221, 221);">
+              <p class="text-center pt-1 m-0 fw-bold">/api/v1/.../generateTest/?amount=10</p>
+              <pre style="background-color: rgb(255, 255, 255); white-space: pre-wrap;
+                                    word-wrap: break-word;
+                                    text-align: justify;"><code class="" style="color: rgb(60, 255, 0); font-family: 'Courier New', Courier, monospace; font-size: medium; font-weight: 900;"><code style="color: rgb(127, 204, 255);">
+    Zapytanie
+    [
+        {
+            "id": 1,
+            "name": "animals"
+        },
+        {
+            "id": 2,
+            "name": "home"
+        }
+    ]
+    </code>
+    Odpowiedź:
+    [
+        {
+            "id": 1,
+            "english": "ant",
+            "polish": "mrówka"
+        },
+        {
+            "id": 2,
+            "english": "cat",
+            "polish": "kot"
+        },
+    ]
+
+                                        </code>
+                                        </pre>
+            </td>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<div class="container-fluid" id="footer">
+  <footer class="row g-light text-center p-2" id="footer">
+    <div class="col-lg-2">
+      Aleksander Haberland 2021
+    </div>
+    <div class="col-lg-7">
+    </div>
+    <div class="col-lg-3">
+      <i class="fas fa-envelope-square pe-1"></i>email: aleksanderhabe@gmail.com
+    </div>
+  </footer>
+</div>
+
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

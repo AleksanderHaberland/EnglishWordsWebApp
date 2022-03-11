@@ -1,6 +1,7 @@
 package pl.project.englishwordswebapp.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,28 +30,28 @@ public class User{
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = true)
-    private LocalTime dateOfFound;
+    @Column(nullable = true, columnDefinition = "DATE")
+    private LocalDate date_of_found;
 
-   @OneToMany (mappedBy = "user",
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.PERSIST,
-           orphanRemoval = true)
+   @OneToMany (mappedBy = "user", fetch = FetchType.EAGER)
    Set<Category> category = new HashSet<>();
+
+    public User(){}
+
+
 
     public void addCategory(Category category){
         category.setUser(this);
         getCategory().add(category);
     }
 
-    public User(){}
-    public User(String name, String lastname, String email, String password, LocalTime dateOfFound) {
+    public User(String name, String lastname, String email, String password) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
 
         this.password = password;
-        this.dateOfFound = dateOfFound;
+
     }
 
     public Set<Category> getCategory() {
@@ -109,12 +110,12 @@ public class User{
         this.password = password;
     }
 
-    public LocalTime getDateOfFound() {
-        return dateOfFound;
+    public LocalDate getDateOfFound() {
+        return date_of_found;
     }
 
-    public void setDateOfFound(LocalTime dateOfFound) {
-        this.dateOfFound = dateOfFound;
+    public void setDateOfFound(LocalDate dateOfFound) {
+        this.date_of_found = dateOfFound;
     }
 
     @Override
@@ -126,7 +127,7 @@ public class User{
                 ", email='" + email + '\'' +
                 ", pesel='" + token + '\'' +
                 ", password='" + password + '\'' +
-                ", dateOfFound='" + dateOfFound + '\'' +
+                ", dateOfFound='" + date_of_found + '\'' +
                 '}';
     }
 }

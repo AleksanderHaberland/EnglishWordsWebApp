@@ -22,6 +22,9 @@ public class CreateCategoryService {
     private WordsDAO wordsDAO;
     private UserRepository userRepository;
 
+    public CreateCategoryService(){
+    }
+
     @Autowired
     public CreateCategoryService(CategoryDAO categoryDAO, WordsDAO wordsDAO, UserRepository userRepository){
         this.categoryDAO = categoryDAO;

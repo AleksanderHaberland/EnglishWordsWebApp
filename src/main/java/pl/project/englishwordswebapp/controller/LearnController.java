@@ -5,10 +5,7 @@ import com.sun.speech.freetts.VoiceManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.project.englishwordswebapp.data.CategoryDAO;
@@ -20,6 +17,7 @@ import pl.project.englishwordswebapp.model.User;
 import pl.project.englishwordswebapp.service.CurrentUser;
 import pl.project.englishwordswebapp.model.Category;
 import pl.project.englishwordswebapp.model.Words;
+import pl.project.englishwordswebapp.service.Pagination;
 import pl.project.englishwordswebapp.service.WordsCounter;
 
 import java.time.LocalTime;
@@ -47,29 +45,6 @@ public class LearnController {
 
         this.wordsCounter = wordsCounter;
 
-        LocalTime time = LocalTime.of(10,43,12);
-        User u = new User("alek", "haber", "arric@wp.pl", "a", time);
-        Category c = new Category("jobs");
-
-        u.addCategory(c);
-        userRepository.save(u);
-
-        Words w = new Words("job", "praca");
-        Words w3 = new Words("accountant", "księgowy");
-
-        w.setCategory(c);
-        wordsDAO.save(w);
-
-        w3.setCategory(c);
-        wordsDAO.save(w3);
-
-        Words w2 = new Words("animal", "zwierze");
-        Category c2 = new Category("animals");
-
-        u.addCategory(c2);
-        categoryDAO.save(c2);
-        w2.setCategory(c2);
-        wordsDAO.save(w2);
     }
 
     @ModelAttribute
@@ -77,20 +52,49 @@ public class LearnController {
         model.addAttribute("userSession", currentUser);
     }
 
-    private String categoryWord;
+    private List<Words> words;
+    private String pageNumber;
+    @GetMapping(value = {"/words/{pageNumber}", "/words"})
+    public String words(@RequestParam(required = false) String wordsType,
+                        Model model,
+                        @ModelAttribute ("speaker") String speaker,
+                        @PathVariable(required = false) String pageNumber
+                        ){
 
-    @GetMapping("/words")
-    public String words(@RequestParam(required = false) String wordsType, Model model, @ModelAttribute ("speaker") String speaker){
-        if(currentUser.getLogged() == false){
-            return "redirect:/science";
-        }
+
 
         String problem = "";
         //logged
+        if (currentUser.getId() == null){
+            List<Category> currentUserCategory = new ArrayList<>();
+            currentUserCategory = learnService.getAllCategories(1);
+
+            List<Category> baseCategory = new ArrayList<>();
+            for(int y = 0; y < 7; y++){
+                baseCategory.add(currentUserCategory.get(y));
+            }
+            model.addAttribute("baseCategory", baseCategory);
+            problem = "notloged";
+            model.addAttribute("empty", problem);
+        }
+
         if(currentUser.getId() != null){
             List<Category> currentUserCategory = new ArrayList<>();
             currentUserCategory = learnService.getAllCategories(currentUser.getId());
-            model.addAttribute("category", currentUserCategory);
+
+            List<Category> baseCategory = new ArrayList<>();
+            for(int y = 0; y < 7; y++){
+                baseCategory.add(currentUserCategory.get(y));
+            }
+            List<Category> userCategory = currentUserCategory;
+            for(int x = 0; x < 7; x++){
+                userCategory.remove(0);
+            }
+
+            model.addAttribute("baseCategory", baseCategory);
+            model.addAttribute("userCategory", userCategory);
+
+
             //empty datas
             if (currentUserCategory.isEmpty()){
                 problem = "empty";
@@ -98,24 +102,37 @@ public class LearnController {
             }
         }
 
+        // pagiantion
+        Pagination<Words> pagination = new Pagination<>(20);
+
         if(wordsType != null ){
-            model.addAttribute("allWords", learnService.getAllByCategoryName(wordsType));
-            categoryWord = wordsType;
+            words = learnService.getAllByCategoryName(wordsType);
+            model.addAttribute("pagination", pagination.amoutOfPages(words));
+            model.addAttribute("allWords", pagination.pageRows("0", words));
         }else {
-            if (categoryWord != null){
-                model.addAttribute("allWords", learnService.getAllByCategoryName(categoryWord));
+            if (!words.isEmpty()){
+                model.addAttribute("pagination", pagination.amoutOfPages(words));
+                if(pageNumber == null){
+                    model.addAttribute("allWords", pagination.pageRows(this.pageNumber, words));
+                } else {
+                    System.out.println(pageNumber + " after");
+                    this.pageNumber = pageNumber;
+                    model.addAttribute("allWords", pagination.pageRows(this.pageNumber, words));
+                }
             }else {
                 model.addAttribute("notChoosenTable", true);
             }
         }
 
-
+        // voice
         System.setProperty("freetts.voices", "com.sun.speech.freetts.en.us.cmu_us_kal.KevinVoiceDirectory");
-
         final VoiceManager voiceManager = VoiceManager.getInstance();
         final Voice voice = voiceManager.getVoice("kevin16");
 
+        voice.allocate();
         voice.speak(speaker);
+
+
         return "/learn/words";
     }
 

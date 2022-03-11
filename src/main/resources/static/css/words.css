@@ -97,29 +97,30 @@ nav input{
     color: rgb(255, 254, 254);
 }
 
-    #side {
+
+
+
+#info {
     padding-top: 25px;
     background-color: rgb(255, 255, 255, 0.3);
     text-align: center;
 }
 
+.sideP{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:rgb(124, 122, 117) ;
+}
 
-#side p{
-    color:rgb(77, 75, 75);
-    text-align: center;
-    font-size: 16px;
+#sidecolor{
+    background-color:rgb(247, 245, 245) ;
     font-weight: 600;
 }
 
-#inSide{
-    background-color: rgb(236, 236, 236);
-    display: block ;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-}
-
 #axc{
-    max-height: 600px;
+    max-height: 360px;
     background-color: whitesmoke;
 }
 #axc::-webkit-scrollbar-track
@@ -141,95 +142,65 @@ nav input{
     background-color: #b1caff;
 }
 
-table,tr,td, #thColor th {
-    text-align: center  ;
-    border: rgb(223, 218, 238) 0.5px solid;
-    border-bottom: 0px;
-}
-
-
-.table th{
-    font-weight: 800;
-    color: rgb(117, 214, 213);
-    letter-spacing: 0.8px;
-
-}
-
-#form button:hover{
-    background-color: rgb(230, 255, 223);
-
-}
-#new1{
-    color: rgb(138, 137, 137);
-    font-weight: 800;
-}
-#new2{
-    text-align: center;
-    width: 65%;
-    height: 35px;
-    border-radius: 25px;
-    font-weight: 700;
+#chooseTable{
+    word-wrap: break-word !important;
+    color: #494949;
+    background: rgba(240, 250, 255, 0.616);
+    transition: all 0.4s ease 0s;
+    border: 1px solid gainsboro;
     outline:none;
     color: rgb(129, 122, 122);
-    border-color: rgba(159, 221, 87, 0.363);
+    border-color: rgba(156, 155, 152, 0.363);
+}
+
+#chooseTable:hover{
+    color: #837f7f;
+    text-transform: uppercase;
+    background: #ffffff;
+    transition: all 0.4s;
+}
+
+#chooseTable2{
+    word-wrap: break-word !important;
+    background: #ffe8c5;
+    transition: all 0.4s ease 0s;
+    border: 1px solid #ece9ca;
+    outline:none;
+    color: rgb(129, 122, 122);
+}
+
+#chooseTable2:hover {
+    color: #9c9999;
+    text-transform: uppercase;
+    background: #fde1a8;
+    border-color: #f6b93b !important;
+    transition: all 0.4s;
     border-width: 1px;
-}
-#new2::placeholder {
-    color: rgb(138, 137, 137);
-}
-#new2:hover{
-    background-color:#d4f5f4    ;
+
 }
 
-#new3{
-    color: rgb(138, 137, 137);
-    font-weight: 700;
+#footer{
+    background-color: rgb(221, 221, 217);
 }
 
-#first button:hover{
-    background-color: rgb(242, 255, 235);
+table {
+     table-layout: fixed;
+ }
+
+td, th{
+    text-align: center;
+    word-wrap:break-word
 }
 
-#first i{
-    color: rgb(12, 224, 5);
-}
-#new4{
-    background-color: #dfffd9    ;
-}
-
-
-#second td{
-    color: rgb(138, 137, 137);
-}
-
-#second i{
-    color: rgb(255, 0, 0);
-}
-#second button:hover{
-    background-color: rgb(253, 242, 242);
-}
-
-#scTd4{
-    background-color: #ffd9dd;
-}
-
-#id{
-    font-weight: 600;
-}
 
 .pagination{
     text-align: center;
     display: block;
     background-color: rgb(236, 236, 236);
+    height: 35px;
 }
 
-.pagination button{
-    padding-left: 4px;
-    padding-right: 4px;
-    height: 40px;
-}
-
-.pagination p{
+.pagination a{
     background-color: rgb(117, 214, 213);
     text-decoration: none;
     padding: 0px 12px;
@@ -240,7 +211,7 @@ table,tr,td, #thColor th {
 
 }
 
-.pagination p:hover{
+.pagination a:hover{
     color: #ffc400 ;
     font-weight: 900;
     border-width: 1px;
@@ -258,17 +229,4 @@ table,tr,td, #thColor th {
     font-size: 20px;
     color: #ffd758    ;
     background-color: rgb(255, 255, 255,0);
-}
-
-#footer{
-     background-color: rgb(221, 221, 217);
-}
-
-table {
-    table-layout: fixed;
-}
-
-td, th{
-    text-align: center;
-    word-wrap:break-word
 }

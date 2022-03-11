@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}" th:rel="stylesheet">
+
+    <title>Słownik</title>
+
+    <link rel="stylesheet" th:href="@{/css/test.css}">
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+
+
+</head>
+<body>
+<div class="main">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+            <a class="navbar-brand" style="padding-left: 5px;">Słownik</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="    Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" id="a1">
+                        <a class="nav-link" th:href="@{/home}">Home</a>
+                    </li>
+                    <li class="nav-item" id="aRest">
+                        <a class="nav-link" th:href="@{/documentation}">RestAPI</a>
+                    </li>
+                    <li class="nav-item" id="a2">
+                        <a class="nav-link" th:href="@{/science}">Nauka</a>
+                    </li>
+                    <li class="dropdown dd1">
+                        <a class="btn dropdown-toggle" type="button" id="dd1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Testy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dd1">
+                            <li id="a2"><a class="dropdown-item" th:href="@{/test/written}">Test pisemny</a></li>
+                            <li id="a1"><a class="dropdown-item" th:href="@{/test/sound}">Test odsłuchu</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dd2">
+                        <a class="btn dropdown-toggle" type="button" id="dd2" data-bs-toggle="dropdown" aria-expanded="false">
+                            Twoja tabela
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dd2">
+                            <li id="a2"><a class="dropdown-item" th:href="@{/editTable}">Dodaj słowa</a></li>
+                            <li id="a3"><a class="dropdown-item" th:href="@{/createTable}">Dodaj kategorię</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div th:if="${userSession.getLogged() == true}">
+                    <form class="d-flex dropdown navbar-nav dropstart" th:action="@{/account}" method="get">
+                        <button type="submit" class="btn dropdown-toggle tff2" id="user" data-bs-toggle="dropdown"
+                                aria-expanded="false"><i class="fas fa-user fa-lg" id="iconUser"></i></button>
+                        <ul class="dropdown-menu " aria-labelledby="user">
+                            <li><button class="btn dropdown-item" name="select" value="userdata" id="logout1">Twoje dane</button></li>
+                            <li><button class="btn dropdown-item" name="select" value="password" id="logout1">Zmień hasło</button></li>
+                            <li><button class="btn dropdown-item" name="select" value="tokenExist" id="logout1">Generuj token API</button></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li style="background-color: rgb(252, 250, 250);"><a class="dropdown-item" id="logout2" th:href="@{/logout}" style="font-weight: 600;">Wyloguj</a></li>
+                        </ul>
+                    </form>
+                </div>
+                <div th:unless="${userSession.getLogged() == true}">
+                    <form class="d-flex" th:action="@{/login}">
+                        <input type="submit" class="form-control" value="Zaloguj" id="tff">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container-fluid">
+    <div class="row mt-1 pt-1" id="info" th:unless="${testCategories.isEmpty()}">
+        <div class="col-6">
+        </div>
+        <div class="col-lg-2" id="info1" th:unless="${speak}">
+            <form method="get" th:action="@{/test/{path}(path=${path})}">
+                <button class="btn shadow-none" type="submit" id="rowOne" name="leanguage" value="engpol" th:if="!${generateTest}">English - Polish</button>
+                <button class="btn shadow-none" type="submit" id="rowOne" name="leanguage" value="engpol" th:if="${generateTest}" disabled>English - Polish</button>
+            </form>
+        </div>
+        <div class="col-lg-2" id="info2" th:unless="${speak}">
+            <form method="get" th:action="@{/test/{path}(path=${path})}">
+                <button class="btn shadow-none" type="submit" id="rowOne" name="leanguage" value="poleng" th:if="!${generateTest}">Polish - English</button>
+                <button class="btn shadow-none" type="submit" id="rowOne" name="leanguage" value="poleng" th:if="${generateTest}" disabled>Polish - English</button>
+            </form>
+        </div>
+        <div class="col-lg-2" id="info3" th:unless="${speak}">
+            <form method="get" th:action="@{/test/{path}(path=${path})}">
+                <button class="btn shadow-none" type="submit" id="rowOne" name="leanguage" value="mix" style="text-align: center" th:if="!${generateTest}">Mix</button>
+                <button class="btn shadow-none" type="submit" id="rowOne" name="leanguage" value="mix" style="text-align: center" th:if="${generateTest}" disabled>Mix</button>
+            </form>
+        </div>
+        <div class="col-lg-6" id="info1" th:if="${speak}">
+            <form method="get" th:action="@{/test/{path}(path=${path})}">
+                <button class="btn shadow-none" type="submit" id="rowOne" name="leanguage" value="engpol" th:if="!${generateTest}">English - Polish</button>
+                <button class="btn shadow-none" type="submit" id="rowOne" name="leanguage" value="engpol" th:if="${generateTest}" disabled>English - Polish</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row" style="min-height: 100vh;">
+
+        <div class="col-lg-2 col-md-3 col-sm-4 col-12" style="background-color:rgb(247, 245, 245); padding-bottom: 10px;">
+
+            <div class="sticky-top">
+
+                <div class="row">
+                    <div class="sideP" id="sidecolor" style="margin-top: 10px;">
+                        Kategorie
+                    </div>
+
+                    <div id="axc" style="overflow-y: scroll;">
+                        <form method="get" th:action="@{/test/{path}(path=${path})}" th:object="${testCategoriesInt}">
+                            <th:block th:if="${empty} == 'empty'">
+                                <a id="dekoA" th:href="@{/login}">
+                                    <button class="col-12 btn" id="chooseTable3"
+                                            type="button">Zaloguj się a otrzymasz dostęp!
+                                    </button>
+                                </a>
+                            </th:block>
+                            <th:block th:unless="${empty}">
+                                <tr th:each="obj, i : ${category}">
+
+                                    <th:block th:if="${testCategories.isEmpty()}">
+                                        <td>
+                                            <button class="col-12 btn" id="chooseTable" name="wordsType"
+                                                    th:text="${obj.getCatename()}" th:value="${obj.getCatename()}" th:if="${i.index < 7}" type="submit"></button>
+                                            <button class="col-12 btn" id="chooseTableUser" name="wordsType"
+                                                    th:text="${obj.getCatename()}" th:value="${obj.getCatename()}" th:if="${i.index >= 7}" type="submit"></button>
+                                        </td>
+                                    </th:block>
+                                    <th:block th:unless="${testCategories.isEmpty()}">
+                                        <td th:if="${testCategoriesInt.get(i.index) == 1}">
+                                            <button class="col-12 btn" id="chooseTableDiff" name="wordsType"
+                                                    th:text="${obj.getCatename()}" th:value="${obj.getCatename()}" type="submit"></button>
+                                        </td>
+                                        <td th:if="${testCategoriesInt.get(i.index) == 0}">
+                                            <button class="col-12 btn" id="chooseTable" name="wordsType"
+                                                    th:text="${obj.getCatename()}" th:value="${obj.getCatename()}" th:if="${i.index < 7}" type="submit"></button>
+                                            <button class="col-12 btn" id="chooseTableUser" name="wordsType"
+                                                    th:text="${obj.getCatename()}" th:value="${obj.getCatename()}" th:if="${i.index >= 7}" type="submit"></button>
+                                        </td>
+                                    </th:block>
+
+                                </tr>
+                            </th:block>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row" th:unless="${empty}">
+                    <form method="get" th:action="@{/test/{path}(path=${path})}" name="selectForm" style="margin-top: 8px;">
+                        <select class="form-select shadow-none custom-select" name="amount" onchange="selectSubmit();">
+                            <option selected th:unless="${amount}">Ilość słów</option>
+                            <option selected th:if="${amount}" th:text="${amount}"></option>
+                            <tr th:if="${amountofwords[9] >= 10}" th:each="obj, i : ${amountofwords}">
+                                <td>
+                                    <option th:value="${obj}" th:text="${obj}"></option>
+                                </td>
+
+                            </tr>
+                            <tr th:if="${amountofwords[9] < 10}">
+                                <td>
+                                    <option th:value="${amountofwords[9]}" th:text="${amountofwords[9]}"></option>
+                                </td>
+                            </tr>
+                        </select>
+                    </form>
+                </div>
+
+                <div class="row" th:if="${generateTest}" style="margin-top: 10px">
+                    <form method="get" th:action="@{/test/{path}(path=${path})}">
+                        <button type="submit" class="col-12 btn" id="resetButton" name="resetButton" value="reset">RESET</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-10 col-md-9 col-sm-8 col-12 ps-0 pe-0">
+
+            <th:block th:if="${testCategories.isEmpty()} == false and ${generateTest} == false">
+                <table class="table table-striped" id="tabel" style="text-align: center">
+                    <thead class="thead-dark">
+                    <tr class="tff2">
+                        <th class="col-2 fw-bold"> id</th>
+                        <th class="col-4 fw-bold"> rodzaj</th>
+                        <th class="col-4 fw-bold"> katgoria</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="obj, i : ${testCategories}" style="background-color: rgba(255,255,255,0.80)" >
+                        <td class="col-3"><span th:text="${(i.index)+1}"></span></td>
+                        <td class="col-4"><span th:text="${obj}"></span></td>
+                        <td class="col-5"><span th:text="${obj}"></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </th:block>
+
+            <h5 th:if="${testCategories.isEmpty()}" style="text-align: center; padding-top:10%;"> Proszę wybrać kategorię z listy </h5>
+            <th:block th:if ="!${testCategories.isEmpty()}">
+                <h5 th:unless="${userchoices[0]}" style="text-align: center; padding-top:10%;"> Proszę wybrać ilość słów </h5>
+                <h5 th:unless="${userchoices[1]}" th:if="${userchoices[0]} == true" style="text-align: center; padding-top:10%;"> Proszę wybrać format językowy </h5>
+            </th:block>
+
+            <div class="mt-5" id="checkControl1" th:if="!${generateTest}">
+                <h5 class="col-12 mt-5" th:if="!${testCategories.isEmpty()}"><p class="mb-0"><i class="far fa-check-circle fa-lg pe-2"></i>Wybrano kategorie</p></h5>
+                <h5 class="col-12" th:if="${userchoices[0]}"><p class="mb-0"><i class="far fa-check-circle fa-lg pe-2" ></i>Wybrano ilość słów</p></h5>
+                <h5 class="col-12" th:if="${userchoices[1]}"><p class="mb-0"><i class="far fa-check-circle fa-lg pe-2" ></i>Wybrano format językowy</p></h5>
+
+                <form method="get" th:action="@{/test/{path}(path=${path})}">
+                    <button th:if="!${testCategories.isEmpty()} and ${userchoices[0]} and ${userchoices[1]} and !${generateTest}" class="btn w-auto btn-success btn-lg" name="generate" value="generate" >Generuj</button>
+                </form>
+            </div>
+
+            <div id="checkControl2">
+                <h5 class="col-12" th:if="${testCategories.isEmpty()}"><p class="mb-0"><i class="far fa-times-circle fa-lg pe-2"></i>Wybrano kategorie</p></h5>
+                <h5 class="col-12" th:unless="${userchoices[0]}"><p class="mb-0"><i class="far fa-times-circle fa-lg pe-2"></i>Wybrano ilość słów</p></h5>
+                <h5 class="col-12" th:unless="${userchoices[1]}"><p class="mb-0"><i class="far fa-times-circle fa-lg pe-2"></i>Wybrano format językowy</p></h5>
+
+                <form method="get" th:action="@{/test/{path}(path=${path})}">
+                    <button th:if="!${generateTest} and ${testCategories.isEmpty()} or !${userchoices[0]} or !${userchoices[1]}" class="btn w-auto btn-danger btn-lg" name="generate" value="generate" disabled>Uzupełnij dane</button>
+                </form>
+            </div>
+
+
+            <th:block th:if="${generateTest}">
+                <form method="post" th:action="@{/test/{path}(path=${path})}" th:object="${counterObject}" style="text-align: center">
+                    <table class="table table-striped" id="tabel">
+                        <thead class="thead-dark">
+                        <tr class="tff2">
+                            <th class="col-2 fw-bold"> id</th>
+                            <th:block th:if="${language} eq 'engpol'">
+                                <th class="col-4 fw-bold">eng</th>
+                                <th class="col-4 fw-bold">wpisz po polsku</th>
+                            </th:block>
+                            <th:block th:if="${language} eq 'poleng'">
+                                <th class="col-4 fw-bold">pol</th>
+                                <th class="col-4 fw-bold">wpisz po angielsku</th>
+                            </th:block>
+                            <th:block th:if="${language} eq 'mix'">
+                                <th class="col-4 fw-bold">mix</th>
+                                <th class="col-4 fw-bold">wpisz w odpowiednim języku</th>
+                            </th:block>
+
+                            <th class="col-2 fw-bold">wynik</th>
+                            <th:block th:if="${postActivated == 'true'}">
+                                <th class="col-2 fw-bold" th:if="${check}">odpowiedź</th>
+
+                            </th:block>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="obj, i : ${allWords}" style="background-color: rgba(255,255,255,0.55)" >
+                            <td class="col-2"><span th:text="${(i.index)+1}" style="color: rgb(138, 137, 137); font-weight: 800;"></span></td>
+
+                            <td class="col-4" th:if="${path} eq 'written'"><span th:text="${obj}" style="color: rgb(138, 137, 137); font-weight: 700;"></span></td>
+                            <td class="col-4" th:if="${path} eq 'sound'"><button th:value="${obj}" name="speaker" id="imgButton"><img style="width: 80%" src="https://img.icons8.com/windows/32/000000/speaker.png"/></button></td>
+
+                            <td class="col-4" th:if="${postActivated != 'true'}"><input th:field="*{list[__${i.index}__]}" type="text" style="width: 50%; text-align: center; color: rgb(138, 137, 137); font-weight: 700;"></td>
+
+                            <th:block th:unless="${speakerinuse}">
+                                <td class="col-4" th:if="${postActivated == 'true'} and ${score[__${i.index}__] == 0}"><input th:field="*{list[__${i.index}__]}" th:placeholder="${placeH[__${i.index}__]}" type="text" style="width: 50%; text-align: center; color: rgb(138, 137, 137); font-weight: 700;"></td>
+                                <td class="col-4" th:if="${postActivated == 'true'} and ${score[__${i.index}__] == 1}" th:text="${placeH[__${i.index}__]}" style="color: rgb(138, 137, 137); font-weight: 700;"></td>
+                            </th:block>
+
+                            <th:block th:if="${speakerinuse}">
+                                <td class="col-4" th:if="${postActivated == 'true'} and ${score[__${i.index}__] == 0}"><input th:field="*{list[__${i.index}__]}" th:placeholder="${member[__${i.index}__]}" type="text" style="width: 50%; text-align: center; color: rgb(138, 137, 137); font-weight: 700;"></td>
+                                <td class="col-4" th:unless="${check}" th:if="${postActivated == 'true'} and ${score[__${i.index}__] == 1}"><input th:field="*{list[__${i.index}__]}" th:placeholder="${member[__${i.index}__]}" type="text" style="width: 50%; text-align: center; color: rgb(138, 137, 137); font-weight: 700;"></td>
+
+                                <th:block th:if="${check} eq 'check'">
+                                    <td class="col-4" th:if="${postActivated == 'true'} and ${score[__${i.index}__] == 1}" th:text="${member[__${i.index}__]}" style="color: rgb(138, 137, 137); font-weight: 700;"></td>
+                                </th:block>
+                            </th:block>
+
+                            <th:block th:if="${postActivated != 'true'}">
+                                <td class="col-4"></td>
+                            </th:block>
+
+                            <div th:if="${postActivated == 'true'}">
+                                <th:block th:unless="${speakerinuse}">
+                                    <td class="col-2" th:if="${score[__${i.index}__] == 1}"><span style="color: green; font-weight: 700;">dobrze</span></td>
+                                    <td class="col-2" th:if="${score[__${i.index}__] == 1}"><span style="color: green; font-weight: 700;" th:text="${answer[__${i.index}__]}"></span></td>
+
+                                    <td class="col-2" th:if="${score[__${i.index}__] == 0}"><span style="color: red; font-weight: 700">źle</span></td>
+                                    <td class="col-2" th:if="${score[__${i.index}__] == 0}"><span style="color: red; font-weight: 700" th:text="${answer[__${i.index}__]}"></span></td>
+                                </th:block>
+
+                                <th:block th:if="${speakerinuse}">
+                                    <td class="col-2" th:if="${score[__${i.index}__] == 1}"><span style="color: green"></span></td>
+                                    <td class="col-2" th:if="${score[__${i.index}__] == 0}"><span style="color: red"></span></td>
+                                </th:block>
+
+                            </div>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button th:unless="${congratulations} and ${check}" class="btn" id="checkButton" name="check" value="check" type="submit">sprawdź</button>
+                    <button th:if="${congratulations} and ${check}" class="btn" id="checkButton2" type="submit">GRATULACJE</button>
+                </form>
+            </th:block>
+        </div>
+    </div>
+    <div class="row">
+    </div>
+</div>
+
+<div class="container-fluid" style="background-color: white;">
+
+    <footer class="row g-light text-center p-2" id="footer">
+        <div class="col-lg-2">
+            Aleksander Haberland 2021
+        </div>
+        <div class="col-lg-7">
+        </div>
+        <div class="col-lg-3">
+            <i class="fas fa-envelope-square pe-1"></i>email: aleksanderhabe@gmail.com
+        </div>
+    </footer>
+
+</div>
+
+<script>
+    function selectSubmit()
+    {
+        document.selectForm.submit();
+
+    }
+</script>
+
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"></script>
+</body>
+</html>

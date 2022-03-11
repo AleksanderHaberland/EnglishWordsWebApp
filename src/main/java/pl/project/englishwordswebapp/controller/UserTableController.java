@@ -36,6 +36,13 @@ public class UserTableController {
         model.addAttribute("userSession", currentUser);
     }
 
+    private static List<Category> remover(int toRemove, List<Category> categories){
+        for(int x = 0; x < toRemove; x++){
+            categories.remove(0);
+        }
+        return categories;
+    }
+
     @GetMapping("/createTable")
         public String createTable(ModelMap map, @RequestParam(value = "pageNumber", required = false) String pageNumber,
                                   @ModelAttribute String nameExist, RedirectAttributes rrat){
@@ -45,9 +52,11 @@ public class UserTableController {
             return "redirect:/login";
         }
 
-        Pagination<Category> pagination = new Pagination<>();
+        Pagination<Category> pagination = new Pagination<>(10);
 
-        List<Category> allCategories = createCategoryService.allCategories(currentUser.getId());
+        //List<Category> allCategories = createCategoryService.allCategories(currentUser.getId());
+
+        List<Category> allCategories = remover(7, createCategoryService.allCategories(currentUser.getId()));
         // checking duplicates ! important
         boolean duplicate = false;
 
@@ -134,9 +143,11 @@ public class UserTableController {
             attr.addFlashAttribute("logged", false);
             return "redirect:/login";
         }
-        Pagination pagination = new Pagination();
+        Pagination pagination = new Pagination(10);
 
-        List<Category> allCategories = createCategoryService.allCategories(currentUser.getId());
+        //List<Category> allCategories = createCategoryService.allCategories(currentUser.getId());
+        List<Category> allCategories = remover(7, createCategoryService.allCategories(currentUser.getId()));
+
         map.addAttribute("allCategories", allCategories);
 
         String notSelected = "false";

@@ -15,66 +15,69 @@
 </head>
 
 <body>
-
 <div class="main">
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
 
-        <a class="navbar-brand" style="padding-left: 5px;">Słownik</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="    Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item" id="a1">
-                    <a class="nav-link" th:href="@{home}">Home</a>
-                </li>
-                <li class="nav-item" id="a2">
-                    <a class="nav-link" th:href="@{science}">Nauka</a>
-                </li>
-                <li class="dropdown dd1">
-                    <a class="btn dropdown-toggle" type="button" id="dd1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Testy
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dd1">
-                        <li id="a2"><a class="dropdown-item" th:href="@{writtenTest}">Test pisemny</a></li>
-                        <li id="a1"><a class="dropdown-item" th:href="@{createTable}">Test odsłuchu</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown dd2">
-                    <a class="btn dropdown-toggle" type="button" id="dd2" data-bs-toggle="dropdown" aria-expanded="false">
-                        Twoja tabela
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dd2">
-                        <li id="a2"><a class="dropdown-item" th:href="@{editTable}">Edytuj tabelę</a></li>
-                        <li id="a3"><a class="dropdown-item" th:href="@{createTable}">Stwórz tabelę</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <div th:if="${userSession.getLogged() == true}">
-                <form class="d-flex dropdown navbar-nav dropstart" th:action="@{account}" method="get">
-                    <button type="submit" class="btn dropdown-toggle tff2" id="user" data-bs-toggle="dropdown"
-                            aria-expanded="false"><i class="fas fa-user fa-lg" id="iconUser"></i></button>
-                    <ul class="dropdown-menu " aria-labelledby="user" >
-                        <li><button class="btn dropdown-item" name="select" value="userdata" id="logout1">Twoje dane</button></li>
-                        <li><button class="btn dropdown-item" name="select" value="password" id="logout1">Zmień hasło</button></li>
-                        <li><button class="btn dropdown-item" name="select" value="tokenExist" id="logout1">Generuj token API</button></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li style="background-color: rgb(252, 250, 250);"><a class="dropdown-item" id="logout2" th:href="@{logout}" style="font-weight: 600;">Wyloguj</a></li>
-                    </ul>
-                </form>
-
+            <a class="navbar-brand" style="padding-left: 5px;">Słownik</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="    Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" id="a1">
+                        <a class="nav-link" th:href="@{/home}">Home</a>
+                    </li>
+                    <li class="nav-item" id="aRest">
+                        <a class="nav-link" th:href="@{/documentation}">RestAPI</a>
+                    </li>
+                    <li class="nav-item" id="a2">
+                        <a class="nav-link" th:href="@{science}">Nauka</a>
+                    </li>
+                    <li class="dropdown dd1">
+                        <a class="btn dropdown-toggle" type="button" id="dd1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Testy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dd1">
+                            <li id="a2"><a class="dropdown-item" th:href="@{test/written}">Test pisemny</a></li>
+                            <li id="a1"><a class="dropdown-item" th:href="@{test/sound}">Test odsłuchu</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dd2">
+                        <a class="btn dropdown-toggle" type="button" id="dd2" data-bs-toggle="dropdown" aria-expanded="false">
+                            Twoja tabela
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dd2">
+                            <li id="a2"><a class="dropdown-item" th:href="@{editTable}">Dodaj słowa</a></li>
+                            <li id="a3"><a class="dropdown-item" th:href="@{createTable}">Dodaj kategorię</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div th:if="${userSession.getLogged() == true}">
+                    <form class="d-flex dropdown navbar-nav dropstart" th:action="@{account}" method="get">
+                        <button type="submit" class="btn dropdown-toggle tff2" id="user" data-bs-toggle="dropdown"
+                                aria-expanded="false"><i class="fas fa-user fa-lg" id="iconUser"></i></button>
+                        <ul class="dropdown-menu " aria-labelledby="user">
+                            <li><button class="btn dropdown-item" name="select" value="userdata" id="logout1">Twoje dane</button></li>
+                            <li><button class="btn dropdown-item" name="select" value="password" id="logout1">Zmień hasło</button></li>
+                            <li><button class="btn dropdown-item" name="select" value="tokenExist" id="logout1">Generuj token API</button></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li style="background-color: rgb(252, 250, 250);"><a class="dropdown-item" id="logout2" th:href="@{logout}" style="font-weight: 600;">Wyloguj</a></li>
+                        </ul>
+                    </form>
+                </div>
+                <div th:unless="${userSession.getLogged() == true}">
+                    <form class="d-flex" th:action="@{login}">
+                        <input type="submit" class="form-control" value="Zaloguj" id="tff">
+                    </form>
+                </div>
             </div>
-            <div th:unless="${userSession.getLogged() == true}">
-                <form class="d-flex" th:action="@{login}">
-                    <input type="submit" class="form-control" value="Zaloguj" id="tff">
-                </form>
-            </div>
-        </div>
         </div>
     </nav>
 </div>
+
+
 
 <div class="container-fluid" style="margin-top: 20px;">
     <div class="row" id="info">
@@ -90,8 +93,8 @@
 
                 <div style="overflow-y: scroll; padding-top: 5px; " id="axc">
                     <form method="get" th:action="@{/words}">
-                        <tr th:each="obj : ${category}">
-                            <td><button type="submit" class="col-12 btn" id="chooseTable" th:value="${obj.getCatename()}" name="wordsType" th:text="${obj.getCatename()}"></button></td>
+                        <tr th:each="obj : ${baseCategory}">
+                                <td><button type="submit" class="col-12 btn" id="chooseTable" th:value="${obj.getCatename()}" name="wordsType" th:text="${obj.getCatename()}"></button></td>
                         </tr>
                     </form>
                 </div>
@@ -106,7 +109,7 @@
                             <a th:href="@{login}" id="dekoA"><button type="button" th:if="${empty} == 'notloged'" class="col-12 btn" id="chooseTable3" >Zaloguj się a otrzymasz dostęp!</button></a>
 
                         </th:block>
-                        <tr th:each="obj : ${category}">
+                        <tr th:each="obj : ${userCategory}">
                             <td><button type="submit" class="col-12 btn" id="chooseTable" th:value="${obj.getCatename()}" name="wordsType" th:text="${obj.getCatename()}"></button></td>
                         </tr>
                     </form>

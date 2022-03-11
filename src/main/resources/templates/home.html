@@ -8,70 +8,176 @@
 
     <!-- Bootstrap CSS -->
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 
     <title>Słownik</title>
-    <!-- CSS -->
-    <link th:href="@{/css/home.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 
 <body>
+<div class="main">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid" id="abc">
-        <a class="navbar-brand " id="a0">Słownik</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item" id="a1">
-                    <a class="nav-link" th:href="@{home}">Home</a>
-                </li>
-                <li class="nav-item" id="a2">
-                    <a class="nav-link" th:href="@{science}">Nauka</a>
-                </li>
-                <script>
-                    function info() {
-                        confirm("Zaloguj się aby mieć dostęp do wyników!");
-                    }
-                </script>
-                <li class="nav-item dropdown" id="a3">
-                    <a class="nav-link" th:href="@{score}">Wynik</a>
-                </li>
-                <li class="dropdown" >
-                    <a class="btn dropdown-toggle" type="button" id="dd" data-bs-toggle="dropdown" aria-expanded="false">
-                        Twoja tabela
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dd">
-                        <li id="a2"><a class="dropdown-item" th:href="@{editTable}">Edytuj tabelę</a></li>
-                        <li id="a3"><a class="dropdown-item" th:href="@{createTable}">Stwórz tabelę</a></li>
-                    </ul>
-                </li>
-
-            </ul>
-
-            <div th:if="${userSession.getLogged() == true}">
-                <form class="d-flex" th:action="@{logout}" method="post">
-                    <input type="submit" class="btn btn-secondary" value="Wyloguj" id="tff">
-                </form>
+            <a class="navbar-brand" style="padding-left: 5px;">Słownik</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="    Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" id="a1">
+                        <a class="nav-link" th:href="@{/home}">Home</a>
+                    </li>
+                    <li class="nav-item" id="aRest">
+                        <a class="nav-link" th:href="@{/documentation}">RestAPI</a>
+                    </li>
+                    <li class="nav-item" id="a2">
+                        <a class="nav-link" th:href="@{science}">Nauka</a>
+                    </li>
+                    <li class="dropdown dd1">
+                        <a class="btn dropdown-toggle" type="button" id="dd1" data-bs-toggle="dropdown" aria-expanded="false">
+                            Testy
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dd1">
+                            <li id="a2"><a class="dropdown-item" th:href="@{test/written}">Test pisemny</a></li>
+                            <li id="a1"><a class="dropdown-item" th:href="@{test/sound}">Test odsłuchu</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown dd2">
+                        <a class="btn dropdown-toggle" type="button" id="dd2" data-bs-toggle="dropdown" aria-expanded="false">
+                            Twoja tabela
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dd2">
+                            <li id="a2"><a class="dropdown-item" th:href="@{editTable}">Dodaj słowa</a></li>
+                            <li id="a3"><a class="dropdown-item" th:href="@{createTable}">Dodaj kategorię</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div th:if="${userSession.getLogged() == true}">
+                    <form class="d-flex dropdown navbar-nav dropstart" th:action="@{account}" method="get">
+                        <button type="submit" class="btn dropdown-toggle tff2" id="user" data-bs-toggle="dropdown"
+                                aria-expanded="false"><i class="fas fa-user fa-lg" id="iconUser"></i></button>
+                        <ul class="dropdown-menu " aria-labelledby="user">
+                            <li><button class="btn dropdown-item" name="select" value="userdata" id="logout1">Twoje dane</button></li>
+                            <li><button class="btn dropdown-item" name="select" value="password" id="logout1">Zmień hasło</button></li>
+                            <li><button class="btn dropdown-item" name="select" value="tokenExist" id="logout1">Generuj token API</button></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li style="background-color: rgb(252, 250, 250);"><a class="dropdown-item" id="logout2" th:href="@{logout}" style="font-weight: 600;">Wyloguj</a></li>
+                        </ul>
+                    </form>
+                </div>
+                <div th:unless="${userSession.getLogged() == true}">
+                    <form class="d-flex" th:action="@{login}">
+                        <input type="submit" class="form-control" value="Zaloguj" id="tff">
+                    </form>
+                </div>
             </div>
-            <div th:unless="${userSession.getLogged() == true}">
-                <form class="d-flex" th:action="@{login}">
-                    <input type="submit" class="btn btn-secondary" value="Zaloguj" id="tff">
-                </form>
-            </div>
-
-
         </div>
-    </div>
-</nav>
-
-<div class="container vh-100" style="background-color:white;">
-    <h4 style="text-align:center;">Aleksander H.</h4>
+    </nav>
 </div>
 
+<div class="container-fluid mainContainer px-0" style="margin-top: 20px;">
+    <section class="py-4 text-center">
+        <div class="row py-lg-5 g-0">
+            <div class="col-lg-5 mx-auto" id="moreLight">
+                <h1 class="fw-normal">Słownik Polsko Angielski</h1>
+                <p class="lead ">Nauka słów oparta na twojej bazie kategorich słownych</p>
+                <p>
+                    <a href="#student" class="btn my-2 me-1 fw-bold" id="btnMain">Dla uczniów</a>
+                    <a th:href="@{/documentation}" class="btn my-2 ms-1 fw-bold" id="btnRest">REST API</a>
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="container-fluid mt-5">
+    <div class="row align-items-md-stretch">
+        <div class="col-md-6">
+            <div class="h-100 p-5 text-white rounded-3" style="background-color: rgb(165, 165, 248);">
+                <h2>Stwórz konto aby uzyskać możliwość tworzenia włanych baz</h2>
+                <p><em>Zarejestruj się, aby otrzymać dostęp do bardziej wyspecjalizowanych funkcji.</em></p>
+                <a th:href="@{/register}" role="button" class="btn btn-outline-light">Rejestracja</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="h-100 p-5 bg-light border rounded-3">
+                <h2>Masz konto, Zaloguj się!</h2>
+                <p><em>Logowanie upoważnia do korzystania z testów i umożliwia tworzenie własnych baz. Jeśli jesteś deweloperem masz możliwość tworzenia własnej aplikacji za pomocą REST API
+                    Słownika.</em></p>
+                <a th:href="@{/login}" role="button" class="btn btn-outline-secondary">Logowanie</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="background-color: rgb(247, 247, 247);" id="student">
+
+    <div class="row class mt-5 p-3">
+        <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 g-0">
+            <img src="../img/science2.png"  class="img-fluid float-start" alt="science">
+            <img src="../img/science.png" class="img-fluid float-start" alt="science">
+        </div>
+
+        <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 g-4 pt-3">
+            <h3 class="text-center"><span class=" p-2" style="background-color: #00ff88; color: rgb(87, 87, 87);">Nauka</span>
+                <span class="text-muted">  Powtarzaj słówka z wybranej kategorii</span></h3>
+            <p class="lead pt-5 px-5 text-center mt-3 " style=" font-weight: 330; font-family: Georgia, 'Times New Roman', Times, serif; color: rgb(80, 80, 80); letter-spacing: 1px;">
+                Boczny pasek umożliwia wybranie interesującej cię kategorii, który po naciśnięciu przekieruje cię do miejsca, z którego możesz uczyć się słówek.
+                W tym miejscu możesz skorzystać z własnej bazy słów.
+            </p>
+        </div>
+    </div>
+    <hr class="mainHR"/>
+
+    <div class="row class p-3">
+        <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 g-4 pt-3">
+            <h3 class="text-center"><span class=" p-2" style="background-color: rgb(150, 193, 250); color: rgb(87, 87, 87);">Testy</span>
+                <span class="text-muted">  Przejdź wybrany test pisemny lub odsłuchu</span></h3>
+            <p class="lead pt-5 px-5 text-center mt-3 mb-1" style=" font-weight: 330; font-family: Georgia, 'Times New Roman', Times, serif; color: rgb(80, 80, 80); letter-spacing: 1px;">
+                Generuj test wybierając jego rodzaj, kategorie słowne, ilość słów oraz format językowy.
+                Test odsłuchu prowadzony jest w stałym formacie językowym, Angielskim mówionym. W teście pisemnym do wyboru znajdziesz:</p>
+            <p class="lead text-center m-0 p-0 fw-normal">Angielski na Polski</p>
+            <p class="lead text-center m-0 p-0 fw-normal">Polski na Angielski </p>
+            <p class="lead text-center m-0 p-0 fw-normal">Mix</p>
+        </div>
+        <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 g-0">
+            <img src="../img/navTest.png"  class="img-fluid float-start" alt="science">
+            <img src="../img/written.png" class="img-fluid float-start" alt="science">
+        </div>
+    </div>
+    <hr class="mainHR2"/>
+
+    <div class="row class" style="min-height: 100vh;">
+        <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 g-0">
+            <img src="../img/navCreate.png"  class="img-fluid float-start" alt="science">
+            <img src="../img/createWord.png" class="img-fluid float-start" alt="science">
+        </div>
+
+        <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 pt-3">
+            <h3 class="text-center"><span class=" p-2" style="background-color: #ff2aadb9; color: rgb(87, 87, 87);">Twoja tabela</span>
+                <span class="text-muted">  Stwórz własną bazę słów i zarządzaj jej zawartością</span></h3>
+            <p class="lead pt-5 px-5 text-center mt-3 " style=" font-weight: 330; font-family: Georgia, 'Times New Roman', Times, serif; color: rgb(80, 80, 80); letter-spacing: 1px;">Z listy po lewej możesz wybrać kategroię cię interesującą, która po naciśnieciu przekieruje cię do miejsca z którego możesz uczyć się słówek.
+                Twoja tabela umożliwia ci dodawanie i usuwanie twoich kategorii do, który masz możliwość dodawania własnego zbioru słów oraz ich przyszłe edycji.
+            </p>
+        </div>
+    </div>
+    <hr class="mainHR"/>
+</div>
+
+<div class="container-fluid" id="footer">
+    <footer class="row g-light text-center p-2" id="footer">
+        <div class="col-lg-2">
+            Aleksander Haberland 2021
+        </div>
+        <div class="col-lg-7">
+        </div>
+        <div class="col-lg-3">
+            <i class="fas fa-envelope-square pe-1"></i>email: aleksanderhabe@gmail.com
+        </div>
+    </footer>
+</div>
 
 <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/2.9.2/umd/popper.min.js}"></script>

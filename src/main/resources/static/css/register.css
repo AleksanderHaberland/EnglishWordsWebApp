@@ -4,10 +4,39 @@ body {
     background-size: cover;
 }
 
-#tff {
-    background: rgb(255, 210, 251);
-    background: linear-gradient(118deg, rgba(255, 210, 251, 1) 31%, rgba(139, 255, 226, 1) 72%, rgba(255, 237, 171, 1) 100%);
+#tff{
+    background: rgb(255,210,251);
+    background: linear-gradient(118deg, rgba(255,210,251,1) 31%, rgba(139,255,226,1) 72%, rgba(255,237,171,1) 100%);
     color: rgb(104, 97, 97);
+}
+
+.tff2{
+    background: rgb(255,210,251);
+    background: linear-gradient(118deg, rgba(255,210,251,1) 31%, rgba(139,255,226,1) 72%, rgba(255,237,171,1) 100%);    border-radius: 15px;
+}
+.tff2:hover{
+    background-color: rgb(235, 235, 235);
+    border: 2px solid rgb(235, 235, 235)   ;
+}
+
+#iconUser{
+    color: rgb(139, 75, 134);
+}
+
+@media screen and (min-width: 1502px) {
+    .tff {
+        width: 150px;
+    }
+}
+
+.navbar  {
+    opacity: 1;
+    width: 100%;
+    top:0;
+}
+
+.main{
+    margin-bottom: 50px;
 }
 
 nav li {
@@ -16,7 +45,7 @@ nav li {
     text-align: center;
 }
 
-nav input {
+nav input{
     margin-right: 25px;
     width: 155px;
 }
@@ -24,16 +53,15 @@ nav input {
 #a1 :hover {
     background-color: #ffcc00;
 }
-
 #a2 :hover {
     background-color: #00ff88;
 }
-
 #a3 :hover {
     background-color: #fd34b0;
-
 }
-
+#aRest:hover{
+    background-color: rgb(255,189,113,0.90);
+}
 #a3x :hover {
     background-color: #fd34b0;
     color: currentColor;
@@ -42,14 +70,37 @@ nav input {
     text-decoration: none;
 }
 
-#a4 {
-    color: #00ff88;
+#imgButton{
+    padding: 0;
+    border: none;
+    background: none;
 }
 
-#tff {
-    background: rgb(255, 210, 251);
-    background: linear-gradient(118deg, rgba(255, 210, 251, 1) 31%, rgba(139, 255, 226, 1) 72%, rgba(255, 237, 171, 1) 100%);
+.dd1 a:hover{
+    background-color: rgb(150, 193, 250);
 }
+
+.dd2 a:hover{
+    background-color: #ff2aadb9;
+}
+
+.dropdown a:hover{
+    background-color: rgb(150, 193, 250);
+}
+#logout1:hover{
+    background-color: rgb(150, 193, 250);
+    color: rgb(255, 254, 254);
+}
+
+#logout2:hover{
+    background-color: rgb(255, 87, 87);
+    color: rgb(255, 254, 254);
+}
+
+
+
+
+
 
 #alertt {
     font-family: Bookman, URW Bookman L, serif;
@@ -57,13 +108,13 @@ nav input {
     text-align: center;
     font-size: 25px;
 }
+
 #alertt a{
     font-weight: 800;
     color: #74ADAE ;
     font-size: 26px;
 
 }
-
 
 .form-control, .form-control:focus, .input-group-addon {
     border-color: #e1e1e1;
@@ -168,9 +219,3 @@ nav input {
     font-size: 7px;
     position: absolute;
 }
-
-.dropdown a:hover{
-    background-color: rgb(150, 193, 250);
-}
-
-

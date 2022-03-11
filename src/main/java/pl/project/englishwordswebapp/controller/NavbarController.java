@@ -1,15 +1,19 @@
 package pl.project.englishwordswebapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.project.englishwordswebapp.data.UserRepository;
 import pl.project.englishwordswebapp.mainService.CreateCategoryService;
+import pl.project.englishwordswebapp.mainService.LearnService;
 import pl.project.englishwordswebapp.mainService.UserService;
 import pl.project.englishwordswebapp.model.Category;
 import pl.project.englishwordswebapp.model.User;
@@ -23,15 +27,14 @@ public class NavbarController {
 
     private UserRepository userRepository;
     private CurrentUser currentUser;
-    private CreateCategoryService createCategoryService;
     private UserService us;
-
+    private LearnService learnService;
     @Autowired
-    public NavbarController(UserRepository userRepository, CurrentUser currentUser, CreateCategoryService createCategoryService, UserService us){
+    public NavbarController(UserRepository userRepository, CurrentUser currentUser, UserService us, LearnService learnService){
         this.userRepository = userRepository;
         this.currentUser = currentUser;
-        this.createCategoryService = createCategoryService;
         this.us = us;
+        this.learnService = learnService;
     }
 
     @ModelAttribute
@@ -53,16 +56,39 @@ public class NavbarController {
     public String learn(Model model){
         String problem = "";
         //logged
+        if (currentUser.getId() == null){
+            List<Category> currentUserCategory = new ArrayList<>();
+            currentUserCategory = learnService.getAllCategories(1);
+
+            List<Category> baseCategory = new ArrayList<>();
+            for(int y = 0; y < 7; y++){
+                baseCategory.add(currentUserCategory.get(y));
+            }
+            model.addAttribute("baseCategory", baseCategory);
+            problem = "notloged";
+            model.addAttribute("empty", problem);
+        }
         if(currentUser.getId() != null){
             List<Category> currentUserCategory = new ArrayList<>();
-            currentUserCategory = createCategoryService.allCategories(currentUser.getId());
-            model.addAttribute("category", currentUserCategory);
+            currentUserCategory = learnService.getAllCategories(currentUser.getId());
+
+            List<Category> baseCategory = new ArrayList<>();
+            for(int y = 0; y < 7; y++){
+                baseCategory.add(currentUserCategory.get(y));
+            }
+            List<Category> userCategory = currentUserCategory;
+            for(int x = 0; x < 7; x++){
+                userCategory.remove(0);
+            }
+
+            model.addAttribute("baseCategory", baseCategory);
+            model.addAttribute("userCategory", userCategory);
             //empty datas
             if (currentUserCategory.isEmpty()){
                 problem = "empty";
                 model.addAttribute("empty", problem);
             }
-        }else {// nologged
+        }else {// nologed
             problem = "notloged";
             model.addAttribute("empty", problem);
 
@@ -113,5 +139,10 @@ public class NavbarController {
         }
 
         return "redirect:/account";
+    }
+
+    @GetMapping("/documentation")
+    public String doc(){
+        return "restdoc";
     }
 }

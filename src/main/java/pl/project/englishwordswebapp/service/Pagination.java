@@ -1,37 +1,36 @@
 package pl.project.englishwordswebapp.service;
 
-import org.springframework.stereotype.Controller;
-import pl.project.englishwordswebapp.model.Category;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Pagination<T>{
-    public Pagination(){
+    final private int amountOfRows;
+
+    public Pagination(int amountOfRows){
+        this.amountOfRows = amountOfRows;
     }
-    // method return amount of pages based on received amount of categories / 10 .
-    // If number categories divided by 10 has remainder, then returns pages + 1
+    // method return amount of pages based on received amount of categories / amountOfRows .
+    // If number categories divided by amountOfRows has remainder, then returns pages + 1
     public List<Integer> amoutOfPages(List<T> categories){
 
         List<Integer> pages = new ArrayList<>();
         int amoutOfPages = 0;
         int x = 0;
 
-        if(categories.size() == 0 || categories.size() <= 10){
+        if(categories.size() == 0 || categories.size() <= amountOfRows){
             amoutOfPages = 1;
         }
-        if(categories.size() > 10){
+        if(categories.size() > amountOfRows){
             if(categories.size() % 2 == 0){
-                if(categories.size() % 10 == 0){
-                    amoutOfPages = categories.size() / 10;
+                if(categories.size() % amountOfRows == 0){
+                    amoutOfPages = categories.size() / amountOfRows;
                 }
                 else{
-                    amoutOfPages = (categories.size() / 10) + 1;
+                    amoutOfPages = (categories.size() / amountOfRows) + 1;
                 }
             }
             else {
-                amoutOfPages = (categories.size() / 10) + 1;
+                amoutOfPages = (categories.size() / amountOfRows) + 1;
             }
         }
         // do at least once to get page page numb.1
@@ -55,15 +54,15 @@ public class Pagination<T>{
 
         if(pageNumberAfterParse > 1){
 
-            start = pageNumberAfterParse * 10 - 10;
+            start = pageNumberAfterParse * amountOfRows - amountOfRows;
 
-            for(int i = start; i < categoryName.size() && categoryName.size() <= pageNumberAfterParse * 10; i++ ){
+            for(int i = start; i < categoryName.size() && categoryName.size() <= pageNumberAfterParse * amountOfRows; i++ ){
                 currentCategoryName.add(categoryName.get(i));
             }
 
-            if(categoryName.size() >= pageNumberAfterParse * 10 + 1){
+            if(categoryName.size() >= pageNumberAfterParse * amountOfRows + 1){
 
-                for (int i = start; i < pageNumberAfterParse * 10; i++){
+                for (int i = start; i < pageNumberAfterParse * amountOfRows; i++){
                     currentCategoryName.add(categoryName.get(i));
                 }
             }
@@ -71,13 +70,13 @@ public class Pagination<T>{
         }
         else {
             // could no exsits
-            if(categoryName.size() > 0 && categoryName.size() < 11){
+            if(categoryName.size() > 0 && categoryName.size() < amountOfRows + 1){
                 for (T cat : categoryName){
                     currentCategoryName.add(cat);
                 }
             }
-            if(categoryName.size() > 10) {
-                for (int i = 0; i < 10; i++){
+            if(categoryName.size() > amountOfRows) {
+                for (int i = 0; i < amountOfRows; i++){
                     currentCategoryName.add(categoryName.get(i));
                 }
             }
